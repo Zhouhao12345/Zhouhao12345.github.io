@@ -1,0 +1,12 @@
+Homepage: http://127.0.0.1/awesome/
+About page: http://127.0.0.1/awesome/about/
+Register page: http://127.0.0.1/awesome/register/
+forgot password page: http://127.0.0.1/awesome/reset-password/
+Login page: http://127.0.0.1/awesome/login/
+Logout page: http://127.0.0.1/awesome/logout/
+About page: http://127.0.0.1/awesome/about/
+create team page: http://127.0.0.1/awesome/create-team/
+profile page: http://127.0.0.1/awesome/profile/
+edit profile page: http://127.0.0.1/awesome/profile/edit/
+team details page: http://127.0.0.1/awesome/team/{team_name_slug}/details/
+find team page: http://127.0.0.1/awesome/find-team/
