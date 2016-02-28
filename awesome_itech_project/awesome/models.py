@@ -45,8 +45,10 @@ class Course(models.Model):
 class Role(models.Model):
     type=models.CharField(max_length=15,unique=True)
     role_id=models.IntegerField(default=0,unique=True)
+
     def __unicode__(self):
         return  self.type
+
 class UserRole(models.Model):
     user=models.ForeignKey(User)
     role=models.ForeignKey(Role)
@@ -58,5 +60,6 @@ class Team(models.Model):
     creation_date=models.DateField(default=datetime.now())
     required_skills=models.TextField(max_length=500)
     description=models.TextField(max_length=500)
+
     def __unicode__(self):
          return self.name
