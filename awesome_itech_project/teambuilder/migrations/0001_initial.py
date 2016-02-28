@@ -71,7 +71,7 @@ class Migration(migrations.Migration):
                 ('creation_date', models.DateField(default=datetime.datetime(2016, 2, 28, 20, 26, 21, 166127))),
                 ('required_skills', models.TextField(max_length=500)),
                 ('description', models.TextField(max_length=500)),
-                ('course', models.ForeignKey(to='awesome.Course')),
+                ('course', models.ForeignKey(to='teambuilder.Course')),
             ],
             options={
             },
@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
             name='UserRole',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('role', models.ForeignKey(to='awesome.Role')),
+                ('role', models.ForeignKey(to='teambuilder.Role')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
