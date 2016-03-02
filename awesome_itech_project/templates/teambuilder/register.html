@@ -2,5 +2,15 @@
 {% block title_block %}Create an account {% endblock %}
 {% block body_block %}
     <p>This is the register page</p>
-    Zhou wants to register an account
+    {% if not registered %}
+        <form id="register_form" method="post" action="{% url 'teambuilder:register' %}">
+            {% csrf_token %}
+            {{errors}}
+            {{ user_form.as_p }}
+            <input type="submit" value="Submit" />
+        </form>
+
+    {% else %}
+        <p>You have been successfully registered. Click <a href="{% url 'teambuilder:login' %}">here</a> to login </p>
+    {% endif %}
 {% endblock %}

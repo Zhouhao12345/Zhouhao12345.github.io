@@ -1,5 +1,37 @@
 {% extends 'base.html' %}
 {% block title_block %}Home page {% endblock %}
 {% block body_block %}
-    <p>This is the home page</p>
+    {% if user.is_authenticated %}
+        <p>Welcome {{user.first_name}}</p>
+    {% endif %}
+    <div id="latest_teams">
+        <h3>Recently built teams</h3>
+        {% if teams %}
+            <table>
+                <thead>
+                    <td>Team</td><td>Course</td>
+                </thead>
+                {% for team in teams %}
+                    <tr>
+                        <td><a href="/teambuilder/team/{{team.slug}}/details/">{{ team.name }}</a></td>
+                        <td>{{ team.course.name }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No teams have been built</p>
+        {% endif %}
+
+    </div>
+    <div id="latest_projects">
+
+        <h3>Recently added projects</h3>
+        {% if courses %}
+            {% for course in courses %}
+                <p>{{course.name}}</p>
+            {% endfor %}
+        {% else %}
+            <p>No courses have been added</p>
+        {% endif %}
+    </div>
 {% endblock %}
