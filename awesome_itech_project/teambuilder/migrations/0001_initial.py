@@ -21,7 +21,8 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(unique=True, max_length=100)),
                 ('course_password', models.CharField(max_length=15)),
                 ('team_size', models.IntegerField(default=0)),
-                ('add_date', models.DateField(default=datetime.datetime(2016, 2, 28, 20, 26, 21, 163166))),
+                ('add_date', models.DateField(default=datetime.datetime(2016, 3, 2, 17, 47, 42, 233854))),
+                ('slug', models.SlugField()),
                 ('creator', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -32,20 +33,8 @@ class Migration(migrations.Migration):
             name='Memberrequest',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('status', models.CharField(max_length=10)),
-                ('request_date', models.DateField(default=datetime.datetime(2016, 2, 28, 20, 26, 21, 161310))),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='Role',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('type', models.CharField(unique=True, max_length=15)),
-                ('role_id', models.IntegerField(default=0, unique=True)),
+                ('status', models.CharField(default=b'pending', max_length=10)),
+                ('request_date', models.DateField(default=datetime.datetime(2016, 3, 2, 17, 47, 42, 235795))),
             ],
             options={
             },
@@ -55,8 +44,7 @@ class Migration(migrations.Migration):
             name='Skill',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('skill_name', models.CharField(max_length=20)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('skill_name', models.CharField(unique=True, max_length=50)),
             ],
             options={
             },
@@ -68,10 +56,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(unique=True, max_length=100)),
                 ('current_size', models.IntegerField(default=0)),
-                ('creation_date', models.DateField(default=datetime.datetime(2016, 2, 28, 20, 26, 21, 166127))),
+                ('creation_date', models.DateField(default=datetime.datetime(2016, 3, 2, 17, 47, 42, 234731))),
                 ('required_skills', models.TextField(max_length=500)),
                 ('description', models.TextField(max_length=500)),
+                ('slug', models.SlugField()),
                 ('course', models.ForeignKey(to='teambuilder.Course')),
+                ('creator', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
@@ -81,9 +71,9 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('phonenumber', models.CharField(max_length=15)),
-                ('dob', models.DateField(default=datetime.datetime(2016, 2, 28, 20, 26, 21, 160140))),
-                ('aboutme', models.TextField(max_length=500)),
+                ('phone_number', models.CharField(max_length=15, null=True)),
+                ('dob', models.DateField(default=datetime.date(2016, 3, 2), null=True)),
+                ('about_me', models.TextField(max_length=500, null=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -91,14 +81,26 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='UserRole',
+            name='UserProfile_Skill',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('role', models.ForeignKey(to='teambuilder.Role')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('skill', models.ForeignKey(to='teambuilder.Skill')),
+                ('user_profile', models.ForeignKey(to='teambuilder.UserProfile')),
             ],
             options={
             },
             bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='memberrequest',
+            name='team',
+            field=models.ForeignKey(to='teambuilder.Team'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='memberrequest',
+            name='user',
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
+            preserve_default=True,
         ),
     ]
