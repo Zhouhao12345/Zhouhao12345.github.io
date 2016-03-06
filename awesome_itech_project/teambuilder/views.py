@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from teambuilder.models import Team, Course
-from teambuilder.forms import UserForm
+from teambuilder.forms import UserForm,TeamForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -65,7 +65,22 @@ def user_logout(request):
 
 @login_required
 def create_team(request):
-    return render(request, 'teambuilder/create_team.html', {})
+    context_dict = {}
+    if request.method=='POST':
+        team_form = TeamForm(data=request.POST)
+
+        if team_form.is_valid():
+            team = team_form.save()
+            team.save()
+            context_dict['created'] = True
+
+        else:
+            context_dict['errors'] = team_form.errors
+
+    else:
+        team_form = TeamForm();
+        context_dict['team_form'] = team_form
+    return render(request, 'teambuilder/create_team.html', context_dict)
 
 def profile(request):
     return render(request, 'teambuilder/profile.html', {})
