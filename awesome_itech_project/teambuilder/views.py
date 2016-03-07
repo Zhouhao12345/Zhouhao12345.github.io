@@ -70,7 +70,9 @@ def create_team(request):
         team_form = TeamForm(data=request.POST)
 
         if team_form.is_valid():
-            team = team_form.save()
+            user = request.user
+            team = team_form.save(commit=False)
+            team.creator = user
             team.save()
             context_dict['created'] = True
 

@@ -38,7 +38,7 @@ class Team(models.Model):
     course=models.ForeignKey(Course)
     creator = models.ForeignKey(User)
     current_size=models.IntegerField(default=0)
-    creation_date=models.DateField(default=datetime.now(), null=False)
+    creation_date=models.DateTimeField(default=datetime.now(), null=False)
     required_skills=models.TextField(max_length=500)
     description=models.TextField(max_length=500)
     slug = models.SlugField()
