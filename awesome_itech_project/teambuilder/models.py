@@ -3,6 +3,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
+class Skill(models.Model):
+    skill_name=models.CharField(max_length=50, unique=True)
+
+    def __unicode__(self):
+        return self.skill_name
+
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
     user = models.OneToOneField(User)
@@ -16,6 +22,15 @@ class UserProfile(models.Model):
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
         return self.user.username
+
+class UserProfile_Skill(models.Model):
+    user_profile = models.ForeignKey(UserProfile)
+    skill = models.ForeignKey(Skill)
+
+
+    def __unicode__(self):
+        return self.user_profile + "_" + self.skill
+
 
 class Course(models.Model):
     code=models.CharField(max_length=15,unique=True)
@@ -38,7 +53,7 @@ class Team(models.Model):
     course=models.ForeignKey(Course)
     creator = models.ForeignKey(User)
     current_size=models.IntegerField(default=0)
-    creation_date=models.DateTimeField(default=datetime.now(), null=False)
+    creation_date=models.DateField(default=datetime.now(), null=False)
     required_skills=models.TextField(max_length=500)
     description=models.TextField(max_length=500)
     slug = models.SlugField()
@@ -58,25 +73,3 @@ class Memberrequest(models.Model):
 
     def __unicode__(self):
         return  self.status
-
-class Skill(models.Model):
-    user=models.ForeignKey(User)
-    skill_name=models.CharField(max_length=20)
-
-    def __unicode__(self):
-        return  self.skill_name
-
-
-class Role(models.Model):
-    type=models.CharField(max_length=15,unique=True)
-
-    def __unicode__(self):
-        return  self.type
-
-class UserRole(models.Model):
-    user=models.ForeignKey(User)
-    role=models.ForeignKey(Role)
-
-    def __unicode__(self):
-        return self.user.username + " " + self.role.type
-
