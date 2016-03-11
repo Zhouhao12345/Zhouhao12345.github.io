@@ -2,7 +2,11 @@
 {% block title_block %}Home page {% endblock %}
 {% block body_block %}
     {% if user.is_authenticated %}
-        <p>Welcome {{user.first_name}}</p>
+        {% if user.first_name %}
+            <p>Welcome {{user.first_name}}</p>
+        {% else %}
+            <p>Welcome {{user.username}}</p>
+        {% endif %}
     {% endif %}
     <div id="latest_teams">
         <h3>Recently built teams</h3>

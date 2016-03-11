@@ -21,7 +21,11 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(unique=True, max_length=100)),
                 ('course_password', models.CharField(max_length=15)),
                 ('team_size', models.IntegerField(default=0)),
+<<<<<<< HEAD
                 ('add_date', models.DateField(default=datetime.datetime(2016, 3, 9, 18, 30, 1, 635000))),
+=======
+                ('add_date', models.DateField(default=datetime.datetime(2016, 3, 9, 17, 11, 32, 764000))),
+>>>>>>> 22606dc3576f8743467a4fe133f7a25b4e9e64e9
                 ('slug', models.SlugField()),
                 ('creator', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
@@ -34,7 +38,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('status', models.CharField(default=b'pending', max_length=10)),
+<<<<<<< HEAD
                 ('request_date', models.DateField(default=datetime.datetime(2016, 3, 9, 18, 30, 1, 636000))),
+=======
+                ('request_date', models.DateField(default=datetime.datetime(2016, 3, 9, 17, 11, 32, 765000))),
+>>>>>>> 22606dc3576f8743467a4fe133f7a25b4e9e64e9
             ],
             options={
             },
@@ -56,7 +64,11 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(unique=True, max_length=100)),
                 ('current_size', models.IntegerField(default=0)),
+<<<<<<< HEAD
                 ('creation_date', models.DateField(default=datetime.datetime(2016, 3, 9, 18, 30, 1, 635000))),
+=======
+                ('creation_date', models.DateField(default=datetime.datetime(2016, 3, 9, 17, 11, 32, 765000))),
+>>>>>>> 22606dc3576f8743467a4fe133f7a25b4e9e64e9
                 ('required_skills', models.TextField(max_length=500)),
                 ('description', models.TextField(max_length=500)),
                 ('slug', models.SlugField()),

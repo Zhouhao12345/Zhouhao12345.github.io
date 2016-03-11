@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 {% block title_block %}Team detail {% endblock %}
 {% block body_block %}
-    <p>This is the detail page for {{team_name}}</p>
+    <h2>{{team.name}}</h2>
+    <p>Course :{{ team.course.name}}</p>
+    <p>Description: {{team.description}}</p>
+    <p>Required skills: {{ team.required_skills}}</p>
+    <p>Number of free slots: {{ available_slots }}</p>
+
+    {% if not member_request %}
+        <a href="/teambuilder/team/{{team.slug}}/send_request/">Request to join</a>
+    {% else %}
+        <p>Your request to join {{team.name}} is {{ member_request.status}}</p>
+    {% endif %}
 {% endblock %}

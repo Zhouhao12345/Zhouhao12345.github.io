@@ -2,59 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddf2ba7a-a132-4adc-824b-afc93da2b63a" name="Default" comment="">
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0002_auto_20160228_2128.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0003_auto_20160229_1950.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0004_auto_20160229_2009.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0005_auto_20160229_2014.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0006_auto_20160229_2019.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0007_auto_20160229_2021.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0008_auto_20160229_2024.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0009_auto_20160229_2026.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0010_auto_20160229_2028.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0011_auto_20160229_2204.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0012_auto_20160229_2206.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0013_auto_20160229_2207.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0014_auto_20160229_2210.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0015_auto_20160229_2216.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0016_auto_20160229_2218.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0017_auto_20160229_2219.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0018_auto_20160229_2228.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0019_auto_20160229_2236.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0020_auto_20160229_2238.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0021_auto_20160229_2241.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0022_auto_20160229_2244.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0023_auto_20160229_2248.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0024_auto_20160229_2251.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0025_auto_20160229_2252.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0026_auto_20160229_2253.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0027_auto_20160229_2254.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0028_auto_20160229_2255.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0029_auto_20160229_2256.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0030_remove_team_creator.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0031_auto_20160229_2258.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0032_auto_20160229_2300.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0033_team_creator.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0034_auto_20160229_2303.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0035_auto_20160229_2303.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0036_auto_20160229_2304.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0037_auto_20160229_2305.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0038_auto_20160229_2307.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0039_auto_20160229_2307.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0040_auto_20160229_2308.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0041_auto_20160229_2308.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0042_auto_20160229_2310.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0043_auto_20160229_2311.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0044_auto_20160229_2322.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0045_auto_20160229_2324.py" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspaceMaster\myGitHub\AwesomeITECH\awesome_itech_project\teambuilder\migrations\0046_auto_20160307_0951.py" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/awesome_itech_project/requirements.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/db.sqlite3" afterPath="$PROJECT_DIR$/awesome_itech_project/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/teambuilder/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/awesome_itech_project/teambuilder/migrations/0001_initial.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/add_course.html" afterPath="$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/add_course.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/teambuilder/admin.py" afterPath="$PROJECT_DIR$/awesome_itech_project/teambuilder/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/.idea/awesome_itech_project.iml" afterPath="$PROJECT_DIR$/awesome_itech_project/.idea/awesome_itech_project.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/templates/base.html" afterPath="$PROJECT_DIR$/awesome_itech_project/templates/base.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/teambuilder/forms.py" afterPath="$PROJECT_DIR$/awesome_itech_project/teambuilder/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/index.html" afterPath="$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/.idea/misc.xml" afterPath="$PROJECT_DIR$/awesome_itech_project/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/team_detail.html" afterPath="$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/team_detail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/teambuilder/urls.py" afterPath="$PROJECT_DIR$/awesome_itech_project/teambuilder/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/teambuilder/views.py" afterPath="$PROJECT_DIR$/awesome_itech_project/teambuilder/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/awesome_itech_project/.idea/workspace.xml" afterPath="$PROJECT_DIR$/awesome_itech_project/.idea/workspace.xml" />
     </list>
     <ignored path="AwesomeITECH.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -76,33 +37,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#35#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="50" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="15" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
+            <state vertical-scroll-proportion="0.18046133">
+              <caret line="7" column="60" selection-start-line="7" selection-start-column="60" selection-end-line="7" selection-end-column="60" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -114,7 +53,7 @@
         <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="115" column="55" selection-start-line="115" selection-start-column="55" selection-end-line="115" selection-end-column="55" />
+              <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -122,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add_course.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="add_course.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/add_course.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.348378">
-              <caret line="13" column="125" selection-start-line="13" selection-start-column="125" selection-end-line="13" selection-end-column="125" />
+            <state vertical-scroll-proportion="-8.821428">
+              <caret line="13" column="130" selection-start-line="13" selection-start-column="130" selection-end-line="13" selection-end-column="130" />
               <folding />
             </state>
           </provider>
@@ -136,7 +75,7 @@
         <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="63" selection-start-line="12" selection-start-column="63" selection-end-line="12" selection-end-column="63" />
+              <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
               <folding>
                 <element signature="e#0#51#0" expanded="true" />
               </folding>
@@ -147,7 +86,7 @@
       <file leaf-file-name="profile.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-2.0357144">
               <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="4" selection-end-column="14" />
               <folding />
             </state>
@@ -157,7 +96,7 @@
       <file leaf-file-name="create_team.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/create_team.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-10.178572">
               <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
               <folding />
             </state>
@@ -181,11 +120,11 @@
       <list>
         <option value="$PROJECT_DIR$/awesome_itech_project/teambuilder/admin.py" />
         <option value="$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/profile.html" />
+        <option value="$PROJECT_DIR$/awesome_itech_project/templates/base.html" />
+        <option value="$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/add_course.html" />
+        <option value="$PROJECT_DIR$/awesome_itech_project/teambuilder/forms.py" />
         <option value="$PROJECT_DIR$/awesome_itech_project/teambuilder/urls.py" />
         <option value="$PROJECT_DIR$/awesome_itech_project/teambuilder/views.py" />
-        <option value="$PROJECT_DIR$/awesome_itech_project/templates/base.html" />
-        <option value="$PROJECT_DIR$/awesome_itech_project/teambuilder/forms.py" />
-        <option value="$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/add_course.html" />
       </list>
     </option>
   </component>
@@ -242,20 +181,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AwesomeITECH" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AwesomeITECH" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="AwesomeITECH" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="awesome_itech_project" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -474,9 +399,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1357" y="-9" width="1618" height="918" extended-state="7" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21741936" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21741936" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -496,6 +421,27 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21741936" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32881355" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24981357" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -840,22 +786,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="50" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/profile.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="4" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/register.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -870,24 +800,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/create_team.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="63" selection-start-line="12" selection-start-column="63" selection-end-line="12" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -898,10 +810,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/create_team.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.178572">
+          <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.0357144">
+          <caret line="3" column="5" selection-start-line="3" selection-start-column="5" selection-end-line="4" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/add_course.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.821428">
+          <caret line="13" column="130" selection-start-line="13" selection-start-column="130" selection-end-line="13" selection-end-column="130" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="50" selection-start-line="1" selection-start-column="50" selection-end-line="1" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="115" column="55" selection-start-line="115" selection-start-column="55" selection-end-line="115" selection-end-column="55" />
+          <caret line="120" column="0" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
           </folding>
@@ -910,19 +864,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/awesome_itech_project/teambuilder/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="15" selection-start-line="32" selection-start-column="15" selection-end-line="32" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.18046133">
+          <caret line="7" column="60" selection-start-line="7" selection-start-column="60" selection-end-line="7" selection-end-column="60" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/awesome_itech_project/templates/teambuilder/add_course.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.348378">
-          <caret line="13" column="125" selection-start-line="13" selection-start-column="125" selection-end-line="13" selection-end-column="125" />
-          <folding />
         </state>
       </provider>
     </entry>

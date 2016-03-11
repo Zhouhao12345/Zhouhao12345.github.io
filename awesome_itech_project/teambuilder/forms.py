@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from models import Team,Course
+from models import Team, Course
+
 
 class LoginForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -30,6 +32,8 @@ class CourseForm(forms.ModelForm):
    ## likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     #widget=IntegerField()
 
+
     class Meta:
         model = Course
         fields = ('code','name','course_password','team_size',)
+
