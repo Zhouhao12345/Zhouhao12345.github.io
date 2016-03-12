@@ -72,12 +72,22 @@ def create_team(request):
 
         if team_form.is_valid():
             user = request.user
-            team = team_form.save(commit=False)
-            team.creator = user
-            team.name = team.name.title()
-            team.save()
-            context_dict['created'] = True
-            return HttpResponseRedirect('/teambuilder/team/'+team.slug+'/details/')
+            course_password = request.POST['course_password']
+            course_id = request.POST['course']
+            course = Course.objects.get(pk=course_id)
+
+            if course_password == course.course_password:
+                team = team_form.save(commit=False)
+                team.creator = user
+                team.name = team.name.title()
+                team.save()
+                context_dict['created'] = True
+                return HttpResponseRedirect('/teambuilder/team/'+team.slug+'/details/')
+
+            else:
+                context_dict['password_error'] = "Invalid course password provided"
+                context_dict['created'] = False
+                context_dict['team_form'] = team_form
 
         else:
             context_dict['errors'] = team_form.errors
