@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
+from teambuilder.models import Team, Course
+from teambuilder.forms import UserForm,TeamForm,CourseForm
 from teambuilder.models import Team, Course, Memberrequest
 from teambuilder.forms import UserForm,TeamForm
 from django.contrib.auth.decorators import login_required
@@ -121,6 +123,26 @@ def find_team(request):
     return render(request, 'teambuilder/find_team.html', {})
 
 @login_required
+def add_course(request):
+    context_dic= {}
+    if request.method=='POST':
+        course_form=CourseForm(request.POST)
+
+        if course_form.is_valid():
+            course=course_form.save(commit=True)
+           # course.creator=user
+            course.save()
+            context_dic['created']=True
+
+            return (request)
+        else:
+            context_dic['errors']=course_form.errors
+    else:
+        course_form=CourseForm()
+        context_dic['course_form']=course_form
+    return render(request,'teambuilder/add_course.html',context_dic)
+
+
 def join_team(request, team_name_slug):
     user = request.user
     team = Team.objects.get(slug=team_name_slug)
@@ -131,3 +153,4 @@ def join_team(request, team_name_slug):
 def cancel_request(request):
 
     return render
+

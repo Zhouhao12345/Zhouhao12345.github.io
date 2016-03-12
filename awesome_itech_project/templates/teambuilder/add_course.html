@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title_block %}Add a course {% endblock %}
+{% block body_block %}
+    <p>This is the add course page</p>
+    {% if not created %}
+        <form id="course_form" method="post" action="{% url 'teambuilder:add_course' %}">
+            {% csrf_token %}
+            {{errors}}
+            {{ course_form.as_p }}
+            <input type="submit" value="Submit" />
+        </form>
+
+    {% else %}
+        <p>You have successfully add a course.<!-- Click <a href="{% url 'teambuilder:login' %}">here</a> to login </p>--workworks>
+    {% endif %}
+{% endblock %}
