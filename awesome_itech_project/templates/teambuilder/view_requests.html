@@ -13,8 +13,8 @@
             </tr>
             {% for request in requests %}
             <tr>
-                <td>{{request.team.name}}</td>
-                <td><a href="/teambuilder/{{request.user.username}}/">{{request.user.username}}</a></td>
+                <td><a href="/teambuilder/team/{{request.team.slug}}/details/">{{request.team.name}}</a></td>
+                <td><a href="/teambuilder/profile/{{request.user.username}}/">{{request.user.username}}</a></td>
                 <td>{{request.status}}</td>
                 <td>
                     {% if request.status == "pending" %}

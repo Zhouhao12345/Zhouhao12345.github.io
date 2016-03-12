@@ -5,7 +5,6 @@ from teambuilder.forms import UserForm,TeamForm,CourseForm
 from teambuilder.models import Team, Course, Memberrequest
 from teambuilder.forms import UserForm,TeamForm
 from django.contrib.auth.decorators import login_required
-from django.core import serializers
 
 # Create your views here.
 def index(request):
@@ -88,8 +87,8 @@ def create_team(request):
         context_dict['team_form'] = team_form
     return render(request, 'teambuilder/create_team.html', context_dict)
 
-def profile(request):
-    return render(request, 'teambuilder/profile.html', {})
+def profile(request, username):
+    return render(request, 'teambuilder/profile.html', {'username':username})
 
 def edit_profile(request):
     return render(request, 'teambuilder/edit_profile.html', {})
@@ -113,6 +112,14 @@ def team_details(request, team_name_slug):
             except Memberrequest.DoesNotExist:
                 pass
 
+            #check if user has an already accepted request for that team
+            try:
+                mr2 = Memberrequest.objects.get(team=team,user=user,status="accepted")
+                if mr2:
+                    context_dict['accepted_request'] = True
+
+            except Memberrequest.DoesNotExist:
+                pass
 
     except Team.DoesNotExist:
         pass
@@ -175,11 +182,64 @@ def view_requests(request, team_name_slug):
 
 @login_required
 def accept_request(request, request_id):
+    try:
+        mr = Memberrequest.objects.get(pk=request_id)
+        team = mr.team
 
-    return render()
+        if request.user == team.creator:
+            mr.status = "accepted"
+
+            team.current_size = team.current_size + 1
+            team.save()
+            mr.save()
+
+        else:
+            return HttpResponse("You are not authorized to perform this action")
+
+    except Memberrequest.DoesNotExist:
+        return HttpResponse("Invalid request ID")
+
+    return HttpResponseRedirect('/teambuilder/team/'+mr.team.slug+'/view-requests/')
 
 @login_required
 def reject_request(request, request_id):
+    try:
+        mr = Memberrequest.objects.get(pk=request_id)
+        team = mr.team
 
-    return render()
+        if request.user == team.creator:
+            mr.status = "rejected"
+            mr.save()
+
+        else:
+            return HttpResponse("You are not authorized to perform this action")
+
+    except Memberrequest.DoesNotExist:
+        return HttpResponseRedirect("Invalid request ID")
+
+    return HttpResponseRedirect('/teambuilder/team/'+mr.team.slug+'/view-requests/')
+
+@login_required
+def my_sent_requests(request):
+    user = request.user
+    mrs = Memberrequest.objects.filter(user=user).order_by('-request_date')
+    return render(request, 'teambuilder/my_sent_requests.html', {'requests':mrs})
+
+@login_required
+def view_team_members(request, team_name_slug):
+    user = request.user
+    context_dict = {}
+    try:
+        team = Team.objects.get(slug=team_name_slug)
+        if team.creator == user:
+            requests = Memberrequest.objects.filter(team=team,status="accepted")
+            context_dict['requests'] = requests
+            context_dict['team'] = team
+
+    except Team.DoesNotExist:
+        return HttpResponse("Invalid team provided")
+
+    return render(request, 'teambuilder/view_team_members.html', context_dict)
+
+
 

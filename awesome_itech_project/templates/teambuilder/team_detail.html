@@ -3,7 +3,7 @@
 {% block body_block %}
     {% if team %}
         <h2>{{team.name}}</h2>
-        <p>Course :{{ team.course.name}}</p>
+        <p>Course: {{ team.course.name}}</p>
         <p>Description: {{team.description}}</p>
         <p>Required skills: {{ team.required_skills}}</p>
         <p>Number of free slots: {{ available_slots }}</p>
@@ -15,8 +15,13 @@
             {% else %}
                 {% if user == team.creator %}
                     <a href="/teambuilder/team/{{team.slug}}/view-requests/">View requests</a>
+                    <a href="/teambuilder/team/{{team.slug}}/view-members/">View team members</a>
                 {% else %}
-                    <a href="/teambuilder/team/{{team.slug}}/send-request/">Request to join</a>
+                    {% if not accepted_request %}
+                        <a href="/teambuilder/team/{{team.slug}}/send-request/">Request to join</a>
+                    {% else %}
+                        <p>You are a member of this team</p>
+                    {% endif %}
                 {% endif %}
             {% endif %}
         {% endif %}

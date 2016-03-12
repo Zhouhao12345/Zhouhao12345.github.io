@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title_block %}My sent requests{% endblock %}
+{% block body_block %}
+    {% if requests %}
+        <table>
+            <tr>
+                <td>Team</td>
+                <td>Request date</td>
+                <td>Status</td>
+            </tr>
+
+            {% for request in requests %}
+                <tr>
+                    <td><a href="/teambuilder/team/{{request.team.slug}}/details/"> {{request.team.name}}</a></td>
+                    <td>{{request.request_date}}</td>
+                    <td>{{request.status}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No requests have been sent.</p>
+    {% endif %}
+{% endblock %}
