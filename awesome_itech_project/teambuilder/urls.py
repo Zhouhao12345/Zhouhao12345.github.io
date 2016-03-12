@@ -16,4 +16,5 @@ urlpatterns = patterns('',
     url(r'^team/(?P<team_name_slug>[\w\-]+)/details/$', views.team_details, name='team_detail'),
     url(r'^find-team/$', views.find_team, name='find_team'),
     url(r'^team/(?P<team_name_slug>[\w\-]+)/send_request/$', views.join_team, name='join_team'),
+    url(r'^team/(?P<team_name_slug>[\w\-]+)/cancel_request/$', views.cancel_request, name='cancel_request'),
 )

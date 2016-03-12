@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-from teambuilder.models import Team, Course
 from teambuilder.forms import UserForm,TeamForm,CourseForm
 from teambuilder.models import Team, Course, Memberrequest
 from teambuilder.forms import UserForm,TeamForm
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 
 # Create your views here.
 def index(request):
@@ -106,7 +106,7 @@ def team_details(request, team_name_slug):
         user = request.user
         if user.is_authenticated():
             try:
-                mr = Memberrequest.objects.get(team=team,user=user)
+                mr = Memberrequest.objects.get(team=team,user=user,status="pending")
                 context_dict['member_request'] = mr
 
             except Memberrequest.DoesNotExist:
@@ -117,7 +117,7 @@ def team_details(request, team_name_slug):
         pass
 
     return render(request, 'teambuilder/team_detail.html', context_dict)
-    #return render(request, 'teambuilder/team_detail.html', {"team_name":team_name_slug})
+
 
 def find_team(request):
     return render(request, 'teambuilder/find_team.html', {})
@@ -129,12 +129,11 @@ def add_course(request):
         course_form=CourseForm(request.POST)
 
         if course_form.is_valid():
-            course=course_form.save(commit=True)
-           # course.creator=user
+            course=course_form.save(commit=False)
+            course.creator= request.user
             course.save()
             context_dic['created']=True
 
-            return (request)
         else:
             context_dic['errors']=course_form.errors
     else:
@@ -142,15 +141,21 @@ def add_course(request):
         context_dic['course_form']=course_form
     return render(request,'teambuilder/add_course.html',context_dic)
 
-
+@login_required
 def join_team(request, team_name_slug):
     user = request.user
     team = Team.objects.get(slug=team_name_slug)
-    mr = Memberrequest.objects.get_or_create(user=user,team=team)
-    return_string = "Your request to join {0} has been sent".format(team_name_slug)
-    return HttpResponse(return_string)
+    Memberrequest.objects.get_or_create(user=user, team=team, status="pending")
 
-def cancel_request(request):
+    return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/details/')
 
-    return render
+@login_required
+def cancel_request(request, team_name_slug):
+    user = request.user
+    team = Team.objects.get(slug=team_name_slug)
+    mr = Memberrequest.objects.get(user=user, team=team, status="pending")
+    mr.status = "cancelled"
+    mr.save()
+
+    return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/details/')
 

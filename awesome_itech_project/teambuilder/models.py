@@ -29,7 +29,7 @@ class UserProfile_Skill(models.Model):
 
 
     def __unicode__(self):
-        return self.user_profile + "_" + self.skill
+        return self.user_profile.user.username + "skills"
 
 
 class Course(models.Model):
@@ -37,7 +37,7 @@ class Course(models.Model):
     name=models.CharField(max_length=100,unique=True)
     course_password=models.CharField(max_length=15)
     team_size=models.IntegerField(default=0)
-    add_date=models.DateField(default=datetime.now(), null=False)
+    add_date=models.DateTimeField(default=datetime.now(), null=False)
     creator=models.ForeignKey(User)
     slug = models.SlugField()
 
@@ -53,7 +53,7 @@ class Team(models.Model):
     course=models.ForeignKey(Course)
     creator = models.ForeignKey(User)
     current_size=models.IntegerField(default=0)
-    creation_date=models.DateField(default=datetime.now(), null=False)
+    creation_date=models.DateTimeField(default=datetime.now(), null=False)
     required_skills=models.TextField(max_length=500)
     description=models.TextField(max_length=500)
     slug = models.SlugField()
@@ -68,8 +68,8 @@ class Team(models.Model):
 class Memberrequest(models.Model):
     user=models.ForeignKey(User)
     status=models.CharField(max_length=10, default="pending")
-    request_date=models.DateField(default=datetime.now(), null=False)
+    request_date=models.DateTimeField(default=datetime.now(), null=False)
     team = models.ForeignKey(Team)
 
     def __unicode__(self):
-        return  self.user.username + "," + self.team
+        return  self.user.username + "," + self.team.name

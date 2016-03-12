@@ -10,7 +10,8 @@
 
         {% if user.is_authenticated %}
             {% if member_request %}
-                <p>Your request to join {{team.name}} is {{ member_request.status}}</p>
+                <p>Your request to join {{team.name}} is pending</p>
+                <a href="/teambuilder/team/{{team.slug}}/cancel_request/">Cancel request</a>
             {% else %}
                 <a href="/teambuilder/team/{{team.slug}}/send_request/">Request to join</a>
             {% endif %}
