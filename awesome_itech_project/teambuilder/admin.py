@@ -8,9 +8,12 @@ class UserProfileAdmin(admin.ModelAdmin):
 class MemberRequestAdmin(admin.ModelAdmin):
     list_display = ('user' , 'team', 'status')
 
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ('name', 'creator')
+
 
 # Register your models here.
-admin.site.register(Team)
+admin.site.register(Team, TeamAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Course)
 admin.site.register(Memberrequest, MemberRequestAdmin)

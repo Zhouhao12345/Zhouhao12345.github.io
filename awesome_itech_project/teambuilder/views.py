@@ -22,7 +22,7 @@ def about(request):
 def register(request):
 
     context_dict = {}
-    if request.method=='POST':
+    if request.method == 'POST':
         user_form = UserForm(data=request.POST)
 
         if user_form.is_valid():
@@ -78,6 +78,7 @@ def create_team(request):
             team.name = team.name.title()
             team.save()
             context_dict['created'] = True
+            return HttpResponseRedirect('/teambuilder/team/'+team.slug+'/details/')
 
         else:
             context_dict['errors'] = team_form.errors
@@ -158,4 +159,27 @@ def cancel_request(request, team_name_slug):
     mr.save()
 
     return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/details/')
+
+@login_required
+def view_requests(request, team_name_slug):
+    user = request.user
+    team = Team.objects.get(slug=team_name_slug)
+
+    if team.creator == user:
+        requests = Memberrequest.objects.filter(team = team).order_by('-request_date')
+
+        return render(request, 'teambuilder/view_requests.html', {'requests':requests, 'team':team})
+
+    else:
+        return HttpResponse("You are not authorized to access this page")
+
+@login_required
+def accept_request(request, request_id):
+
+    return render()
+
+@login_required
+def reject_request(request, request_id):
+
+    return render()
 

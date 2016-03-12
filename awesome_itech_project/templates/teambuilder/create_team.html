@@ -1,16 +1,12 @@
 {% extends 'base.html' %}
 {% block title_block %}Build a team {% endblock %}
 {% block body_block %}
-    <p>This is the create team page</p>
-    {% if not registered %}
-        <form id="team_form" method="post" action="{% url 'teambuilder:create_team' %}">
-            {% csrf_token %}
-            {{errors}}
-            {{ team_form.as_p }}
-            <input type="submit" value="Submit" />
-        </form>
 
-    {% else %}
-        <p>You have been successfully registered. Click <a href="{% url 'teambuilder:login' %}">here</a> to login </p>
-    {% endif %}
+    <form id="team_form" method="post" action="{% url 'teambuilder:create_team' %}">
+        {% csrf_token %}
+        {{errors}}
+        {{ team_form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
+
 {% endblock %}

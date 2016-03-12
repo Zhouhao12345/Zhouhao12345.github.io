@@ -11,9 +11,13 @@
         {% if user.is_authenticated %}
             {% if member_request %}
                 <p>Your request to join {{team.name}} is pending</p>
-                <a href="/teambuilder/team/{{team.slug}}/cancel_request/">Cancel request</a>
+                <a href="/teambuilder/team/{{team.slug}}/cancel-request/">Cancel request</a>
             {% else %}
-                <a href="/teambuilder/team/{{team.slug}}/send_request/">Request to join</a>
+                {% if user == team.creator %}
+                    <a href="/teambuilder/team/{{team.slug}}/view-requests/">View requests</a>
+                {% else %}
+                    <a href="/teambuilder/team/{{team.slug}}/send-request/">Request to join</a>
+                {% endif %}
             {% endif %}
         {% endif %}
     {% else %}
