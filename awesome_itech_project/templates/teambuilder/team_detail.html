@@ -1,15 +1,21 @@
 {% extends 'base.html' %}
 {% block title_block %}Team detail {% endblock %}
 {% block body_block %}
-    <h2>{{team.name}}</h2>
-    <p>Course :{{ team.course.name}}</p>
-    <p>Description: {{team.description}}</p>
-    <p>Required skills: {{ team.required_skills}}</p>
-    <p>Number of free slots: {{ available_slots }}</p>
+    {% if team %}
+        <h2>{{team.name}}</h2>
+        <p>Course :{{ team.course.name}}</p>
+        <p>Description: {{team.description}}</p>
+        <p>Required skills: {{ team.required_skills}}</p>
+        <p>Number of free slots: {{ available_slots }}</p>
 
-    {% if not member_request %}
-        <a href="/teambuilder/team/{{team.slug}}/send_request/">Request to join</a>
+        {% if user.is_authenticated %}
+            {% if member_request %}
+                <p>Your request to join {{team.name}} is {{ member_request.status}}</p>
+            {% else %}
+                <a href="/teambuilder/team/{{team.slug}}/send_request/">Request to join</a>
+            {% endif %}
+        {% endif %}
     {% else %}
-        <p>Your request to join {{team.name}} is {{ member_request.status}}</p>
+        <p>Team not found</p>
     {% endif %}
 {% endblock %}

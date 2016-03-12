@@ -92,18 +92,26 @@ def edit_profile(request):
     return render(request, 'teambuilder/edit_profile.html', {})
 
 def team_details(request, team_name_slug):
-    team = Team.objects.get(slug=team_name_slug)
-    context_dict = {'team': team}
-    available_slots = team.course.team_size - team.current_size
-    context_dict['available_slots'] = available_slots
 
-    #check if user has previously requested to join the team
-    user = request.user
+    context_dict = {}
     try:
-        mr = Memberrequest.objects.get(team=team,user=user)
-        context_dict['member_request'] = mr
+        team = Team.objects.get(slug=team_name_slug)
+        context_dict['team'] = team
+        available_slots = team.course.team_size - team.current_size
+        context_dict['available_slots'] = available_slots
 
-    except Memberrequest.DoesNotExist:
+        #check if user has previously requested to join the team
+        user = request.user
+        if user.is_authenticated():
+            try:
+                mr = Memberrequest.objects.get(team=team,user=user)
+                context_dict['member_request'] = mr
+
+            except Memberrequest.DoesNotExist:
+                pass
+
+
+    except Team.DoesNotExist:
         pass
 
     return render(request, 'teambuilder/team_detail.html', context_dict)
@@ -112,9 +120,14 @@ def team_details(request, team_name_slug):
 def find_team(request):
     return render(request, 'teambuilder/find_team.html', {})
 
+@login_required
 def join_team(request, team_name_slug):
     user = request.user
     team = Team.objects.get(slug=team_name_slug)
     mr = Memberrequest.objects.get_or_create(user=user,team=team)
     return_string = "Your request to join {0} has been sent".format(team_name_slug)
     return HttpResponse(return_string)
+
+def cancel_request(request):
+
+    return render

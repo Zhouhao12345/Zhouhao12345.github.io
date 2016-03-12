@@ -72,4 +72,4 @@ class Memberrequest(models.Model):
     team = models.ForeignKey(Team)
 
     def __unicode__(self):
-        return  self.status
+        return  self.user.username + "," + self.team

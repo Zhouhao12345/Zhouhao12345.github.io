@@ -5,10 +5,13 @@ from teambuilder.models import Team, UserProfile, User, Course, Memberrequest, S
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('phone_number', 'dob', 'about_me', 'user')
 
+class MemberRequestAdmin(admin.ModelAdmin):
+    list_display = ('user' , 'team', 'status')
+
 
 # Register your models here.
 admin.site.register(Team)
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Course)
-admin.site.register(Memberrequest)
+admin.site.register(Memberrequest, MemberRequestAdmin)
 admin.site.register(Skill)
