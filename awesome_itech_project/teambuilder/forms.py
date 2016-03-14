@@ -23,7 +23,7 @@ class TeamForm(forms.ModelForm):
 
     class Meta:
         model = Team
-        fields = ('name', 'course', 'current_size', 'required_skills','description')
+        fields = ('name', 'course', 'required_skills','description')
 
 class CourseForm(forms.ModelForm):
     #code=forms.CharField(max_length=15, help_text="Please enter the course code")
