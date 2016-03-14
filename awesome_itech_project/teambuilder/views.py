@@ -196,12 +196,25 @@ def accept_request(request, request_id):
         mr = Memberrequest.objects.get(pk=request_id)
         team = mr.team
 
-        if request.user == team.creator:
-            mr.status = "accepted"
+        user = request.user
+        if user == team.creator:
+            if mr.status == "pending":
+                mr.status = "accepted"
+                team.current_size = team.current_size + 1
+                team.save()
+                mr.save()
 
-            team.current_size = team.current_size + 1
-            team.save()
-            mr.save()
+                course = mr.course
+                sender = mr.user
+
+                reqs = Memberrequest.objects.filter(user=sender, course=course, status='pending')
+                for r in reqs:
+                    r.status = "cancelled"
+                    r.save()
+
+            else:
+                return HttpResponse("The request has been cancelled by user")
+
 
         else:
             return HttpResponse("You are not authorized to perform this action")
