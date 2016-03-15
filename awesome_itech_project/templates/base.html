@@ -19,14 +19,12 @@
                 <li><a href="{% url 'teambuilder:login' %}">Login</a> </li>
                 <li><a href="{% url 'teambuilder:register' %}">Register</a> </li>
             {% else %}
+            <li><a href="{% url 'teambuilder:dashboard' %}">Dashboard</a> </li>
             <li><a href="{% url 'teambuilder:edit_profile' %}">Edit profile</a> </li>
             <li><a href="{% url 'teambuilder:profile' user.username%}">Profile</a> </li>
             <li><a href="{% url 'teambuilder:logout' %}">Logout</a> </li>
             <li><a href="{% url 'teambuilder:reset' %}">Reset Password</a> </li>
-            <li><a href="{% url 'teambuilder:create_team' %}">Create team</a> </li>
-            <li><a href="{% url 'teambuilder:add_course' %}">Add a course</a> </li>
             <li><a href="{% url 'teambuilder:find_team' %}">Find team</a> </li>
-            <li><a href="{% url 'teambuilder:my_sent_requests' %}">My sent requests</a> </li>
             {% endif %}
         </ul>
         <hr />

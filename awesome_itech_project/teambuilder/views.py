@@ -6,6 +6,7 @@ from teambuilder.models import Team, Course, Memberrequest
 from teambuilder.forms import UserForm,TeamForm
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
 def index(request):
     teams = Team.objects.order_by('-creation_date')[:5]
@@ -15,8 +16,10 @@ def index(request):
     context_dict['courses'] = courses
     return render(request, 'teambuilder/index.html', context_dict)
 
+
 def about(request):
     return render(request, 'teambuilder/about.html', {})
+
 
 def register(request):
 
@@ -39,8 +42,10 @@ def register(request):
 
     return render(request, 'teambuilder/register.html', context_dict)
 
+
 def reset_password(request):
     return render(request, 'teambuilder/reset_password.html', {})
+
 
 def user_login(request):
     if request.user.is_authenticated():
@@ -49,20 +54,26 @@ def user_login(request):
     if request.method=='POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        next = request.POST.get('next')
         user = authenticate(username=username, password=password)
 
         if user:
             login(request,user)
-            return HttpResponseRedirect('/teambuilder/')
+            if next != 'None':
+                return HttpResponseRedirect(next)
+            else:
+                return HttpResponseRedirect('/teambuilder/')
 
         else:
             return render(request, 'teambuilder/login.html', {'message':'Invalid username/password provided'})
     else:
-        return render(request, 'teambuilder/login.html', {})
+        return render(request, 'teambuilder/login.html', {'next':request.GET.get('next')})
+
 
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/teambuilder/')
+
 
 @login_required
 def create_team(request):
@@ -97,11 +108,14 @@ def create_team(request):
         context_dict['team_form'] = team_form
     return render(request, 'teambuilder/create_team.html', context_dict)
 
+
 def profile(request, username):
     return render(request, 'teambuilder/profile.html', {'username':username})
 
+
 def edit_profile(request):
     return render(request, 'teambuilder/edit_profile.html', {})
+
 
 def team_details(request, team_name_slug):
 
@@ -132,13 +146,14 @@ def team_details(request, team_name_slug):
                 pass
 
     except Team.DoesNotExist:
-        pass
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return render(request, 'teambuilder/team_detail.html', context_dict)
 
 
 def find_team(request):
     return render(request, 'teambuilder/find_team.html', {})
+
 
 @login_required
 def add_course(request):
@@ -159,6 +174,7 @@ def add_course(request):
         context_dic['course_form']=course_form
     return render(request,'teambuilder/add_course.html',context_dic)
 
+
 @login_required
 def join_team(request, team_name_slug):
     user = request.user
@@ -166,6 +182,7 @@ def join_team(request, team_name_slug):
     Memberrequest.objects.get_or_create(user=user, team=team, status="pending")
 
     return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/details/')
+
 
 @login_required
 def cancel_request(request, team_name_slug):
@@ -177,18 +194,20 @@ def cancel_request(request, team_name_slug):
 
     return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/details/')
 
+
 @login_required
 def view_requests(request, team_name_slug):
     user = request.user
     team = Team.objects.get(slug=team_name_slug)
 
     if team.creator == user:
-        requests = Memberrequest.objects.filter(team = team).order_by('-request_date')
+        requests = Memberrequest.objects.filter(team=team).order_by('-request_date')
 
-        return render(request, 'teambuilder/view_requests.html', {'requests':requests, 'team':team})
+        return render(request, 'teambuilder/view_requests.html', {'requests': requests, 'team': team})
 
     else:
-        return HttpResponse("You are not authorized to access this page")
+        return HttpResponseRedirect('/teambuilder/unauthorized/')
+
 
 @login_required
 def accept_request(request, request_id):
@@ -204,25 +223,30 @@ def accept_request(request, request_id):
                 team.save()
                 mr.save()
 
-                course = mr.course
                 sender = mr.user
 
-                reqs = Memberrequest.objects.filter(user=sender, course=course, status='pending')
-                for r in reqs:
-                    r.status = "cancelled"
-                    r.save()
+                reqs =  Memberrequest.objects.filter(user=sender, status='pending') #get the memberrequests sent by sender that are pending
+
+                #select the ones with the same course and cancel them
+                teams = team.course.team_set.all();
+                for req in reqs:
+                    if req.team in teams:
+                        req.status="cancelled"
+                        req.save()
+
 
             else:
                 return HttpResponse("The request has been cancelled by user")
 
 
         else:
-            return HttpResponse("You are not authorized to perform this action")
+            return HttpResponseRedirect('/teambuilder/unauthorized/')
 
     except Memberrequest.DoesNotExist:
-        return HttpResponse("Invalid request ID")
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return HttpResponseRedirect('/teambuilder/team/'+mr.team.slug+'/view-requests/')
+
 
 @login_required
 def reject_request(request, request_id):
@@ -235,18 +259,31 @@ def reject_request(request, request_id):
             mr.save()
 
         else:
-            return HttpResponse("You are not authorized to perform this action")
+            return HttpResponseRedirect('/teambuilder/unauthorized/')
 
     except Memberrequest.DoesNotExist:
-        return HttpResponseRedirect("Invalid request ID")
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return HttpResponseRedirect('/teambuilder/team/'+mr.team.slug+'/view-requests/')
 
+
 @login_required
-def my_sent_requests(request):
+def sent_requests(request):
     user = request.user
     mrs = Memberrequest.objects.filter(user=user).order_by('-request_date')
     return render(request, 'teambuilder/my_sent_requests.html', {'requests':mrs})
+
+
+@login_required
+def received_requests(request):
+    context_list = []
+    teams = Team.objects.filter(creator=request.user)
+    for team in teams:
+        requests = Memberrequest.objects.filter(team=team).order_by('-request_date')
+        context_list.append(requests)
+
+    return render(request, 'teambuilder/received_requests.html', {'requests': context_list})
+
 
 @login_required
 def view_team_members(request, team_name_slug):
@@ -260,9 +297,93 @@ def view_team_members(request, team_name_slug):
             context_dict['team'] = team
 
     except Team.DoesNotExist:
-        return HttpResponse("Invalid team provided")
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return render(request, 'teambuilder/view_team_members.html', context_dict)
+
+
+@login_required
+def dashboard(request):
+    user = request.user
+    context_dict = {}
+
+    courses = Course.objects.filter(creator=user)
+    context_dict['courses'] = courses
+
+    teams = Team.objects.filter(creator=user)
+    context_dict['teams'] = teams
+
+    return render(request, 'teambuilder/dashboard.html', context_dict)
+
+
+def course_details(request, course_name_slug):
+    context_dict = {}
+    try:
+        course = Course.objects.get(slug=course_name_slug)
+        context_dict['course'] = course
+        if request.user.is_authenticated():
+            if request.user == course.creator:
+                context_dict['creator'] = True
+
+    except Course.DoesNotExist:
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
+
+    return render(request, 'teambuilder/course_detail.html', context_dict)
+
+
+@login_required
+def edit_course(request, course_name_slug):
+    context_dict = {}
+    try:
+        old_course = Course.objects.get(slug=course_name_slug)
+        if request.user == old_course.creator:
+            context_dict['course'] = old_course
+            if request.method == 'POST':
+                course_form = CourseForm(data=request.POST, instance=old_course)
+                if course_form.is_valid():
+                    course=course_form.save()
+                    return HttpResponseRedirect('/teambuilder/course/'+course.slug+'/')
+                else:
+                    context_dict['errors']=course_form.errors
+
+            else:
+                pass
+            return render(request,'teambuilder/edit_course.html',context_dict)
+
+        else:
+            return HttpResponseRedirect('/teambuilder/unauthorized/')
+
+    except Course.DoesNotExist:
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
+
+
+def unauthorized(request):
+    return render(request, 'teambuilder/403.html', {})
+
+
+def page_not_found(request):
+    return render(request, 'teambuilder/404.html', {})
+
+
+@login_required
+def view_course_teams(request, course_name_slug):
+    context_dict = {}
+    try:
+        course = Course.objects.get(slug=course_name_slug)
+        context_dict['course'] = course
+        if course.creator == request.user:
+            teams = Team.objects.filter(course=course)
+            context_dict['teams'] =  teams
+
+        else:
+            return HttpResponseRedirect('/teambuilder/unauthorized/')
+
+    except Course.DoesNotExist:
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
+    except Team.DoesNotExist:
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
+
+    return render(request, 'teambuilder/view_course_teams.html', context_dict)
 
 
 

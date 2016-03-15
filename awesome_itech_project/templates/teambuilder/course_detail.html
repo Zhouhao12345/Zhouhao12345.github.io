@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title_block %}{{course.name}} details {% endblock %}
+{% block body_block %}
+    {% if course %}
+        <h2>{{course.name}}</h2>
+        <p>Code: {{course.code}}</p>
+        <p>Name: {{course.name}}</p>
+        <p>Creator: {{course.creator.username}}</p>
+        <p>Required team size: {{course.team_size}}</p>
+
+        {% if user.is_authenticated %}
+            {% if creator == True %}
+                <a href="/teambuilder/course/{{course.slug}}/edit/">Edit course</a>
+                <a href="/teambuilder/course/{{course.slug}}/teams/">View teams</a>
+            {% endif %}
+        {% endif %}
+    {% else %}
+        <p>Course not found</p>
+    {% endif %}
+{% endblock %}

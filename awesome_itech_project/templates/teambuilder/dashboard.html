@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title_block %}Dashboard{% endblock %}
+
+{% block body_block %}
+    <h1>Dashboard</h1>
+    <h2>My Courses</h2>
+    {% if courses %}
+        <ul>
+        {% for course in courses %}
+            <li><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not added any course yet</p>
+    {% endif %}
+            <p><a href="{% url 'teambuilder:add_course' %}">Add a course</a></p>
+    <h2>My Teams</h2>
+    {% if teams %}
+        <ul>
+        {% for team in teams %}
+            <li><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></li>
+        {% endfor %}
+            <p><a href="{% url 'teambuilder:create_team' %}">Create a new team</a></p>
+        </ul>
+    {% else %}
+        <p>You have not built any team yet</p>
+        <p><a href="{% url 'teambuilder:create_team' %}">Create team</a></p>
+    {% endif %}
+
+    <h2>Requests</h2>
+    <a href="{% url 'teambuilder:sent_requests' %}">My sent requests</a><br />
+    <a href="{% url 'teambuilder:received_requests' %}">My received requests</a>
+{% endblock %}

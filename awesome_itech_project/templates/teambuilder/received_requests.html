@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title_block %}Requests needing your attention{% endblock %}
+
+{% block body_block %}
+    <h3>Requests needing your attention</h3>
+    {% if requests %}
+        <table>
+            <tr>
+                <td>Team</td>
+                <td>Requester</td>
+                <td>Status</td>
+                <td>Action</td>
+            </tr>
+            {% for r in requests %}
+                {% for request in r %}
+                    <tr>
+                        <td><a href="{% url 'teambuilder:team_detail' request.team.slug %}">{{request.team.name}}</a></td>
+                        <td><a href="/teambuilder/profile/{{request.user.username}}/">{{request.user.username}}</a></td>
+                        <td>{{request.status}}</td>
+                        <td>
+                            {% if request.status == "pending" %}
+                            <a href="/teambuilder/request/{{request.id}}/accept/">Accept request</a>
+                            <a href="/teambuilder/request/{{request.id}}/reject/">Reject request</a>
+                            {% elif request.status == "accepted" %}
+                            <p>Request accepted</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <p>There are no available requests at this time</p>
+    {% endif %}
+
+{% endblock %}

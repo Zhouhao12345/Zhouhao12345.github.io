@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title_block %}Add a course {% endblock %}
+{% block body_block %}
+
+    {% if not created %}
+        <form id="course_form" method="post" action="/teambuilder/course/{{course.slug}}/edit/">
+            {{errors}}
+            {% csrf_token %}
+            <label for="course_code">Code: </label><input id="course_code" type="text" name="code" value="{{course.code}}" /><br /><br />
+            <label for="course_code">Name: </label><input id="course_name" type="text" name="name" value="{{course.name}}" /><br /><br />
+            <label for="course_password">Course password: </label><input id="course_password" type="text" name="course_password" value="{{course.course_password}}" /><br /><br />
+            <label for="course_teamsize">Team size: </label><input id="course_teamsize" type="text" name="team_size" value="{{course.team_size}}" /><br /><br />
+            <input type="submit" value="Submit" />
+        </form>
+
+    {% else %}
+        <p>Course has been successfully added</p>
+    {% endif %}
+{% endblock %}

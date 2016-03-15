@@ -3,7 +3,7 @@
 {% block body_block %}
     {% if team %}
         <h2>{{team.name}}</h2>
-        <p>Course: {{ team.course.name}}</p>
+        <p>Course: <a href="{% url 'teambuilder:course_detail' team.course.slug %}">{{ team.course.name}}</a></p>
         <p>Description: {{team.description}}</p>
         <p>Required skills: {{ team.required_skills}}</p>
         <p>Number of free slots: {{ available_slots }}</p>

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title_block %}Requests needing your attention{% endblock %}
+
+{% block body_block %}
+    <h3>Teams for {{course.name}}</h3>
+    {% if teams %}
+        <table>
+            <tr>
+                <td>Team Name</td>
+                <td>Creator</td>
+                <td>Current Size</td>
+                <td>Action</td>
+            </tr>
+            {% for team in teams %}
+                <tr>
+                    <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></td>
+                    <td><a href="/teambuilder/profile/{{user.username}}/">{{team.creator.username}}</a></td>
+                    <td>{{team.current_size}}</td>
+                    <td>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <p>There are no teams for {{course.name}} at this time</p>
+    {% endif %}
+
+{% endblock %}

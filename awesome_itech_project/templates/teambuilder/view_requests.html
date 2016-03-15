@@ -13,7 +13,7 @@
             </tr>
             {% for request in requests %}
             <tr>
-                <td><a href="/teambuilder/team/{{request.team.slug}}/details/">{{request.team.name}}</a></td>
+                <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{request.team.name}}</a></td>
                 <td><a href="/teambuilder/profile/{{request.user.username}}/">{{request.user.username}}</a></td>
                 <td>{{request.status}}</td>
                 <td>
