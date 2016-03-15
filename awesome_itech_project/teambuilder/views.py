@@ -80,25 +80,28 @@ def create_team(request):
     context_dict = {}
     if request.method=='POST':
         team_form = TeamForm(data=request.POST)
-
+        context_dict['team_form'] = team_form
         if team_form.is_valid():
-            user = request.user
             course_password = request.POST['course_password']
             course_id = request.POST['course']
             course = Course.objects.get(pk=course_id)
 
             if course_password == course.course_password:
                 team = team_form.save(commit=False)
-                team.creator = user
-                team.name = team.name.title()
-                team.save()
-                context_dict['created'] = True
-                return HttpResponseRedirect('/teambuilder/team/'+team.slug+'/details/')
+                team.creator = request.user
+                created_before = Team.objects.filter(course=course, creator=team.creator) #check if user has created a team for the course previously
+                print "len is", len(created_before)
+                if len(created_before) > 0:
+                    context_dict['error'] = "You have already created a team for this course before"
+                else:
+                    team.name = team.name.title()
+                    team.save()
+                    context_dict['created'] = True
+                    return HttpResponseRedirect('/teambuilder/team/'+team.slug+'/details/')
 
             else:
-                context_dict['password_error'] = "Invalid course password provided"
+                context_dict['error'] = "Invalid course password provided"
                 context_dict['created'] = False
-                context_dict['team_form'] = team_form
 
         else:
             context_dict['errors'] = team_form.errors

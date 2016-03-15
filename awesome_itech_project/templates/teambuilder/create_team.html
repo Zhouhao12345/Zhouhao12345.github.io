@@ -5,7 +5,7 @@
         <form id="team_form" method="post" action="{% url 'teambuilder:create_team' %}">
             {% csrf_token %}
             {{errors}}
-            {{password_error}}
+            {{error}}
             {{ team_form.as_p }}
             <input type="submit" value="Submit" />
         </form>
