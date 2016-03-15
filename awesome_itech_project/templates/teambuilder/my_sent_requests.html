@@ -11,7 +11,7 @@
 
             {% for request in requests %}
                 <tr>
-                    <td><a href="/teambuilder/team/{{request.team.slug}}/details/"> {{request.team.name}}</a></td>
+                    <td><a href="/teambuilder/team/{{request.team.slug}}/"> {{request.team.name}}</a></td>
                     <td>{{request.request_date}}</td>
                     <td>{{request.status}}</td>
                 </tr>
