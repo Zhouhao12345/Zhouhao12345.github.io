@@ -97,7 +97,7 @@ def create_team(request):
                     team.name = team.name.title()
                     team.save()
                     context_dict['created'] = True
-                    return HttpResponseRedirect('/teambuilder/team/'+team.slug+'/details/')
+                    return HttpResponseRedirect('/teambuilder/team/'+team.slug+'/')
 
             else:
                 context_dict['error'] = "Invalid course password provided"
@@ -184,7 +184,7 @@ def join_team(request, team_name_slug):
     team = Team.objects.get(slug=team_name_slug)
     Memberrequest.objects.get_or_create(user=user, team=team, status="pending")
 
-    return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/details/')
+    return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/')
 
 
 @login_required
@@ -195,7 +195,7 @@ def cancel_request(request, team_name_slug):
     mr.status = "cancelled"
     mr.save()
 
-    return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/details/')
+    return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/')
 
 
 @login_required
