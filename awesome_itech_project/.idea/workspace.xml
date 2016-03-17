@@ -38,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/teambuilder/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-31.775">
-              <caret line="378" column="49" selection-start-line="378" selection-start-column="49" selection-end-line="378" selection-end-column="49" />
+            <state vertical-scroll-proportion="0.70848054">
+              <caret line="269" column="61" selection-start-line="269" selection-start-column="61" selection-end-line="269" selection-end-column="61" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
               </folding>
@@ -80,10 +80,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dashboard.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/teambuilder/dashboard.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3814433">
+            <state vertical-scroll-proportion="-9.25">
               <caret line="49" column="57" selection-start-line="49" selection-start-column="57" selection-end-line="49" selection-end-column="57" />
               <folding />
             </state>
@@ -145,8 +145,8 @@
         <option value="$PROJECT_DIR$/populate_teambuilder.py" />
         <option value="$PROJECT_DIR$/templates/teambuilder/teams_belonged_to.html" />
         <option value="$PROJECT_DIR$/teambuilder/urls.py" />
-        <option value="$PROJECT_DIR$/teambuilder/views.py" />
         <option value="$PROJECT_DIR$/templates/teambuilder/dashboard.html" />
+        <option value="$PROJECT_DIR$/teambuilder/views.py" />
       </list>
     </option>
   </component>
@@ -1003,16 +1003,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/teambuilder/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-31.775">
-          <caret line="378" column="49" selection-start-line="378" selection-start-column="49" selection-end-line="378" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/teambuilder/view_course_teams.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-13.0">
@@ -1041,9 +1031,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/teambuilder/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3814433">
+        <state vertical-scroll-proportion="-9.25">
           <caret line="49" column="57" selection-start-line="49" selection-start-column="57" selection-end-line="49" selection-end-column="57" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/teambuilder/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70848054">
+          <caret line="269" column="61" selection-start-line="269" selection-start-column="61" selection-end-line="269" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

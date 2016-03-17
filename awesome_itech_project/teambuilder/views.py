@@ -239,9 +239,6 @@ def accept_request(request, request_id):
                         req.status = "cancelled"
                         req.save()
 
-            else:
-                return HttpResponse("The request has been cancelled by user")
-
 
         else:
             return HttpResponseRedirect('/teambuilder/unauthorized/')
@@ -249,7 +246,8 @@ def accept_request(request, request_id):
     except Memberrequest.DoesNotExist:
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
-    return HttpResponseRedirect('/teambuilder/team/'+mr.team.slug+'/view-requests/')
+    #return HttpResponseRedirect('/teambuilder/team/'+mr.team.slug+'/view-requests/')
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 @login_required
@@ -268,7 +266,8 @@ def reject_request(request, request_id):
     except Memberrequest.DoesNotExist:
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
-    return HttpResponseRedirect('/teambuilder/team/'+mr.team.slug+'/view-requests/')
+    #return HttpResponseRedirect('/teambuilder/team/'+mr.team.slug+'/view-requests/')
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 @login_required
