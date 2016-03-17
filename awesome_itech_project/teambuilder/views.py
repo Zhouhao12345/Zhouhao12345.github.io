@@ -315,8 +315,13 @@ def dashboard(request):
     courses = Course.objects.filter(creator=user)
     context_dict['courses'] = courses
 
+    #teams created by user
     teams = Team.objects.filter(creator=user)
     context_dict['teams'] = teams
+
+    #request to teams sent by user that have been accepted
+    reqs = Memberrequest.objects.filter(user=request.user, status="accepted")
+    context_dict['requests'] = reqs
 
     return render(request, 'teambuilder/dashboard.html', context_dict)
 
@@ -449,12 +454,7 @@ def merge_teams(request, course_name_slug):
                 context_dict['merge'] = True
 
 
-
     return render(request, 'teambuilder/merge_teams.html', context_dict)
 
-@login_required
-def teams_belonged_to():
-
-    return ""
 
 
