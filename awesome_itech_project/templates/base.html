@@ -46,7 +46,7 @@
             <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="{% url 'teambuilder:index' %}">Home</a> </li>
-                <li><a href="{% url 'teambuilder:about' %}">About</a> </li>
+                <li><a href="{% url 'teambuilder:about' %}" target="_blank">About</a> </li>
                 {% if not user.is_authenticated %}
                     <li><a href="{% url 'teambuilder:login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a> </li>
                     <li><a href="{% url 'teambuilder:register' %}"><span class="glyphicon glyphicon-user"></span> Register</a> </li>
