@@ -6,10 +6,10 @@ class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('phone_number', 'dob', 'about_me', 'user')
 
 class MemberRequestAdmin(admin.ModelAdmin):
-    list_display = ('user' , 'team', 'status')
+    list_display = ('user' , 'team', 'status', )
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'creator')
+    list_display = ('name', 'creator', 'course')
 
 
 # Register your models here.

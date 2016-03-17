@@ -14,6 +14,7 @@ def populate():
     user4 = add_user("user4", "abcdef", "jkl@xyz.com")
     user5 = add_user("user5", "abcdef", "mno@xyz.com")
     user6 = add_user("user6", "abcdef", "pqr@xyz.com")
+
     userprofile1 = add_userprofile("01234567890", "just a regular guy", user)
     userprofile2 = add_userprofile("01238747890", "just another regular guy", user2)
     userprofile3 = add_userprofile("01299854740", "just another regular guy again", user3)

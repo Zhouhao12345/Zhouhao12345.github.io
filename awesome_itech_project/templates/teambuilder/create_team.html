@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% block title_block %}Build a team {% endblock %}
 {% block body_block %}
-
-    <form id="team_form" method="post" action="{% url 'teambuilder:create_team' %}">
-        {% csrf_token %}
-        {{errors}}
-        {{ team_form.as_p }}
-        <input type="submit" value="Submit" />
-    </form>
-
+    {% if not created %}
+        <form id="team_form" method="post" action="{% url 'teambuilder:create_team' %}">
+            {% csrf_token %}
+            {{errors}}
+            {{error}}
+            {{ team_form.as_p }}
+            <input type="submit" value="Submit" />
+        </form>
+    {% endif %}
 {% endblock %}

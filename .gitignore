@@ -1,2 +1,2 @@
-/awesome_itech_project/.idea
-/awesome_itech_project/db.sqlite3
+awesome_itech_project/.idea/*
+awesome_itech_project/db.sqlite3

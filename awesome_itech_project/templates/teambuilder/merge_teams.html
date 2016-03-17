@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title_block %}Merge teams{% endblock %}
+{% block body_block %}
+    <h3>Merge teams together</h3>
+    <p>Note that the members of the child team will be moved to the parent team</p>
+    {% if teams %}
+        <p>{{message}}</p>
+        {% if not merge %}
+            <form id="merge_team_form" method="post" action="/teambuilder/course/{{course.slug}}/merge-teams/">
+                {% csrf_token %}
+                Parent team:
+                <select name="team_1">
+                    {% for team in teams %}
+                        <option value="{{team.id}}">{{team.name}}</option>
+                    {% endfor %}
+                </select>
+
+                Child team:
+                <select name="team_2">
+                    {% for team in teams %}
+                        <option value="{{team.id}}">{{team.name}}</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Merge teams" />
+            </form>
+        {% endif %}
+    {% endif %}
+{% endblock %}

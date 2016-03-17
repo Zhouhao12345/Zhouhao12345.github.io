@@ -19,17 +19,18 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'password', 'email', 'first_name', 'last_name')
 
 class TeamForm(forms.ModelForm):
+    course_password = forms.CharField(max_length=15, required=True)
 
     class Meta:
         model = Team
-        fields = ('name', 'course','current_size', 'required_skills','description')
+        fields = ('name', 'course', 'required_skills','description')
 
 class CourseForm(forms.ModelForm):
     #code=forms.CharField(max_length=15, help_text="Please enter the course code")
     #name=forms.CharField(max_length=100, help_text="Please enter the course name")
     #course_password=forms.CharField(max_length=15, help_text="Please enter the course password")
     #team_size=forms.IntegerField(help_text="Please enter the team size")
-   ## likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+    #likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     #widget=IntegerField()
 
 

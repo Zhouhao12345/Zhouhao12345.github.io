@@ -24,8 +24,8 @@
                 </thead>
                 {% for team in teams %}
                     <tr>
-                        <td><a href="/teambuilder/team/{{team.slug}}/details/">{{ team.name }}</a></td>
-                        <td>{{ team.course.name }}</td>
+                        <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{ team.name }}</a></td>
+                        <td><a href="{% url 'teambuilder:course_detail' team.course.slug %}">{{ team.course.name }}</a></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -36,10 +36,10 @@
     </div>
     <div id="latest_projects">
 
-        <h3>Recently added projects</h3>
+        <h3>Recently added courses</h3>
         {% if courses %}
             {% for course in courses %}
-                <p>{{course.name}}</p>
+                <p><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></p>
             {% endfor %}
         {% else %}
             <p>No courses have been added</p>

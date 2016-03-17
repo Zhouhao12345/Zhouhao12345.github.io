@@ -13,15 +13,19 @@
             </tr>
             {% for request in requests %}
             <tr>
-                <td><a href="/teambuilder/team/{{request.team.slug}}/details/">{{request.team.name}}</a></td>
+                <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{request.team.name}}</a></td>
                 <td><a href="/teambuilder/profile/{{request.user.username}}/">{{request.user.username}}</a></td>
                 <td>{{request.status}}</td>
                 <td>
-                    {% if request.status == "pending" %}
-                    <a href="/teambuilder/request/{{request.id}}/accept/">Accept request</a>
-                    <a href="/teambuilder/request/{{request.id}}/reject/">Reject request</a>
-                    {% elif request.status == "accepted" %}
-                    <p>Request accepted</p>
+                    {% if request.team.current_size >= request.team.course.team_size %}
+                        <p>Team is now full</p>
+                    {% else %}
+                        {% if request.status == "pending" %}
+                            <a href="/teambuilder/request/{{request.id}}/accept/">Accept request</a>
+                            <a href="/teambuilder/request/{{request.id}}/reject/">Reject request</a>
+                        {% elif request.status == "accepted" %}
+                        <p>Request accepted</p>
+                        {% endif %}
                     {% endif %}
                 </td>
             </tr>
