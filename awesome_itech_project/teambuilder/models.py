@@ -52,11 +52,13 @@ class Team(models.Model):
     name=models.CharField(max_length=100, unique=True)
     course=models.ForeignKey(Course)
     creator = models.ForeignKey(User)
-    current_size=models.IntegerField(default=0)
+    current_size=models.IntegerField(default=1)
     creation_date=models.DateTimeField(default=datetime.now(), null=False)
     required_skills=models.TextField(max_length=500)
     description=models.TextField(max_length=500)
     slug = models.SlugField()
+    merge_with = models.ForeignKey('self', null=True)
+    status = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -64,6 +66,9 @@ class Team(models.Model):
 
     def __unicode__(self):
          return self.name
+
+    def available_slots(self):
+        return self.course.team_size - self.current_size
 
 class Memberrequest(models.Model):
     user=models.ForeignKey(User)

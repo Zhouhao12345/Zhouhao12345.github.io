@@ -16,12 +16,23 @@
             <p><a href="{% url 'teambuilder:add_course' %}">Add a course</a></p>
     <h2>My Teams</h2>
     {% if teams %}
-        <ul>
+        <table>
+            <tr>
+                <td>Team name</td>
+                <td>Status</td>
+            </tr>
         {% for team in teams %}
-            <li><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></li>
+            <tr>
+            <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></td>
+            {% if team.status %}
+                <td>Active</td>
+            {% else %}
+                <td>Merged with <a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.merge_with.name}}</a></td>
+            {% endif %}
+            </tr>
         {% endfor %}
             <p><a href="{% url 'teambuilder:create_team' %}">Create a new team</a></p>
-        </ul>
+        </table>
     {% else %}
         <p>You have not built any team yet</p>
         <p><a href="{% url 'teambuilder:create_team' %}">Create team</a></p>

@@ -6,24 +6,34 @@
         <p>Course: <a href="{% url 'teambuilder:course_detail' team.course.slug %}">{{ team.course.name}}</a></p>
         <p>Description: {{team.description}}</p>
         <p>Required skills: {{ team.required_skills}}</p>
-        <p>Number of free slots: {{ available_slots }}</p>
+        {% if team.status %}
+            <p>Status: Active</p>
+            <p>Number of free slots: {{ team.available_slots }}</p>
 
-        {% if user.is_authenticated %}
-            {% if member_request %}
-                <p>Your request to join {{team.name}} is pending</p>
-                <a href="/teambuilder/team/{{team.slug}}/cancel-request/">Cancel request</a>
-            {% else %}
-                {% if user == team.creator %}
-                    <a href="/teambuilder/team/{{team.slug}}/view-requests/">View requests</a>
-                    <a href="/teambuilder/team/{{team.slug}}/view-members/">View team members</a>
+
+            {% if user.is_authenticated %}
+                {% if member_request %}
+                    <p>Your request to join {{team.name}} is pending</p>
+                    <a href="/teambuilder/team/{{team.slug}}/cancel-request/">Cancel request</a>
                 {% else %}
-                    {% if not accepted_request %}
-                        <a href="/teambuilder/team/{{team.slug}}/send-request/">Request to join</a>
+                    {% if user == team.creator %}
+                        <a href="/teambuilder/team/{{team.slug}}/view-requests/">View requests</a>
+                        <a href="/teambuilder/team/{{team.slug}}/view-members/">View team members</a>
                     {% else %}
-                        <p>You are a member of this team</p>
+                        {% if not accepted_request %}
+                            {% if team.available_slots == 0 %}
+                                <p>Team is already full</p>
+                            {% else %}
+                                <a href="/teambuilder/team/{{team.slug}}/send-request/">Request to join</a>
+                            {% endif %}
+                        {% else %}
+                            <p>You are a member of this team</p>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
             {% endif %}
+        {% else %}
+            <p>Status: Merged with <a href="/teambuilder/team/{{team.merge_with.slug}}/">{{team.merge_with.name}}</a></p>
         {% endif %}
     {% else %}
         <p>Team not found</p>

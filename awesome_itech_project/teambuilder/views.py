@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
-    teams = Team.objects.order_by('-creation_date')[:5]
-    courses = Course.objects.order_by('add_date')[:5]
+    teams = Team.objects.filter(status=True).order_by('-creation_date')[:5]
+    courses = Course.objects.order_by('-add_date')[:5]
     context_dict = {}
     context_dict['teams'] = teams
     context_dict['courses'] = courses
@@ -89,8 +89,8 @@ def create_team(request):
             if course_password == course.course_password:
                 team = team_form.save(commit=False)
                 team.creator = request.user
-                created_before = Team.objects.filter(course=course, creator=team.creator) #check if user has created a team for the course previously
-                print "len is", len(created_before)
+                created_before = Team.objects.filter(course=course, creator=team.creator, status = True) #check if user has created an active team for the course previously
+
                 if len(created_before) > 0:
                     context_dict['error'] = "You have already created a team for this course before"
                 else:
@@ -126,8 +126,6 @@ def team_details(request, team_name_slug):
     try:
         team = Team.objects.get(slug=team_name_slug)
         context_dict['team'] = team
-        available_slots = team.course.team_size - team.current_size
-        context_dict['available_slots'] = available_slots
 
         #check if user has previously requested to join the team
         user = request.user
@@ -222,21 +220,24 @@ def accept_request(request, request_id):
         if user == team.creator:
             if mr.status == "pending":
                 mr.status = "accepted"
-                team.current_size = team.current_size + 1
+                team.current_size += 1
                 team.save()
                 mr.save()
 
-                sender = mr.user
+                #reject any other pending requests for that team once the team size is full
+                if team.current_size == team.course.team_size:
+                    Memberrequest.objects.filter(team=team, status="pending").update(status="rejected")
 
+                #cancel any other requests sent by a user to join other teams in the same course
+                sender = mr.user
                 reqs =  Memberrequest.objects.filter(user=sender, status='pending') #get the memberrequests sent by sender that are pending
 
                 #select the ones with the same course and cancel them
-                teams = team.course.team_set.all();
+                teams = team.course.team_set.all()
                 for req in reqs:
                     if req.team in teams:
-                        req.status="cancelled"
+                        req.status = "cancelled"
                         req.save()
-
 
             else:
                 return HttpResponse("The request has been cancelled by user")
@@ -280,7 +281,7 @@ def sent_requests(request):
 @login_required
 def received_requests(request):
     context_list = []
-    teams = Team.objects.filter(creator=request.user)
+    teams = Team.objects.filter(creator=request.user, status=True)
     for team in teams:
         requests = Memberrequest.objects.filter(team=team).order_by('-request_date')
         context_list.append(requests)
@@ -294,9 +295,10 @@ def view_team_members(request, team_name_slug):
     context_dict = {}
     try:
         team = Team.objects.get(slug=team_name_slug)
-        if team.creator == user:
+        if team.creator == user or team.course.creator == user:
             requests = Memberrequest.objects.filter(team=team,status="accepted")
             context_dict['requests'] = requests
+            context_dict['team_creator'] = team.creator
             context_dict['team'] = team
 
     except Team.DoesNotExist:
@@ -388,5 +390,71 @@ def view_course_teams(request, course_name_slug):
 
     return render(request, 'teambuilder/view_course_teams.html', context_dict)
 
+@login_required
+def merge_teams(request, course_name_slug):
+    context_dict = {}
+    course = None
+    try:
+            course = Course.objects.get(slug=course_name_slug)
+            teams = Team.objects.filter(course=course,current_size__lt = course.team_size, status = True).order_by('name')
+            context_dict['teams'] = teams
+            context_dict['course'] = course
+
+    except Course.DoesNotExist:
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
+
+    #ensure that only the course creator can perform this operation
+    if course.creator != request.user:
+        return HttpResponseRedirect('/teambuilder/unauthorized/')
+
+    if request.method == 'POST':
+        parent_team_id = request.POST['team_1']
+        child_team_id = request.POST['team_2']
+
+        #check if user selected to merge a team with itself
+        if parent_team_id == child_team_id:
+            context_dict['message'] = "You cannot merge a team with itself"
+
+        else:
+            parent_team = Team.objects.get(pk=parent_team_id)
+            child_team = Team.objects.get(pk=child_team_id)
+
+            if parent_team.current_size + child_team.current_size > course.team_size:
+                context_dict['message'] = "The teams could not be merged because their combined size exceeds the maximum team size for the course"
+                context_dict['merge'] = False
+            else:
+                #deactivate the child_team and set its merge_with field to parent_team
+                child_team.status = False
+                child_team.merge_with = parent_team
+                child_team.save()
+
+                #move members from child team to parent team
+                Memberrequest.objects.filter(team=child_team,status='accepted').update(team=parent_team)
+
+                #create and auto-accept request for team creator of child team as it did not exist before
+                Memberrequest(user=child_team.creator, status='accepted', team=parent_team).save()
+
+                #reject all pending requests sent to child team
+                Memberrequest.objects.filter(team=child_team,status="pending").update(status="rejected")
+
+                #update current size of parent team
+                parent_team.current_size += child_team.current_size
+                parent_team.save()
+
+                #if after merging the parent team becomes full, reject all pending requests sent to it
+                if parent_team.current_size == course.team_size:
+                    Memberrequest.objects.filter(team=parent_team,status="pending").update(status="rejected")
+
+                context_dict['message'] = "%s has now been merged with %s" % (child_team.name, parent_team.name)
+                context_dict['merge'] = True
+
+
+
+    return render(request, 'teambuilder/merge_teams.html', context_dict)
+
+@login_required
+def teams_belonged_to():
+
+    return ""
 
 

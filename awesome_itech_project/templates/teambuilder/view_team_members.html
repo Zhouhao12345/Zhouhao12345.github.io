@@ -2,13 +2,13 @@
 {% block title_block %}{{team.name}} team members{% endblock %}
 {% block body_block %}
     Team members for {{team.name}}.
+    <ul>
+        <li><a href="/teambuilder/profile/{{team.creator.username}}/">{{team.creator.username}}</a>(Team Creator)</li>
     {% if requests %}
-        <ul>
             {% for request in requests %}
                 <li><a href="/teambuilder/profile/{{request.user.username}}/">{{request.user.username}}</a></li>
             {% endfor %}
-        </ul>
     {% else %}
-        <p>No members currently belong to the team.</p>
+    </ul>
     {% endif %}
 {% endblock %}

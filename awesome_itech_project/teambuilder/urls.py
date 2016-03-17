@@ -28,5 +28,6 @@ urlpatterns = patterns('',
     url(r'^received-requests/$', views.received_requests, name='received_requests'),
     url(r'^dashboard/$', views.dashboard, name='dashboard'),
     url(r'^unauthorized/$', views.unauthorized, name='unauthorized'),
-    url(r'^page-not-found/$', views.page_not_found, name='unauthorized'),
+    url(r'^page-not-found/$', views.page_not_found, name='page_not_found'),
+    url(r'^course/(?P<course_name_slug>[\w\-]+)/merge-teams/$', views.merge_teams, name='merge_teams'),
 )
