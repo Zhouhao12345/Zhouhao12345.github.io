@@ -41,7 +41,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Team Up</a>
+              <a class="navbar-brand" href="{% url 'teambuilder:index' %}">Team Up</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
               <ul class="nav navbar-nav navbar-right">
@@ -60,10 +60,10 @@
                     <li><a href="{% url 'teambuilder:profile' user.username%}">View profile</a></li>
                     <li><a href="{% url 'teambuilder:edit_profile' %}">Edit profile</a> </li>
                     <li><a href="{% url 'teambuilder:reset' %}">Reset Password</a> </li>
+                    <li><a href="{% url 'teambuilder:logout' %}">Logout</a> </li>
                   </ul>
                 </li>
                 <li><a href="{% url 'teambuilder:find_team' %}"><span class="glyphicon glyphicon-search"></span> Find team</a> </li>
-                <li><a href="{% url 'teambuilder:logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a> </li>
                 {% endif %}
               </ul>
             </div>
