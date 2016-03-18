@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title_block %}Home page {% endblock %}
+{% block title_block %}Home page{% endblock %}
 {% block body_block %}
     {% if user.is_authenticated %}
         {% if user.first_name %}
@@ -15,34 +15,47 @@
         <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
       </div>
 
-    <div id="latest_teams">
-        <h3>Recently built teams</h3>
-        {% if teams %}
-            <table>
-                <thead>
-                    <td>Team</td><td>Course</td>
-                </thead>
-                {% for team in teams %}
-                    <tr>
-                        <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{ team.name }}</a></td>
-                        <td><a href="{% url 'teambuilder:course_detail' team.course.slug %}">{{ team.course.name }}</a></td>
-                    </tr>
-                {% endfor %}
-            </table>
-        {% else %}
-            <p>No teams have been built</p>
-        {% endif %}
 
-    </div>
-    <div id="latest_projects">
+      <div class="row marketing">
+        <div class="col-lg-6">
 
-        <h3>Recently added courses</h3>
-        {% if courses %}
-            {% for course in courses %}
-                <p><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></p>
-            {% endfor %}
-        {% else %}
-            <p>No courses have been added</p>
-        {% endif %}
-    </div>
-{% endblock %}
+                                <div id="latest_teams">
+                                    <h4>Recently built teams</h4>
+                                    {% if teams %}
+                                        <table>
+                                            <thead>
+                                                <td>Team</td><td>Course</td>
+                                            </thead>
+                                            {% for team in teams %}
+                                                <tr>
+                                                    <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{ team.name }}</a></td>
+                                                    <td><a href="{% url 'teambuilder:course_detail' team.course.slug %}">{{ team.course.name }}</a></td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    {% else %}
+                                        <p>No teams have been built</p>
+                                    {% endif %}
+
+                                </div>
+         </div>
+
+
+
+         <div class="col-lg-6">
+                                <div id="latest_projects">
+
+                                    <h4>Recently added courses</h4>
+                                    {% if courses %}
+                                        {% for course in courses %}
+                                            <p><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></p>
+                                        {% endfor %}
+                                    {% else %}
+                                        <p>No courses have been added</p>
+                                    {% endif %}
+                                </div>
+
+          </div>
+
+      </div>
+    {% endblock %}
