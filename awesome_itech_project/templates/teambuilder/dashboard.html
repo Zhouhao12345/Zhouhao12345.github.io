@@ -24,7 +24,10 @@
         {% else %}
             <p>You have not added any course yet</p>
         {% endif %}
-        <p><a href="{% url 'teambuilder:add_course' %}">Add a course</a></p>
+         <p><a type="button" class="btn btn-primary btn-sm" href="/teambuilder/add_course/">Create course
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></p>
+      
+
       </div>
       <div id="teams" class="tab-pane fade">
           <h3>Teams</h3>
