@@ -6,11 +6,36 @@
         <form id="course_form" method="post" action="/teambuilder/course/{{course.slug}}/edit/">
             {{errors}}
             {% csrf_token %}
-            <label for="course_code">Code: </label><input id="course_code" type="text" name="code" value="{{course.code}}" /><br /><br />
-            <label for="course_code">Name: </label><input id="course_name" type="text" name="name" value="{{course.name}}" /><br /><br />
-            <label for="course_password">Course password: </label><input id="course_password" type="text" name="course_password" value="{{course.course_password}}" /><br /><br />
-            <label for="course_teamsize">Team size: </label><input id="course_teamsize" type="text" name="team_size" value="{{course.team_size}}" /><br /><br />
-            <input type="submit" value="Submit" />
+            {% if errors %}
+                <div class="alert alert-danger">
+                    {{errors}}
+                    {{error}}
+                </div>
+            {% endif %}
+
+
+            <label>Please enter your course code:</label><br/>
+             <div class="form-group">
+                <input class="form-control" id="course_code" type="text" name="code" value="{{course.code}}" />
+                 </div><br/>
+
+            <label>Please enter your course name:</label><br/>
+             <div class="form-group">
+                <input class="form-control" id="course_name" type="text" name="name" value="{{course.name}}" />
+                 </div><br/>
+
+            <label>Please enter your course password:</label><br/>
+             <div class="form-group">
+                <input class="form-control" id="course_password" type="text" name="course_password" value="{{course.course_password}}" />
+                 </div><br/>
+
+            <label>Please enter your team size:</label><br/>
+            <div class="form-group">
+                <input id="course_teamsize" class="form-control" type="number" name="team_size" value="{{course.team_size}}" />
+                </div><br/>
+
+            <button class="btn btn-success btn-block center-block" type="submit" value="submit">Submit</button>
+
         </form>
 
     {% else %}
