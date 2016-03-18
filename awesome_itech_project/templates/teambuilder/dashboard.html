@@ -95,9 +95,12 @@
       </div>
       <div id="requests" class="tab-pane fade">
         <h3>Requests</h3>
+            <iframe src="{% url 'teambuilder:sent_requests' %}" width="450" height="400" >
+                  <a href="{% url 'teambuilder:sent_requests' %}">你的浏览器不支持iframe页面嵌套，请点击这里访问页面内容。</a>
+            </iframe>
             <a href="{% url 'teambuilder:sent_requests' %}">My sent requests</a><br />
             <a href="{% url 'teambuilder:received_requests' %}">My received requests</a>
       </div>
     </div>
-
+    </div>
 {% endblock %}
