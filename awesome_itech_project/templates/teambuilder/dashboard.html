@@ -2,67 +2,99 @@
 {% block title_block %}Dashboard{% endblock %}
 
 {% block body_block %}
+<div class="row">
+
+
     <h1>Dashboard</h1>
-    <h2>My Courses</h2>
-    {% if courses %}
-        <ul>
-        {% for course in courses %}
-            <li><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>You have not added any course yet</p>
-    {% endif %}
-            <p><a href="{% url 'teambuilder:add_course' %}">Add a course</a></p>
-    <h2>Teams</h2>
-    <h3>Teams I created</h3>
-    {% if teams %}
-        <table>
-            <tr>
-                <td>Team name</td>
-                <td>Status</td>
-            </tr>
-        {% for team in teams %}
-            <tr>
-            <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></td>
-            {% if team.status %}
-                <td>Active</td>
-            {% else %}
-                <td>Merged with <a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.merge_with.name}}</a></td>
-            {% endif %}
-            </tr>
-        {% endfor %}
-        </table>
-    {% else %}
-        <p>You have not built any team yet</p>
-    {% endif %}
-    <p><a href="{% url 'teambuilder:create_team' %}">Create team</a></p>
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#courses">Courses</a></li>
+      <li><a data-toggle="tab" href="#teams">Teams</a></li>
+      <li><a data-toggle="tab" href="#requests">Requests</a></li>
+    </ul>
 
-    <h3>Teams I belong to</h3>
-    {% if teams or requests %}
-        <table>
-            <tr>
-                <td>Team name</td>
-                <td>Course</td>
-            </tr>
-        {% for request in requests %}
-            <tr>
-                <td><a href="/teambuilder/team/{{request.team.slug}}/">{{request.team.name}}</a></td>
-                <td><a href="/teambuilder/course/{{request.team.course.slug}}/">{{request.team.course.name}}</a></td>
-            </tr>
-        {% endfor %}
-            {% for team in teams %}
-                <tr>
-                    <td><a href="/teambuilder/team/{{team.slug}}/">{{team.name}}</a></td>
-                    <td><a href="/teambuilder/course/{{team.course.slug}}/">{{team.course.name}}</a></td>
-                </tr>
+    <div class="tab-content">
+      <div id="courses" class="tab-pane fade in active">
+        <h3>Courses</h3>
+        {% if courses %}
+            <ul>
+            {% for course in courses %}
+                <li><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></li>
             {% endfor %}
-        </table>
-    {% else %}
-        <p>You do not belong to any team yet</p>
-    {% endif %}
+            </ul>
+        {% else %}
+            <p>You have not added any course yet</p>
+        {% endif %}
+        <p><a href="{% url 'teambuilder:add_course' %}">Add a course</a></p>
+      </div>
+      <div id="teams" class="tab-pane fade">
+          <h3>Teams</h3>
+          <div class="panel-group">
+              <div class="panel panel-default">
+                  <div class="panel-heading">Teams I created</div>
+                  <div class="panel-body">
+                      {% if teams %}
+                        <div class="table-responsive">
+                           <table class="table">
+                            <tr>
+                                <td>Team name</td>
+                                <td>Status</td>
+                            </tr>
+                        {% for team in teams %}
+                            <tr>
+                            <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></td>
+                            {% if team.status %}
+                                <td>Active</td>
+                            {% else %}
+                                <td>Merged with <a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.merge_with.name}}</a></td>
+                            {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </table>
+                       </div>
+                    {% else %}
+                        <p>You have not built any team yet</p>
+                    {% endif %}
+                    <p><a type="button" class="btn btn-primary btn-sm" href="{% url 'teambuilder:create_team' %}">Create team
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></a></p>
+                  </div>
+              </div>
 
-    <h2>Requests</h2>
-    <a href="{% url 'teambuilder:sent_requests' %}">My sent requests</a><br />
-    <a href="{% url 'teambuilder:received_requests' %}">My received requests</a>
+              <div class="panel panel-default">
+                  <div class="panel-heading">Teams I belong to</div>
+                  <div class="panel-body">
+                      {% if teams or requests %}
+                           <div class="table-responsive">
+                               <table class="table">
+                                    <tr>
+                                        <td>Team name</td>
+                                        <td>Course</td>
+                                    </tr>
+                                {% for request in requests %}
+                                    <tr>
+                                        <td><a href="/teambuilder/team/{{request.team.slug}}/">{{request.team.name}}</a></td>
+                                        <td><a href="/teambuilder/course/{{request.team.course.slug}}/">{{request.team.course.name}}</a></td>
+                                    </tr>
+                                {% endfor %}
+                                    {% for team in teams %}
+                                        <tr>
+                                            <td><a href="/teambuilder/team/{{team.slug}}/">{{team.name}}</a></td>
+                                            <td><a href="/teambuilder/course/{{team.course.slug}}/">{{team.course.name}}</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                           </div>
+                        {% else %}
+                            <p>You do not belong to any team yet</p>
+                        {% endif %}
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div id="requests" class="tab-pane fade">
+        <h3>Requests</h3>
+            <a href="{% url 'teambuilder:sent_requests' %}">My sent requests</a><br />
+            <a href="{% url 'teambuilder:received_requests' %}">My received requests</a>
+      </div>
+    </div>
+
 {% endblock %}

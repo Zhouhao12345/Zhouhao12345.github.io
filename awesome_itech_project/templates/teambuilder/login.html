@@ -6,7 +6,9 @@
         <h2 class="form-signin-heading">This is the login page</h2>
 	{% csrf_token %}
              {% if message %}
-                <p>{{ message }}</p>
+                <div class="alert alert-danger">
+                    <p>{{ message }}</p>
+                </div>
             {% endif %}
 
         <label for="username" class="sr-only">Username</label>
@@ -15,11 +17,12 @@
         <input type="password" id="password" class="form-control" name="password" placeholder="Password" required="">
         <input type="hidden" name="next" value="{{ next }}" />
 
-	<div class="checkbox">
+	    <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
+          <p>Don't have an account? <a href="{% url 'teambuilder:register' %}">Register now</a></p>
         <button class="btn btn-lg btn-primary btn-block" type="submit" value="submit">Sign in</button>
       </form>
     {% endblock %}

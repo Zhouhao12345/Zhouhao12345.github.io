@@ -3,10 +3,12 @@
 {% block body_block %}
     {% if course %}
         <h2>{{course.name}}</h2>
-        <p>Code: {{course.code}}</p>
-        <p>Name: {{course.name}}</p>
-        <p>Creator: {{course.creator.username}}</p>
-        <p>Required team size: {{course.team_size}}</p>
+        <ul>
+        <li>Code: {{course.code}}</li>
+        <li>Name: {{course.name}}</li>
+        <li>Creator: {{course.creator.username}}</li>
+        <li>Required team size: {{course.team_size}}</li>
+        </ul>
 
         {% if user.is_authenticated %}
             {% if creator == True %}
