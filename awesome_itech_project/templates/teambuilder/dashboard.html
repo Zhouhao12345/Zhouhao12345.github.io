@@ -35,10 +35,12 @@
                       {% if teams %}
                         <div class="table-responsive">
                            <table class="table">
-                            <tr>
-                                <td>Team name</td>
-                                <td>Status</td>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th>Team name</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
                         {% for team in teams %}
                             <tr>
                             <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></td>
@@ -66,8 +68,8 @@
                            <div class="table-responsive">
                                <table class="table">
                                     <tr>
-                                        <td>Team name</td>
-                                        <td>Course</td>
+                                        <th>Team name</th>
+                                        <th>Course</th>
                                     </tr>
                                 {% for request in requests %}
                                     <tr>
