@@ -92,12 +92,91 @@
       </div>
       <div id="requests" class="tab-pane fade">
         <h3>Requests</h3>
-            <iframe src="{% url 'teambuilder:sent_requests' %}" width="450" height="400" >
-                  <a href="{% url 'teambuilder:sent_requests' %}">你的浏览器不支持iframe页面嵌套，请点击这里访问页面内容。</a>
-            </iframe>
-            <a href="{% url 'teambuilder:sent_requests' %}">My sent requests</a><br />
-            <a href="{% url 'teambuilder:received_requests' %}">My received requests</a>
+          <div class="panel-group">
+              <div class="panel panel-default">
+                   <div class="panel-heading">Received Request:</div>
+                  <div class="panel-body">
+          {% if requests2 %}
+            <div class="table-responsive">
+             <table class="table">
+              <thead>
+                <tr>
+                    <th>Team</th>
+                    <th>Request date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+               </thead>
+
+              {% for request in requests2 %}
+                <tr>
+                    <td><a href="/teambuilder/team/{{request.team.slug}}/"> {{request.team.name}}</a></td>
+                    <td>{{request.request_date}}</td>
+                    <td>{{request.status}}</td>
+                    <td>
+                        {% if request.status == 'pending' %}
+                        &nbsp; <a type="button" class="btn btn-danger btn-sm" href="/teambuilder/team/{{request.team.slug}}/cancel-request/">Cancel request
+                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></a>
+                        {% endif %}
+                    </td>
+                </tr>
+              {% endfor %}
+             </table>
+         </div>
+        {% else %}
+        <p>No requests have been sent.</p>
+       {% endif %}
+       </div></div>
+         <div class="panel panel-default">
+                   <div class="panel-heading">Requests needing your attention</div>
+                  <div class="panel-body">
+          {% if requests3 %}
+           <div class="table-responsive">
+            <table class="table">
+               <thead>
+                    <tr>
+                        <th>Team</th>
+                        <th>Available slots</th>
+                        <th>Requester</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+               </thead>
+                {% for r in requests3 %}
+                    {% for request in r %}
+                        <tr>
+                            <td><a href="{% url 'teambuilder:team_detail' request.team.slug %}">{{request.team.name}}</a></td>
+                            <td>{{request.team.available_slots}}</td>
+                            <td><a href="/teambuilder/profile/{{request.user.username}}/">{{request.user.username}}</a></td>
+                            <td>{{request.status}}</td>
+                            <td>
+                                {% if request.team.available_slots > 0 %}
+                                {% if request.status == "pending" %}
+                                    <a type="button" class="btn btn-success btn-sm" href="/teambuilder/request/{{request.id}}/accept/">
+                                        Accept request <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                                    <a type="button" class="btn btn-danger btn-sm" href="/teambuilder/request/{{request.id}}/reject/">
+                                        Reject request<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                                {% elif request.status == "accepted" %}
+                                    <p>Request accepted</p>
+                                {% endif %}
+                                {% else %}
+                                <p>Team full</p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+
+    {% else %}
+        <p>There are no available requests at this time</p>
+       {% endif %}
+                      </div></div>
       </div>
     </div>
     </div>
+
+      </div>
+        </div>
 {% endblock %}

@@ -378,22 +378,6 @@ def reject_request(request, request_id):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-@login_required
-def sent_requests(request):
-    user = request.user
-    mrs = Memberrequest.objects.filter(user=user).order_by('-request_date')
-    return render(request, 'teambuilder/my_sent_requests.html', {'requests':mrs})
-
-
-@login_required
-def received_requests(request):
-    context_list = []
-    teams = Team.objects.filter(creator=request.user, status=True)
-    for team in teams:
-        requests = Memberrequest.objects.filter(team=team).order_by('-request_date')
-        context_list.append(requests)
-
-    return render(request, 'teambuilder/received_requests.html', {'requests': context_list})
 
 
 @login_required
@@ -418,7 +402,9 @@ def view_team_members(request, team_name_slug):
 def dashboard(request):
     user = request.user
     context_dict = {}
-
+    context_list = []
+    mrs = Memberrequest.objects.filter(user=user).order_by('-request_date')
+    context_dict['requests2'] = mrs
     courses = Course.objects.filter(creator=user)
     context_dict['courses'] = courses
 
@@ -429,7 +415,11 @@ def dashboard(request):
     #request to teams sent by user that have been accepted
     reqs = Memberrequest.objects.filter(user=request.user, status="accepted")
     context_dict['requests'] = reqs
-
+    teams = Team.objects.filter(creator=request.user, status=True)
+    for team in teams:
+        requests = Memberrequest.objects.filter(team=team).order_by('-request_date')
+        context_list.append(requests)
+    context_dict['requests3'] = context_list
     return render(request, 'teambuilder/dashboard.html', context_dict)
 
 
