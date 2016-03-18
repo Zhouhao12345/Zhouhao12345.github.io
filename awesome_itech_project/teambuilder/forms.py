@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from models import Team,Course
+from models import Team,Course,UserProfile
 from models import Team, Course
 
 
@@ -24,6 +24,12 @@ class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
         fields = ('name', 'course', 'required_skills','description')
+
+class ProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ('phone_number', 'dob','about_me')
 
 class CourseForm(forms.ModelForm):
     #code=forms.CharField(max_length=15, help_text="Please enter the course code")

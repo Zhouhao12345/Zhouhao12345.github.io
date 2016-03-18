@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title_block %}Create profile{% endblock %}
+{% block title_block %}Edit profile{% endblock %}
 {% block body_block %}
     {% if not created %}
-        <form id="profile_form" method="post" action="{% url 'teambuilder:create_profile' %}">
+        <form id="profile_form" method="post" action="{% url 'teambuilder:edit_profile' %}">
             {% csrf_token %}
             {{errors}}
             {{ profile_form.as_p }}</br>
@@ -11,7 +11,7 @@
             <input type="submit" value="Submit" />
         </form>
     {% else %}
-         <p>You have been successfully created a profile Click <a href="/teambuilder/profile/{{ user.username }}">here</a> to view profile </p>
+         <p>You have been successfully edited a profile Click <a href="/teambuilder/profile/{{ user.username }}">here</a> to view profile </p>
     {% endif %}
 
 {% endblock %}

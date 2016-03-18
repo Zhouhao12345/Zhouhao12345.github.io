@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title_block %}Edit Team{% endblock %}
+{% block body_block %}
+    {% if not created %}
+        <form id="team_form" method="post">
+            {% csrf_token %}
+            {{errors}}
+            <p>Team name: <input type="text" value="{{team.name}}" name="name"/></p></br>
+            <p>Skill needed: <input type="text" value="{{team.required_skills}}" name="skill"/></p></br>
+            <p>Description: <input type="text" value="{{team.description}}" name="description"/></p></br>
+            <input type="submit" value="Submit" />
+        </form>
+    {% else %}
+         <p>You have been successfully edited this team, Click <a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a> to view team </p>
+    {% endif %}
+{% endblock %}
