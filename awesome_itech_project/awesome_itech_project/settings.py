@@ -94,3 +94,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/teambuilder/login/'
+
+#add browser length cookies
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

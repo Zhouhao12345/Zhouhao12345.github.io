@@ -3,8 +3,8 @@
     {% block body_block %}
 
       <form id="login_form" class="form-signin" method="post" action="{% url 'teambuilder:login' %}">
-        <h2 class="form-signin-heading">This is the login page</h2>
-	{% csrf_token %}
+        <h2 class="form-signin-heading">Login here</h2>
+	    {% csrf_token %}
              {% if message %}
                 <div class="alert alert-danger">
                     <p>{{ message }}</p>
