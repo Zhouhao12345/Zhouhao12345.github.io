@@ -4,11 +4,43 @@
     {% if not created %}
         <form id="profile_form" method="post" action="{% url 'teambuilder:create_profile' %}">
             {% csrf_token %}
-            {{errors}}
-            {{ profile_form.as_p }}</br>
-            <p>first name: <input type="text" value="{{user.first_name}}" name="first_name"/></p></br>
-            <p>last name: <input type="text" value="{{user.last_name}}" name="last_name"/></p></br>
-            <input type="submit" value="Submit" />
+            {% if errors %}
+                <div class="alert alert-danger">
+                    {{error}}
+                </div>
+            {% endif %}
+
+            <!--{{ profile_form.as_p }}</br>-->
+
+            <label>Please enter your phone number:</label><br/>
+                <div class="form-group">
+                <input class="form-control" id="id_phone_number" maxlength="15" name="phone_number" type="text" placeholder="Enter phone number" />
+            </div><br/>
+
+            <label>Please enter your date of birth:</label><br/>
+                <div class="form-group">
+                <input class="form-control" id="id_dob" name="dob" type="text" value="2016-03-18" />
+            </div><br/>
+
+           <label>Please enter something about yourself:</label><br/>
+                <div class="form-group">
+                <textarea cols="40" id="id_about_me" maxlength="500" name="about_me" class="form-control" style="min-width: 100%">
+            </textarea>
+                    </div><br/>
+
+            <label>Please enter your first name:</label><br/>
+                <div class="form-group">
+                 <input class="form-control" type="text" value="{{user.first_name}}" name="first_name"/>
+                   </div><br/>
+
+            <label>Please enter your last name:</label><br/>
+                <div class="form-group">
+            <p>last name: <input type="text" value="{{user.last_name}}" name="last_name"/>
+            </div><br/>
+
+            <button class="btn btn-success btn-block center-block" type="submit" value="submit">Submit</button>
+
+
         </form>
     {% else %}
          <p>You have been successfully created a profile Click <a href="/teambuilder/profile/{{ user.username }}">here</a> to view profile </p>
