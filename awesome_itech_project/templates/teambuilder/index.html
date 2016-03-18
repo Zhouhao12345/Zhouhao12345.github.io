@@ -11,8 +11,10 @@
 
 	<div class="jumbotron">
         <h1>Build Your Team</h1>
-        <p class="lead">Build a your team today!</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
+        <p class="lead">Build your team today!</p>
+        {% if not user.is_authenticated %}
+            <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
+        {% endif %}
     </div>
 
     <div class="row">
