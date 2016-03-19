@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load staticfiles %}
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -12,11 +12,12 @@
 
     <title>TeamUp - {%block tile%}Build a team{% endblock%}</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!--add the following link, it the css page of the original page-->
+    <!-- Bootstrap CSS -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/dashboard/dashboard.css" rel="stylesheet">
-    <link href="{% static "css/signin.css" %}" rel="stylesheet" />
+
+    <link href="{% static 'css/signin.css' %}" rel="stylesheet" />
+
     <link href=".http://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
@@ -29,6 +30,15 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!--datatable css -->
+    <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}"/>
+
+    <link rel="stylesheet" href="{% static 'css/teambuilder.css' %}"/>
+
+    <!--datatable javascript -->
+    <script type="text/javascript" src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+
   </head>
 
   <body>
@@ -79,5 +89,8 @@
         <p class="text-center">&copy; Team Awesome 2016</p>
       </footer></div>
 
+      <script src="{% static 'js/teambuilder_jquery.js' %}"></script>
   </body>
+
+
 </html>
