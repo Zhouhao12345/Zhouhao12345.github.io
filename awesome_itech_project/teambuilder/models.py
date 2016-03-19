@@ -17,11 +17,7 @@ class UserProfile(models.Model):
     phone_number = models.CharField(max_length=15, null=True)
     dob=models.DateField(default=date.today(), null=True)
     about_me=models.TextField(max_length=500, null=True)
-    slug = models.SlugField()
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.user.username)
-        super(UserProfile, self).save(*args, **kwargs)
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
         return self.user.username

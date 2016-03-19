@@ -17,17 +17,44 @@
     <div class="tab-content">
       <div id="courses" class="tab-pane fade in active">
         <h3>Courses</h3>
-        {% if courses %}
-            <ul>
-            {% for course in courses %}
-                <li><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>You have not added any course yet</p>
-        {% endif %}
-        <p><a type="button" class="btn btn-primary btn-sm" href="{% url 'teambuilder:add_course' %}">Create course
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></p>
+          <div class="panel-group">
+              <div class="panel panel-default">
+                  <div class="panel-heading">My courses</div>
+                  <div class="panel-body">
+                    {% if courses %}
+                      <div class="table-responsive">
+                          <table class="table table-striped teams_table">
+                              <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Required team size</th>
+                                    <th>Action</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for course in courses %}
+                                    <tr>
+                                        <td><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></td>
+                                        <td>{{course.team_size}}</td>
+                                        <td>
+                                            <a type="button" class="btn btn-primary btn-sm" href="/teambuilder/course/{{course.slug}}/edit/">Edit course
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> &nbsp;
+                                            <a type="button" class="btn btn-primary btn-sm" href="/teambuilder/course/{{course.slug}}/teams/">View teams
+                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                              </tbody>
+                          </table>
+                      </div>
+                    {% else %}
+                        <p>You have not added any course yet</p>
+                    {% endif %}
+                    <p><a type="button" class="btn btn-primary btn-sm" href="{% url 'teambuilder:add_course' %}">Create course
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></p>
+                      </div>
+                  </div>
+              </div>
       </div>
       <div id="teams" class="tab-pane fade">
           <h3>Teams</h3>
@@ -37,7 +64,7 @@
                   <div class="panel-body">
                       {% if teams %}
                         <div class="table-responsive">
-                           <table class="table table-striped table-bordered teams_table" >
+                           <table class="table table-striped teams_table" >
                                 <thead>
                                     <tr>
                                         <th data-sort="team_name">Team name</th>
@@ -71,7 +98,7 @@
                   <div class="panel-body">
                       {% if teams or requests %}
                            <div class="table-responsive">
-                               <table class="table table-striped table-bordered teams_table">
+                               <table class="table table-striped teams_table">
                                    <thead>
                                         <tr>
                                             <th>Team name</th>
@@ -107,7 +134,7 @@
 
               <div class="panel-group">
                   <div class="panel panel-default">
-                       <div class="panel-heading">Received Request:</div>
+                       <div class="panel-heading">Sent Requests</div>
                         <div class="panel-body">
                           {% if requests2 %}
                             <div class="table-responsive">
@@ -129,7 +156,7 @@
                                     <td>
                                         {% if request.status == 'pending' %}
                                         &nbsp; <a type="button" class="btn btn-danger btn-sm" href="/teambuilder/team/{{request.team.slug}}/cancel-request/">Cancel request
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></a>
+                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                         {% endif %}
                                     </td>
                                 </tr>

@@ -111,50 +111,22 @@ def create_team(request):
         context_dict['team_form'] = team_form
     return render(request, 'teambuilder/create_team.html', context_dict)
 
-
-def profile(request,User_name_slug):
+@login_required
+def profile(request,username):
     context_dict = {}
     try:
-        user=request.user
-        u=User.objects.get(username=User_name_slug)
-        if u==user:
-           context_dict['create']='edit profile'
-        context_dict['person']=u
+        u = User.objects.get(username=username)
+        up=UserProfile.objects.get(user=u)
+
+        context_dict['profile']=up
+
     except User.DoesNotExist:
-         pass
-    try:
-        user=request.user
-        u=User.objects.get(username=User_name_slug)
-        profile=UserProfile.objects.get(slug=User_name_slug)
-        if u==user:
-           context_dict['edit']='edit profile'
-        context_dict['profile']=profile
-    except UserProfile.DoesNotExist:
-         pass
+         return HttpResponseRedirect('/teambuilder/page-not-found/')
+
     return render(request, 'teambuilder/profile.html', context_dict)
 
-def edit_profile(request):
-    context_dict = {}
-    user = request.user
-    if request.method=='POST':
-        profile_form = ProfileForm(data=request.POST)
-        if profile_form.is_valid() :
-            user.first_name=request.POST['first_name']
-            user.last_name=request.POST['last_name']
-            user.save()
-            profile = profile_form.save(commit=False)
-            profile.user= user
-            profile.save()
-            context_dict['created'] = True
-        else:
-            context_dict['errors'] = profile_form.errors
-    else:
-        profile_form = ProfileForm();
-        context_dict['user']=user
-        context_dict['profile_form'] = profile_form
-    return render(request, 'teambuilder/edit_profile.html', context_dict)
 
-def create_profile(request):
+def edit_profile(request):
     context_dict = {}
     user = request.user
     profile2 = UserProfile.objects.get(user=user)
@@ -174,10 +146,9 @@ def create_profile(request):
             context_dict['errors'] = profile_form.errors
     else:
         profile_form = ProfileForm(initial={'dob':profile2.dob,'phone_number':profile2.phone_number,'about_me':profile2.about_me});
-        context_dict['user']=user
         context_dict['profile']=profile2
         context_dict['profile_form'] = profile_form
-    return render(request, 'teambuilder/create_profile.html', context_dict)
+    return render(request, 'teambuilder/edit_profile.html', context_dict)
 
 
 def team_details(request, team_name_slug):
