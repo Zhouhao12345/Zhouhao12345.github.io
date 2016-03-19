@@ -37,9 +37,9 @@
                                         <td><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></td>
                                         <td>{{course.team_size}}</td>
                                         <td>
-                                            <a type="button" class="btn btn-primary btn-sm" href="/teambuilder/course/{{course.slug}}/edit/">Edit course
+                                            <a  class="btn btn-primary btn-sm" href="/teambuilder/course/{{course.slug}}/edit/">Edit course
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> &nbsp;
-                                            <a type="button" class="btn btn-primary btn-sm" href="/teambuilder/course/{{course.slug}}/teams/">View teams
+                                            <a  class="btn btn-primary btn-sm" href="/teambuilder/course/{{course.slug}}/teams/">View teams
                                             <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                                         </td>
                                     </tr>
@@ -50,7 +50,7 @@
                     {% else %}
                         <p>You have not added any course yet</p>
                     {% endif %}
-                    <p><a type="button" class="btn btn-primary btn-sm" href="{% url 'teambuilder:add_course' %}">Create course
+                    <p><a  class="btn btn-primary btn-sm" href="{% url 'teambuilder:add_course' %}">Create course
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></p>
                       </div>
                   </div>
@@ -67,19 +67,24 @@
                            <table class="table table-striped teams_table" >
                                 <thead>
                                     <tr>
-                                        <th data-sort="team_name">Team name</th>
-                                        <th data-sort="team_status">Status</th>
+                                        <th>Team name</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                             {% for team in teams %}
                                 <tr>
-                                    <td class="team_name"><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></td>
+                                    <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></td>
                                 {% if team.status %}
-                                    <td class="team_status">Active</td>
+                                    <td>Active</td>
                                 {% else %}
-                                    <td class="team_status">Merged with <a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.merge_with.name}}</a></td>
+                                    <td>Merged with <a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.merge_with.name}}</a></td>
                                 {% endif %}
+                                    <td>
+                                        <a  class="btn btn-primary btn-sm" href="/teambuilder/team/{{team.slug}}/edit/">Edit team
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> &nbsp;
+                                    </td>
                                 </tr>
                             {% endfor %}
                                </tbody>
@@ -88,8 +93,8 @@
                     {% else %}
                         <p>You have not built any team yet</p>
                     {% endif %}
-                    <p><a type="button" class="btn btn-primary btn-sm" href="{% url 'teambuilder:create_team' %}">Create team
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></a></p>
+                    <p><a  class="btn btn-primary btn-sm" href="{% url 'teambuilder:create_team' %}">Create team
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></p>
                   </div>
               </div>
 
@@ -155,7 +160,7 @@
                                     <td>{{request.status}}</td>
                                     <td>
                                         {% if request.status == 'pending' %}
-                                        &nbsp; <a type="button" class="btn btn-danger btn-sm" href="/teambuilder/team/{{request.team.slug}}/cancel-request/">Cancel request
+                                        &nbsp; <a  class="btn btn-danger btn-sm" href="/teambuilder/team/{{request.team.slug}}/cancel-request/">Cancel request
                                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                         {% endif %}
                                     </td>
@@ -195,9 +200,9 @@
                                             <td>
                                                 {% if request.team.available_slots > 0 %}
                                                 {% if request.status == "pending" %}
-                                                    <a type="button" class="btn btn-success btn-sm" href="/teambuilder/request/{{request.id}}/accept/">
+                                                    <a  class="btn btn-success btn-sm" href="/teambuilder/request/{{request.id}}/accept/">
                                                         Accept request <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
-                                                    <a type="button" class="btn btn-danger btn-sm" href="/teambuilder/request/{{request.id}}/reject/">
+                                                    <a  class="btn btn-danger btn-sm" href="/teambuilder/request/{{request.id}}/reject/">
                                                         Reject request<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                                                 {% elif request.status == "accepted" %}
                                                     <p>Request accepted</p>

@@ -4,34 +4,40 @@
 {% block body_block %}
     <h3>Teams for {{course.name}}</h3>
     {% if teams %}
-        <table>
-            <tr>
-                <td>Team Name</td>
-                <td>Creator</td>
-                <td>Required team size</td>
-                <td>Current Size</td>
-                <td>Status</td>
-                <td>Action</td>
-            </tr>
-            {% for team in teams %}
-                <tr>
-                    <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></td>
-                    <td><a href="/teambuilder/profile/{{user.username}}/">{{team.creator.username}}</a></td>
-                    <td>{{course.team_size}}</td>
-                    <td>{{team.current_size}}</td>
-                    {% if team.status %}
-                    <td>Active</td>
-                    <td><a href="/teambuilder/team/{{team.slug}}/view-members/">View Team Members</a></td>
-                    {% else %}
-                    <td>Merged with {{team.merge_with.name}}</td>
-                    <td>View Team Members</td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-        </table>
+        <div class="table-responsive">
+            <table class="table table-striped teams_table">
+                <thead>
+                    <tr>
+                        <td>Team Name</td>
+                        <td>Creator</td>
+                        <td>Req. team size</td>
+                        <td>Current Size</td>
+                        <td>Status</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for team in teams %}
+                        <tr>
+                            <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></td>
+                            <td><a href="/teambuilder/profile/{{user.username}}/">{{team.creator.username}}</a></td>
+                            <td>{{course.team_size}}</td>
+                            <td>{{team.current_size}}</td>
+                            {% if team.status %}
+                            <td>Active</td>
+                            <td><a class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/view-members/">Team Members
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a></td>
+                            {% else %}
+                            <td>Merged with {{team.merge_with.name}}</td>
+                            <td>View Team Members</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
         <p><a href="/teambuilder/course/{{course.slug}}/merge-teams/">Merge teams</a></p>
-
     {% else %}
         <p>There are no teams for {{course.name}} at this time</p>
     {% endif %}

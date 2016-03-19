@@ -1,22 +1,37 @@
 {% extends 'base.html' %}
 {% block title_block %}{{course.name}} details {% endblock %}
 {% block body_block %}
-    {% if course %}
-        <h2>{{course.name}}</h2>
-        <ul>
-        <li>Code: {{course.code}}</li>
-        <li>Name: {{course.name}}</li>
-        <li>Creator: {{course.creator.username}}</li>
-        <li>Required team size: {{course.team_size}}</li>
-        </ul>
+    <h3>{{course.name}}</h3>
+    <div class="table-responsive">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Code</td>
+                    <td>{{course.code}}</td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td>{{ course.name}}</td>
+                </tr>
+                <tr>
+                    <td>Creator</td>
+                    <td><a href="{% url 'teambuilder:profile' course.creator.username %}">{{course.creator.username}}</a></td>
+                </tr>
+                <tr>
+                    <td>Required team size</td>
+                    <td>{{course.team_size}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
-        {% if user.is_authenticated %}
-            {% if creator == True %}
-                <a href="/teambuilder/course/{{course.slug}}/edit/">Edit course</a>
-                <a href="/teambuilder/course/{{course.slug}}/teams/">View teams</a>
-            {% endif %}
+      {% if user.is_authenticated %}
+        {% if creator == True %}
+            <a class="btn btn-primary" href="/teambuilder/course/{{course.slug}}/edit/">Edit course
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+            <a class="btn btn-primary" href="/teambuilder/course/{{course.slug}}/teams/">View teams
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a>
         {% endif %}
-    {% else %}
-        <p>Course not found</p>
-    {% endif %}
+      {% endif %}
+
 {% endblock %}

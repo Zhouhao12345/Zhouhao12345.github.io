@@ -252,16 +252,21 @@ def join_team(request, team_name_slug):
 @login_required
 def edit_team(request,team_name_slug):
     context_dict = {}
-    user = request.user
-    team = Team.objects.get(name=team_name_slug)
-    if request.method=='POST':
-            team.name=request.POST['name']
-            team.required_skills=request.POST['skill']
-            team.description=request.POST['description']
-            team.save()
-            context_dict['created'] = True
-    context_dict['user']=user
-    context_dict['team']=team
+    try:
+        user = request.user
+        team = Team.objects.get(slug=team_name_slug)
+        if request.method=='POST':
+                team.name=request.POST['name']
+                team.required_skills=request.POST['skill']
+                team.description=request.POST['description']
+                team.save()
+                context_dict['created'] = True
+        context_dict['user']=user
+        context_dict['team']=team
+
+    except Team.DoesNotExist:
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
+
     return render(request, 'teambuilder/edit_team.html', context_dict)
 
 @login_required
@@ -325,7 +330,6 @@ def accept_request(request, request_id):
     except Memberrequest.DoesNotExist:
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
-    #return HttpResponseRedirect('/teambuilder/team/'+mr.team.slug+'/view-requests/')
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
@@ -345,7 +349,6 @@ def reject_request(request, request_id):
     except Memberrequest.DoesNotExist:
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
-    #return HttpResponseRedirect('/teambuilder/team/'+mr.team.slug+'/view-requests/')
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 

@@ -1,42 +1,67 @@
 {% extends 'base.html' %}
 {% block title_block %}Team detail {% endblock %}
 {% block body_block %}
-    {% if team %}
-        <h2>{{team.name}}</h2>
-        <p>Course: <a href="{% url 'teambuilder:course_detail' team.course.slug %}">{{ team.course.name}}</a></p>
-        <p>Description: {{team.description}}</p>
-        <p>Required skills: {{ team.required_skills}}</p>
-        {% if team.status %}
-            <p>Status: Active</p>
-            <p>Number of free slots: {{ team.available_slots }}</p>
 
-
-            {% if user.is_authenticated %}
-                {% if member_request %}
-                    <p>Your request to join {{team.name}} is pending</p>
-                    <a href="/teambuilder/team/{{team.slug}}/cancel-request/">Cancel request</a>
-                {% else %}
-                    {% if user == team.creator %}
-                        <a href="/teambuilder/team/{{team.slug}}/view-requests/">View requests</a>
-                        <a href="/teambuilder/team/{{team.slug}}/view-members/">View team members</a>
-                        <a href="/teambuilder/edit_team/{{team.name}}/">Edit team</a>
+    <h3>{{team.name}}</h3>
+    <div class="table-responsive">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Creator</td>
+                    <td><a href="{% url 'teambuilder:profile' team.creator.username %}">{{ team.creator.username}}</a></td>
+                </tr>
+                <tr>
+                    <td>Course</td>
+                    <td><a href="#">{{ team.course.name}}</a></td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>{{team.description}}</td>
+                </tr>
+                <tr>
+                    <td>Required skills</td>
+                    <td>{{ team.required_skills}}</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    {% if team.status %}
+                        <td>Active</td>
                     {% else %}
-                        {% if not accepted_request %}
-                            {% if team.available_slots == 0 %}
-                                <p>Team is already full</p>
-                            {% else %}
-                                <a href="/teambuilder/team/{{team.slug}}/send-request/">Request to join</a>
-                            {% endif %}
-                        {% else %}
-                            <p>You are a member of this team</p>
-                        {% endif %}
+                        <td>SMerged with <a href="/teambuilder/team/{{team.merge_with.slug}}/">{{team.merge_with.name}}</a></td>
                     {% endif %}
+                </tr>
+                <tr>
+                    <td>Number of free slots</td>
+                    <td>{{ team.available_slots }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    {% if user.is_authenticated %}
+        {% if member_request %}
+            <p>Your request to join {{team.name}} is pending</p>
+            <a type="button" class="btn btn-danger" href="/teambuilder/team/{{team.slug}}/cancel-request/">Cancel request</a>
+        {% else %}
+            {% if user == team.creator %}
+                <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/view-requests/">View requests
+                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/view-members/">
+                    View team members <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a>
+                <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/edit/">Edit team
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+            {% else %}
+                {% if not accepted_request %}
+                    {% if team.available_slots == 0 %}
+                        <p>Team is already full</p>
+                    {% else %}
+                        <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/send-request/">Request to join</a>
+                    {% endif %}
+                {% else %}
+                    <p>You are a member of this team</p>
                 {% endif %}
             {% endif %}
-        {% else %}
-            <p>Status: Merged with <a href="/teambuilder/team/{{team.merge_with.slug}}/">{{team.merge_with.name}}</a></p>
         {% endif %}
-    {% else %}
-        <p>Team not found</p>
     {% endif %}
+
 {% endblock %}
