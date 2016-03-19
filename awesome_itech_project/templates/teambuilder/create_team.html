@@ -4,10 +4,51 @@
     {% if not created %}
         <form id="team_form" method="post" action="{% url 'teambuilder:create_team' %}">
             {% csrf_token %}
-            {{errors}}
-            {{error}}
-            {{ team_form.as_p }}
-            <input type="submit" value="Submit" />
+            {% if errors %}
+                <div class="alert alert-danger">
+                    {{errors}}
+                    {{error}}
+                </div>
+            {% endif %}
+
+         <!--label>Please enter your first name</label><br/>
+                    <div class="form-group">
+                        <input class="form-control" id="id_first_name" maxlength="30" name="first_name" type="text" />
+                    </div><br/-->
+
+        <label>Please enter your team name:</label><br/>
+          <div class="form-group">
+            <input class="form-control" id="id_name" maxlength="100" name="name" type="text" placeholder="Enter team name" />
+        </div><br/>
+
+        <label>Please enter your course name:</label><br/>
+            <div class="form-group">
+                <select class="form-control" id="id_course" name="course">
+                <option value="" selected="selected">---------</option>
+                <option value="1">Internet Technology</option>
+                <option value="2">Advanced programming</option>
+                </select>
+            </div><br/>
+
+        <label>Enter your required skills:</label><br/>
+            <div class="form-group">
+                <textarea cols="40" id="id_required_skills" maxlength="500" name="required_skills"  class="form-control" style="min-width: 100%" >
+                </textarea>
+            </div><br/>
+
+        <label>Enter your description:</label><br/>
+            <div class="form-group">
+                <textarea cols="40" id="id_description" maxlength="500" name="description" class="form-control" style="min-width: 100%">
+                </textarea>
+            </div><br/>
+
+        <label>Enter your course password:</label><br/>
+            <div class="form-group">
+             <input class="form-control" id="id_course_password" maxlength="15" name="course_password" type="text" placeholder="Enter your course password"/>
+        </div><br/>
+
+        <button class="btn btn-success btn-block center-block" type="submit" value="submit">Create</button>
+
         </form>
     {% endif %}
 {% endblock %}

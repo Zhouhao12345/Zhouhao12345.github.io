@@ -19,6 +19,7 @@
                     {% if user == team.creator %}
                         <a href="/teambuilder/team/{{team.slug}}/view-requests/">View requests</a>
                         <a href="/teambuilder/team/{{team.slug}}/view-members/">View team members</a>
+                        <a href="/teambuilder/edit_team/{{team.name}}/">Edit team</a>
                     {% else %}
                         {% if not accepted_request %}
                             {% if team.available_slots == 0 %}

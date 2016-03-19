@@ -1,13 +1,6 @@
 {% extends 'base.html' %}
 {% block title_block %}Home page{% endblock %}
 {% block body_block %}
-    {% if user.is_authenticated %}
-        {% if user.first_name %}
-            <p>Welcome {{user.first_name}}</p>
-        {% else %}
-            <p>Welcome {{user.username}}</p>
-        {% endif %}
-    {% endif %}
 
 	<div class="jumbotron">
         <h1>Build Your Team</h1>
@@ -19,7 +12,7 @@
 
     <div class="row">
          <div class="col-md-6">
-            <p><a class="btn btn-lg btn-success" href="{% url 'teambuilder:find_team' %}" role="button">Find a team</a></p>
+            <p><a class="btn btn-lg btn-success" href="{% url 'teambuilder:search_team' %}" role="button">Find a team</a></p>
         </div>
 
         <div class="col-md-6">

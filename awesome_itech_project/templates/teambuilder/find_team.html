@@ -1,5 +1,18 @@
-{% extends 'base.html' %}
-{% block title_block %}Home page {% endblock %}
-{% block body_block %}
-    <p>This is the find team page</p>
-{% endblock %}
+ {% if team_list %}
+         <table>
+                <thead>
+                    <td>Team</td><td>Course</td>
+                </thead>
+                {% for team in team_list %}
+                    <tr>
+                        <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{ team.name }}</a></td>
+                        <td><a href="{% url 'teambuilder:course_detail' team.course.slug %}">{{ team.course.name }}</a></td>
+                    </tr>
+                {% endfor %}
+         </table>
+ {% else %}
+         <p>No such team exits. Please recheck your typing<p>
+ {% endif %}
+
+
+

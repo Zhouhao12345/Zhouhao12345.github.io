@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 {% block title_block %}Profile {% endblock %}
 {% block body_block %}
-    <p>This is the profile page for {{username}}</p>
+    <p>This is the profile page</p>
+    <ul>
+        <li>name: {{person.username}}</li>
+        <li>first name: {{person.first_name}}</li>
+        <li>last name: {{person.last_name}}</li>
+        <li>email: {{person.email}}</li>
+        <li>phone number: {{ profile.phone_number }}</li>
+        <li>DOB: {{ profile.dob }}</li>
+        <li>About me: {{ profile.about_me }}</li>
+    </ul>
+    <h2>{% if profile %}</h2>
+          {% if edit %}
+            <a href="{% url 'teambuilder:edit_profile' %}">{{edit}}</a>
+          {%endif%}
+         {% else %}
+           {% if create %}
+             Your profile is not completed, please complete it</br>
+            <a href="{% url 'teambuilder:create_profile' %}">{{create}}</a>
+           {%endif%}
+         {% endif %}
+
 {% endblock %}

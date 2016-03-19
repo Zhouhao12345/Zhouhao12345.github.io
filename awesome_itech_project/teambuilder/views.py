@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from teambuilder.forms import UserForm,TeamForm,CourseForm
-from teambuilder.models import Team, Course, Memberrequest
-from teambuilder.forms import UserForm,TeamForm
+from teambuilder.models import Team, Course, Memberrequest,UserProfile,User
+from teambuilder.forms import UserForm,TeamForm,ProfileForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -112,12 +112,72 @@ def create_team(request):
     return render(request, 'teambuilder/create_team.html', context_dict)
 
 
-def profile(request, username):
-    return render(request, 'teambuilder/profile.html', {'username':username})
-
+def profile(request,User_name_slug):
+    context_dict = {}
+    try:
+        user=request.user
+        u=User.objects.get(username=User_name_slug)
+        if u==user:
+           context_dict['create']='edit profile'
+        context_dict['person']=u
+    except User.DoesNotExist:
+         pass
+    try:
+        user=request.user
+        u=User.objects.get(username=User_name_slug)
+        profile=UserProfile.objects.get(slug=User_name_slug)
+        if u==user:
+           context_dict['edit']='edit profile'
+        context_dict['profile']=profile
+    except UserProfile.DoesNotExist:
+         pass
+    return render(request, 'teambuilder/profile.html', context_dict)
 
 def edit_profile(request):
-    return render(request, 'teambuilder/edit_profile.html', {})
+    context_dict = {}
+    user = request.user
+    if request.method=='POST':
+        profile_form = ProfileForm(data=request.POST)
+        if profile_form.is_valid() :
+            user.first_name=request.POST['first_name']
+            user.last_name=request.POST['last_name']
+            user.save()
+            profile = profile_form.save(commit=False)
+            profile.user= user
+            profile.save()
+            context_dict['created'] = True
+        else:
+            context_dict['errors'] = profile_form.errors
+    else:
+        profile_form = ProfileForm();
+        context_dict['user']=user
+        context_dict['profile_form'] = profile_form
+    return render(request, 'teambuilder/edit_profile.html', context_dict)
+
+def create_profile(request):
+    context_dict = {}
+    user = request.user
+    profile2 = UserProfile.objects.get(user=user)
+    if request.method=='POST':
+        profile_form = ProfileForm(data=request.POST)
+        if profile_form.is_valid():
+            user.first_name=request.POST['first_name']
+            user.last_name=request.POST['last_name']
+            user.save()
+            profile = profile_form.save(commit=False)
+            profile2.dob=profile.dob
+            profile2.phone_number=profile.phone_number
+            profile2.about_me=profile.about_me
+            profile2.save()
+            context_dict['created'] = True
+        else:
+            context_dict['errors'] = profile_form.errors
+    else:
+        profile_form = ProfileForm(initial={'dob':profile2.dob,'phone_number':profile2.phone_number,'about_me':profile2.about_me});
+        context_dict['user']=user
+        context_dict['profile']=profile2
+        context_dict['profile_form'] = profile_form
+    return render(request, 'teambuilder/create_profile.html', context_dict)
 
 
 def team_details(request, team_name_slug):
@@ -153,7 +213,41 @@ def team_details(request, team_name_slug):
 
 
 def find_team(request):
-    return render(request, 'teambuilder/find_team.html', {})
+        team_list = []
+        starts_with = ''
+        if request.method == 'GET':
+                starts_with = request.GET['suggestion']
+        team_list = get_team_list(20, starts_with)
+
+        return render(request, 'teambuilder/find_team.html', {'team_list': team_list })
+
+def get_team_list(max_results=0, starts_with=''):
+        team_list = []
+        team_list1 = []
+        course_list = []
+        if starts_with:
+                team_list = Team.objects.filter(name__istartswith=starts_with)
+                course_list = Course.objects.filter(name__istartswith=starts_with)
+                for course in course_list:
+                        if team_list:
+                            team_list1=Team.objects.filter(course=course)
+                            for team in team_list1:
+                               team_list.append(team)
+                        else:
+                               team_list = Team.objects.filter(course=course)
+
+        else:
+            team_list=Team.objects.all()
+        if max_results > 0:
+                if team_list.count() > max_results:
+                        team_list = team_list[:max_results]
+
+        return team_list
+
+def search_team(request):
+        team_list=[]
+        team_list=Team.objects.all()
+        return render(request, 'teambuilder/search_team.html', {'team_list': team_list })
 
 
 @login_required
@@ -184,6 +278,20 @@ def join_team(request, team_name_slug):
 
     return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/')
 
+@login_required
+def edit_team(request,team_name_slug):
+    context_dict = {}
+    user = request.user
+    team = Team.objects.get(name=team_name_slug)
+    if request.method=='POST':
+            team.name=request.POST['name']
+            team.required_skills=request.POST['skill']
+            team.description=request.POST['description']
+            team.save()
+            context_dict['created'] = True
+    context_dict['user']=user
+    context_dict['team']=team
+    return render(request, 'teambuilder/edit_team.html', context_dict)
 
 @login_required
 def cancel_request(request, team_name_slug):
@@ -270,22 +378,6 @@ def reject_request(request, request_id):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-@login_required
-def sent_requests(request):
-    user = request.user
-    mrs = Memberrequest.objects.filter(user=user).order_by('-request_date')
-    return render(request, 'teambuilder/my_sent_requests.html', {'requests':mrs})
-
-
-@login_required
-def received_requests(request):
-    context_list = []
-    teams = Team.objects.filter(creator=request.user, status=True)
-    for team in teams:
-        requests = Memberrequest.objects.filter(team=team).order_by('-request_date')
-        context_list.append(requests)
-
-    return render(request, 'teambuilder/received_requests.html', {'requests': context_list})
 
 
 @login_required
@@ -310,7 +402,9 @@ def view_team_members(request, team_name_slug):
 def dashboard(request):
     user = request.user
     context_dict = {}
-
+    context_list = []
+    mrs = Memberrequest.objects.filter(user=user).order_by('-request_date')
+    context_dict['requests2'] = mrs
     courses = Course.objects.filter(creator=user)
     context_dict['courses'] = courses
 
@@ -321,7 +415,11 @@ def dashboard(request):
     #request to teams sent by user that have been accepted
     reqs = Memberrequest.objects.filter(user=request.user, status="accepted")
     context_dict['requests'] = reqs
-
+    teams = Team.objects.filter(creator=request.user, status=True)
+    for team in teams:
+        requests = Memberrequest.objects.filter(team=team).order_by('-request_date')
+        context_list.append(requests)
+    context_dict['requests3'] = context_list
     return render(request, 'teambuilder/dashboard.html', context_dict)
 
 
