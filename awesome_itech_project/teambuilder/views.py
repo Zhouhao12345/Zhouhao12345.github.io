@@ -21,60 +21,6 @@ def about(request):
     return render(request, 'teambuilder/about.html', {})
 
 
-def register(request):
-
-    context_dict = {}
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-
-        if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-            context_dict['registered'] = True
-
-        else:
-            context_dict['errors'] = user_form.errors
-
-    else:
-        user_form = UserForm();
-        context_dict['user_form'] = user_form
-
-    return render(request, 'teambuilder/register.html', context_dict)
-
-
-def reset_password(request):
-    return render(request, 'teambuilder/reset_password.html', {})
-
-
-def user_login(request):
-    if request.user.is_authenticated():
-        return HttpResponseRedirect('/teambuilder/')
-
-    if request.method=='POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        next = request.POST.get('next')
-        user = authenticate(username=username, password=password)
-
-        if user:
-            login(request,user)
-            if next != 'None':
-                return HttpResponseRedirect(next)
-            else:
-                return HttpResponseRedirect('/teambuilder/')
-
-        else:
-            return render(request, 'teambuilder/login.html', {'message':'Invalid username/password provided'})
-    else:
-        return render(request, 'teambuilder/login.html', {'next':request.GET.get('next')})
-
-
-def user_logout(request):
-    logout(request)
-    return HttpResponseRedirect('/teambuilder/')
-
-
 @login_required
 def create_team(request):
     context_dict = {}
@@ -192,6 +138,7 @@ def find_team(request):
 
         return render(request, 'teambuilder/find_team.html', {'team_list': team_list })
 
+
 def get_team_list(max_results=0, starts_with=''):
         team_list = []
         team_list1 = []
@@ -214,6 +161,7 @@ def get_team_list(max_results=0, starts_with=''):
                         team_list = team_list[:max_results]
 
         return team_list
+
 
 def search_team(request):
         team_list=[]
@@ -249,6 +197,7 @@ def join_team(request, team_name_slug):
 
     return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/')
 
+
 @login_required
 def edit_team(request,team_name_slug):
     context_dict = {}
@@ -268,6 +217,7 @@ def edit_team(request,team_name_slug):
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return render(request, 'teambuilder/edit_team.html', context_dict)
+
 
 @login_required
 def cancel_request(request, team_name_slug):
@@ -350,8 +300,6 @@ def reject_request(request, request_id):
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
-
-
 
 
 @login_required
@@ -465,6 +413,7 @@ def view_course_teams(request, course_name_slug):
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return render(request, 'teambuilder/view_course_teams.html', context_dict)
+
 
 @login_required
 def merge_teams(request, course_name_slug):

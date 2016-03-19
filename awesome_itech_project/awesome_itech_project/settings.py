@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'teambuilder',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -97,3 +98,9 @@ LOGIN_URL = '/teambuilder/login/'
 
 #add browser length cookies
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+REGISTRATION_OPEN = True
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/teambuilder/'
+LOGIN_URL = '/accounts/login/'

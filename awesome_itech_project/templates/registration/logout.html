@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 {% block title_block %}Logged out {% endblock %}
 {% block body_block %}
-
-
-
-    <p>This is the logout page</p>
-
-
-
+<p>You have now logged out</p>
+<p><a href="{% url 'auth_login' %}">Click here</a> to log in again</p>
 {% endblock %}

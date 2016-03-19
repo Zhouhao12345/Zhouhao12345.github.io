@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block title_block %}{{team.name}} team members{% endblock %}
 {% block body_block %}
-    Team members for {{team.name}}.
-    <ul>
-        <li><a href="/teambuilder/profile/{{team.creator.username}}/">{{team.creator.username}}</a>(Team Creator)</li>
+    <h3>Team members for {{team.name}}</h3>
+    <ul class="list-group">
+        <li class="list-group-item"><a href="/teambuilder/profile/{{team.creator.username}}/">{{team.creator.username}}</a>( Team Creator)</li>
     {% if requests %}
             {% for request in requests %}
-                <li><a href="/teambuilder/profile/{{request.user.username}}/">{{request.user.username}}</a></li>
+                <li class="list-group-item"><a href="/teambuilder/profile/{{request.user.username}}/">{{request.user.username}}</a></li>
             {% endfor %}
     {% else %}
     </ul>

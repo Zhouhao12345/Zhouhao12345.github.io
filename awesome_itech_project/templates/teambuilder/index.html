@@ -6,7 +6,7 @@
         <h1>Build Your Team</h1>
         <p class="lead">Build your team today!</p>
         {% if not user.is_authenticated %}
-            <p><a class="btn btn-lg btn-success" href="{% url 'teambuilder:register' %}" role="button">Sign up today</a></p>
+            <p><a class="btn btn-lg btn-success" href="{% url 'registration_register' %}" role="button">Sign up today</a></p>
         {% endif %}
     </div>
 
