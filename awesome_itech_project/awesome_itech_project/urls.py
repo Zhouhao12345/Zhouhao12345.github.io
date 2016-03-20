@@ -7,7 +7,7 @@ from django.conf import settings
 class MyRegistrationView(RegistrationView):
     form_class=RegistrationFormUniqueEmail
     def get_success_url(self, user):
-        return '/teambuilder/'
+        return '/teambuilder/edit-profile/'
 
 urlpatterns = patterns('',
     # Examples:

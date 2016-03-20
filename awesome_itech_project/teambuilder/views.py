@@ -61,11 +61,12 @@ def create_team(request):
 @login_required
 def profile(request, username):
     context_dict = {}
-    try:
-        u = User.objects.get(username=username)
-        up = UserProfile.objects.get(user=u)
 
-        context_dict['profile']=up
+    u = User.objects.get(username=username)
+
+    try:  # if user has a profile, get and pass the profile to the template file or else create an empty one
+        up = UserProfile.objects.get_or_create(user=u)[0]
+        context_dict['profile'] = up
 
     except User.DoesNotExist:
         return HttpResponseRedirect('/teambuilder/page-not-found/')
@@ -74,39 +75,45 @@ def profile(request, username):
 
     return render(request, 'teambuilder/profile.html', context_dict)
 
-
+@login_required
 def edit_profile(request):
     context_dict = {}
-    user = request.user
-    profile2 = UserProfile.objects.get(user=user)
-    if request.method=='POST':
+    user = request.user  # get logged in user
+    try:
+        profile2 = UserProfile.objects.get_or_create(user=user)[0]  # get user profile or create an empty one if none exists
 
-        profile_form = ProfileForm(data=request.POST, instance=profile2)
+        if request.method == 'POST':  # if user is posting data to server
 
-        # use a UserProfile object to store data collected
-        dob2 = datetime.strptime(request.POST['dob'], "%Y-%m-%d").date()
-        uprofile = UserProfile(dob=dob2, about_me=request.POST['about_me'],
-                               phone_number=request.POST['phone_number'], user=request.user)
+            profile_form = ProfileForm(data=request.POST, instance=profile2)
 
-        # check the user profile part for validity
-        if profile_form.is_valid():
-            # if form is valid, save
-            # save the user details part
-            user.first_name=request.POST['first_name']
-            user.last_name=request.POST['last_name']
-            user.save()
+            # use a UserProfile object to store data collected in case validation fails
+            uprofile = UserProfile(about_me=request.POST['about_me'],
+                                   phone_number=request.POST['phone_number'], user=request.user)
 
-            user_profile = profile_form.save(commit=False)
-            if 'picture' in request.FILES:
-                user_profile.picture = request.FILES['picture']
-            user_profile.save()
-            context_dict['created'] = True
-        else:
-            # else show errors
-            context_dict['errors'] = profile_form.errors
-            context_dict['profile'] = uprofile  # pass already entered data back to the user
-    else:
-        context_dict['profile'] = profile2
+            # check the user profile part for validity
+            if profile_form.is_valid():
+                # if form is valid, save
+                # save the user details part
+                user.first_name=request.POST['first_name']
+                user.last_name=request.POST['last_name']
+                user.save()
+
+                user_profile = profile_form.save(commit=False)
+                if 'picture' in request.FILES:
+                    user_profile.picture = request.FILES['picture']
+                user_profile.save()
+                context_dict['created'] = True
+            else:
+                # else show errors
+                context_dict['errors'] = profile_form.errors
+                context_dict['profile'] = uprofile  # validation failed. pass already entered data back to the user
+
+        else:  # user is just requesting data from server
+            context_dict['profile'] = profile2
+
+    except UserProfile.DoesNotExist:
+        pass
+
     return render(request, 'teambuilder/edit_profile.html', context_dict)
 
 

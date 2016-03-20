@@ -31,7 +31,7 @@ class TeamForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('phone_number', 'dob', 'about_me',)
+        fields = ('phone_number', 'about_me',)
 
 
 class CourseForm(forms.ModelForm):

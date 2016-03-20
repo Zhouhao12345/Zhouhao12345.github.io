@@ -3,7 +3,7 @@ from teambuilder.models import Team, UserProfile, User, Course, Memberrequest, S
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('phone_number', 'dob', 'about_me', 'user')
+    list_display = ('phone_number', 'about_me', 'user')
 
 class MemberRequestAdmin(admin.ModelAdmin):
     list_display = ('user' , 'team', 'status', )
