@@ -70,7 +70,7 @@ def profile(request, username):
     except User.DoesNotExist:
         return HttpResponseRedirect('/teambuilder/page-not-found/')
     except UserProfile.DoesNotExist:
-        return HttpResponseRedirect('/teambuilder/page-not-found/')
+        pass
 
     return render(request, 'teambuilder/profile.html', context_dict)
 

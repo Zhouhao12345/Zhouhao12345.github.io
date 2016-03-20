@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('registration.backends.simple.urls')),
 )
 
-#let's just use django for now to serve static media as our application does not anticipate any load at the moment
+# let's just use django for now to serve static media as our application does not anticipate any load at the moment
 urlpatterns += patterns(
     'django.views.static',
     (r'^media/(?P<path>.*)',
