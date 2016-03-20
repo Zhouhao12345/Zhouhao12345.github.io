@@ -43,6 +43,10 @@
     <!--datatable javascript -->
     <script type="text/javascript" src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 
+    <!--jqueryUI -->
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
   </head>
 
   <body>
@@ -86,7 +90,7 @@
         {% block body_block %}{% endblock %}
         </div>
 
-      <div class="container">
+      <div class="container-fluid">
         <footer class="footer">
         <p class="text-center">&copy; Team Awesome 2016</p>
       </footer></div>

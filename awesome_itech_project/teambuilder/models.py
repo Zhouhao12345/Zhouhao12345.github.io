@@ -9,23 +9,30 @@ class Skill(models.Model):
     def __unicode__(self):
         return self.skill_name
 
+def upload_location(instance, filename):
+    return 'profile_images/{0}/{1}'.format(instance.user.username, filename)
+
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
     user = models.OneToOneField(User)
 
     # The additional attributes we wish to include.
-    phone_number = models.CharField(max_length=15, null=True)
-    dob=models.DateField(default=date.today(), null=True)
-    about_me=models.TextField(max_length=500, null=True)
+    phone_number = models.CharField(max_length=15, blank=True)
+    dob=models.DateField(default=date.today(), blank=True)
+    about_me=models.TextField(max_length=500, blank=True)
+    picture = models.ImageField(upload_to=upload_location, default='default-avatar.jpg')
 
     # Override the __unicode__() method to return out something meaningful!
     def __unicode__(self):
         return self.user.username
 
+    def get_dob(self):
+        return self.dob.strftime("%Y-%m-%d")
+
+
 class UserProfile_Skill(models.Model):
     user_profile = models.ForeignKey(UserProfile)
     skill = models.ForeignKey(Skill)
-
 
     def __unicode__(self):
         return self.user_profile.user.username + "skills"

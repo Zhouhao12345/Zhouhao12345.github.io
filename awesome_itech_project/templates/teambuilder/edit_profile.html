@@ -1,48 +1,84 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title_block %}Create profile{% endblock %}
 {% block body_block %}
+    <h1 class="page-header">Edit profile</h1>
     {% if not created %}
-        <h3>Edit your profile</h3>
-        <form id="profile_form" method="post" action="{% url 'teambuilder:edit_profile' %}">
-            {% csrf_token %}
-            {% if errors %}
-                <div class="alert alert-danger">
-                    {{error}}
+     <div class="row">
+            <!-- left column -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+          <div class="text-center">
+            <img src="/media/{{profile.picture}}/" class="avatar img-circle img-thumbnail" alt="profile photo">
+          </div>
+        </div>
+            <!-- edit form column -->
+         <div class="col-lg-8 col-sm-6 col-xs-12 personal-info">
+            <form id="profile_form" class="form-horizontal" method="post" action="{% url 'teambuilder:edit_profile' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% if errors %}
+                    <div class="alert alert-danger">
+                        {{errors}}
+                    </div>
+                {% endif %}
+
+                <div class="form-group">
+                  <label class="col-lg-3 control-label">First name:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" value="{{user.first_name}}" name="first_name"/>
+                  </div>
                 </div>
-            {% endif %}
 
-            <label>Please enter your phone number:</label><br/>
                 <div class="form-group">
-                <input class="form-control" id="id_phone_number" maxlength="15" name="phone_number" type="text" placeholder="Enter phone number" />
-            </div><br/>
+                  <label class="col-lg-3 control-label">Last name:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" type="text" value="{{user.last_name}}" name="last_name"/>
+                  </div>
+                </div>
 
-            <label>Please enter your date of birth:</label><br/>
                 <div class="form-group">
-                <input class="form-control" id="id_dob" name="dob" type="text" value="2016-03-18" />
-            </div><br/>
+                  <label class="col-lg-3 control-label">Date of birth:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control datefield" id="id_dob" name="dob" type="text" value="{{profile.get_dob}}" />
+                  </div>
+                </div>
 
-           <label>Please enter something about yourself including your skills:</label><br/>
                 <div class="form-group">
-                <textarea cols="40" id="id_about_me" maxlength="500" name="about_me" class="form-control" style="min-width: 100%">
-            </textarea>
-                    </div><br/>
+                  <label class="col-lg-3 control-label">Phone number:</label>
+                  <div class="col-lg-8">
+                    <input class="form-control" id="id_phone_number" maxlength="15" name="phone_number" type="text" value="{{profile.phone_number}}" placeholder="Enter phone number" />
+                  </div>
+                </div>
 
-            <label>Please enter your first name:</label><br/>
                 <div class="form-group">
-                 <input class="form-control" type="text" value="{{user.first_name}}" name="first_name"/>
-                   </div><br/>
+                  <label class="col-lg-3 control-label">About me</label>
+                  <div class="col-lg-8">
+                    <textarea cols="40" id="id_about_me" maxlength="500" name="about_me" class="form-control">{{profile.about_me}}</textarea>
+                  </div>
+                </div>
 
-            <label>Please enter your last name:</label><br/>
                 <div class="form-group">
-                <input class="form-control" type="text" value="{{user.last_name}}" name="last_name"/>
-            </div><br/>
+                    <label class="col-lg-3 control-label">Change display picture:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="file" name="picture">
+                    </div>
+                </div>
 
-            <button class="btn btn-success btn-block center-block" type="submit" value="submit">Submit</button>
+                <div class="form-group">
+                  <label class="col-md-3 control-label"></label>
+                  <div class="col-md-4">
+                    <button class="btn btn-primary btn-block center-block" type="submit" value="submit">Save changes <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span></button>
+                  </div>
+                  <div class="col-md-4">
+                    <a href="{% url 'teambuilder:profile' profile.user.username %}" class="btn btn-primary btn-block center-block" type="submit" value="submit">Cancel <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                  </div>
+                </div>
 
-
-        </form>
-    {% else %}
-         <p>Your changes have been saved. Click <a href="/teambuilder/profile/{{ user.username }}">here</a> to view profile </p>
-    {% endif %}
-
+            </form>
+        {% else %}
+            <div class="alert alert-success">
+                <p>Your changes have been saved. Click <a href="/teambuilder/profile/{{ user.username }}">here</a> to view profile </p>
+            </div>
+        {% endif %}
+        </div>
+     </div>
 {% endblock %}

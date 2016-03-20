@@ -1,19 +1,58 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title_block %}Profile {% endblock %}
 {% block body_block %}
-    <ul>
-        <li>username: {{profile.user.username}}</li>
-        <li>first name: {{profile.user.first_name}}</li>
-        <li>last name: {{profile.user.last_name}}</li>
-        <li>email: {{profile.user.email}}</li>
-        <li>phone number: {{ profile.phone_number }}</li>
-        <li>DOB: {{ profile.dob }}</li>
-        <li>About me: {{ profile.about_me }}</li>
-    </ul>
 
-    {% if user == profile.user %}
-        <a href="{% url 'teambuilder:edit_profile' %}">Edit profile</a>
+<div class="row">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+      <div class="text-center">
+        <img src="/media/{{profile.picture}}/" class="avatar img-circle img-thumbnail" alt="profile photo">
+      </div>
+    </div>
+    <h3>Personal details</h3>
+    <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+        <h3>{{course.name}}</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Username</td>
+                        <td>{{profile.user.username}}</td>
+                    </tr>
+                    <tr>
+                        <td>First name</td>
+                        <td>{{ profile.user.first_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Last name</td>
+                        <td>{{profile.user.last_name}}</a></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td>{{profile.user.email}}</td>
+                    </tr>
+                    <tr>
+                        <td>Phone number</td>
+                        <td>{{profile.phone_number}}</td>
+                    </tr>
+                    <tr>
+                        <td>Date of birth</td>
+                        <td>{{profile.dob}}</td>
+                    </tr>
+                    <tr>
+                        <td>About me</td>
+                        <td>{{profile.about_me}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-    {% endif %}
+        {% if user == profile.user %}
+            <a class="btn btn-primary" href="{% url 'teambuilder:edit_profile' %}">Edit profile
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+        {% endif %}
+        </div>
+    </div>
 
+</div>
 {% endblock %}

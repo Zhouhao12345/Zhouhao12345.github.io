@@ -5,6 +5,7 @@ from teambuilder.forms import UserForm,TeamForm,CourseForm
 from teambuilder.models import Team, Course, Memberrequest,UserProfile,User
 from teambuilder.forms import UserForm,TeamForm,ProfileForm
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 
 # Create your views here.
@@ -58,16 +59,18 @@ def create_team(request):
     return render(request, 'teambuilder/create_team.html', context_dict)
 
 @login_required
-def profile(request,username):
+def profile(request, username):
     context_dict = {}
     try:
         u = User.objects.get(username=username)
-        up=UserProfile.objects.get(user=u)
+        up = UserProfile.objects.get(user=u)
 
         context_dict['profile']=up
 
     except User.DoesNotExist:
-         return HttpResponseRedirect('/teambuilder/page-not-found/')
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
+    except UserProfile.DoesNotExist:
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return render(request, 'teambuilder/profile.html', context_dict)
 
@@ -77,23 +80,33 @@ def edit_profile(request):
     user = request.user
     profile2 = UserProfile.objects.get(user=user)
     if request.method=='POST':
-        profile_form = ProfileForm(data=request.POST)
+
+        profile_form = ProfileForm(data=request.POST, instance=profile2)
+
+        # use a UserProfile object to store data collected
+        dob2 = datetime.strptime(request.POST['dob'], "%Y-%m-%d").date()
+        uprofile = UserProfile(dob=dob2, about_me=request.POST['about_me'],
+                               phone_number=request.POST['phone_number'], user=request.user)
+
+        # check the user profile part for validity
         if profile_form.is_valid():
+            # if form is valid, save
+            # save the user details part
             user.first_name=request.POST['first_name']
             user.last_name=request.POST['last_name']
             user.save()
-            profile = profile_form.save(commit=False)
-            profile2.dob=profile.dob
-            profile2.phone_number=profile.phone_number
-            profile2.about_me=profile.about_me
-            profile2.save()
+
+            user_profile = profile_form.save(commit=False)
+            if 'picture' in request.FILES:
+                user_profile.picture = request.FILES['picture']
+            user_profile.save()
             context_dict['created'] = True
         else:
+            # else show errors
             context_dict['errors'] = profile_form.errors
+            context_dict['profile'] = uprofile  # pass already entered data back to the user
     else:
-        profile_form = ProfileForm(initial={'dob':profile2.dob,'phone_number':profile2.phone_number,'about_me':profile2.about_me});
-        context_dict['profile']=profile2
-        context_dict['profile_form'] = profile_form
+        context_dict['profile'] = profile2
     return render(request, 'teambuilder/edit_profile.html', context_dict)
 
 
@@ -140,9 +153,9 @@ def find_team(request):
 
 
 def get_team_list(max_results=0, starts_with=''):
-        team_list = []
-        team_list1 = []
-        course_list = []
+        team_list = None
+        team_list1 = None
+        course_list = None
         if starts_with:
                 team_list = Team.objects.filter(name__istartswith=starts_with)
                 course_list = Course.objects.filter(name__istartswith=starts_with)
@@ -171,18 +184,22 @@ def search_team(request):
 
 @login_required
 def add_course(request):
-    context_dic= {}
-    if request.method=='POST':
-        course_form=CourseForm(request.POST)
+    context_dic = {}
+    if request.method == 'POST': # user is sending data
+        course_form = CourseForm(request.POST) # create form instance with submitted data
 
+        # if form is valid, create a new Model instance of course and save it
         if course_form.is_valid():
-            course=course_form.save(commit=False)
-            course.creator= request.user
+            course = course_form.save(commit=False)
+            course.creator = request.user
             course.save()
-            context_dic['created']=True
+            context_dic['created'] = True
 
+        # else form has errors. Add those errors to the context dictionary for rendering on the template file
         else:
             context_dic['errors']=course_form.errors
+
+    # user is requesting data. Create and send back an empty form
     else:
         course_form=CourseForm()
         context_dic['course_form']=course_form
@@ -202,18 +219,20 @@ def join_team(request, team_name_slug):
 def edit_team(request,team_name_slug):
     context_dict = {}
     try:
-        user = request.user
-        team = Team.objects.get(slug=team_name_slug)
+        user = request.user #get logged in user
+        team = Team.objects.get(slug=team_name_slug) #get the specified team
         if request.method=='POST':
                 team.name=request.POST['name']
                 team.required_skills=request.POST['skill']
                 team.description=request.POST['description']
+
+                #update team with new details and save
                 team.save()
                 context_dict['created'] = True
         context_dict['user']=user
         context_dict['team']=team
 
-    except Team.DoesNotExist:
+    except Team.DoesNotExist: #redirect user to 404 page if team does not exist
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return render(request, 'teambuilder/edit_team.html', context_dict)
@@ -364,9 +383,10 @@ def course_details(request, course_name_slug):
 def edit_course(request, course_name_slug):
     context_dict = {}
     try:
-        old_course = Course.objects.get(slug=course_name_slug)
-        if request.user == old_course.creator:
+        old_course = Course.objects.get(slug=course_name_slug) # get course details
+        if request.user == old_course.creator: # check if the user trying to edit is the course creator
             context_dict['course'] = old_course
+
             if request.method == 'POST':
                 course_form = CourseForm(data=request.POST, instance=old_course)
                 if course_form.is_valid():
@@ -377,12 +397,13 @@ def edit_course(request, course_name_slug):
 
             else:
                 pass
+
             return render(request,'teambuilder/edit_course.html',context_dict)
 
-        else:
+        else: # if user is not course creator, redirect to 403 page
             return HttpResponseRedirect('/teambuilder/unauthorized/')
 
-    except Course.DoesNotExist:
+    except Course.DoesNotExist: # if course does not exist, redirect to 404 page
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
 
