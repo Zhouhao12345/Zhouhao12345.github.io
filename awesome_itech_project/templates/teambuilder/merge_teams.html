@@ -4,7 +4,9 @@
     <h3>Merge teams together</h3>
     <p>Note that the members of the child team will be moved to the parent team</p>
     {% if teams %}
-        <p>{{message}}</p>
+        <div class="alert alert-success">
+            <p>{{message}}</p>
+        </div>
         {% if not merge %}
             <form id="merge_team_form" method="post" action="/teambuilder/course/{{course.slug}}/merge-teams/">
                 {% csrf_token %}
