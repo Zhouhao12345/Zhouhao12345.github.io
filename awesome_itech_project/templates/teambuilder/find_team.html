@@ -1,5 +1,8 @@
- {% if team_list %}
-         <table>
+
+  <div id="latest_teams" class="col-sm-6">
+{% if team_list %}
+      <div class="table-responsive">
+         <table class="table">
                 <thead>
                     <td>Team</td><td>Course</td>
                 </thead>
@@ -10,9 +13,11 @@
                     </tr>
                 {% endfor %}
          </table>
+          </div>
  {% else %}
-         <p>No such team exits. Please recheck your typing<p>
+         <p>No such team exits. Please recheck your typing</p>
  {% endif %}
+      </div>
 
 
 
