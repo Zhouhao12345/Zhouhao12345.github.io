@@ -9,50 +9,33 @@ from django.contrib.auth.models import User
 
 def populate():
     user = add_user("leifos", "leifos", "leifos@gmail.com")
-    user2 = add_user("user2", "abcdef", "def@xyz.com")
-    user3 = add_user("user3", "abcdef", "ghi@xyz.com")
-    user4 = add_user("user4", "abcdef", "jkl@xyz.com")
-    user5 = add_user("user5", "abcdef", "mno@xyz.com")
-    user6 = add_user("user6", "abcdef", "pqr@xyz.com")
+    user2 = add_user("laura", "laura", "laura@gmail.com")
+    user3 = add_user("david", "david", "david@gmail.com")
+    user4 = add_user("yu", "yu", "yu@gmail.com")
+    user5 = add_user("hao", "hao", "hao@gmail.com")
+    user6 = add_user("gozie", "gozie", "gozie@gmail.com")
+	user7 = add_user("jeff", "jeff", "jeff@gmail.com")
 
-    userprofile1 = add_userprofile("01234567890", "just a regular guy", user)
-    userprofile2 = add_userprofile("01238747890", "just another regular guy", user2)
-    userprofile3 = add_userprofile("01299854740", "just another regular guy again", user3)
-    userprofile4 = add_userprofile("01255555590", "just another regular guy", user4)
-    userprofile5 = add_userprofile("07778585840", "just another regular guy again", user5)
-    userprofile6 = add_userprofile("00125698580", "just another regular guy", user6)
+    userprofile1 = add_userprofile("01234567890", "I am the lecturer of Internet technology", user)
+    userprofile2 = add_userprofile("01238747890", "I am an industrial visitor", user2)
+    userprofile3 = add_userprofile("01299854740", "I am an industrial visitor too", user3)
+    userprofile4 = add_userprofile("01255555590", "I am a hardworking IT student", user4)
+    userprofile5 = add_userprofile("07778585840", "I am a smart SD student", user5)
+    userprofile6 = add_userprofile("00125698580", "I am a SD student, good at web development ", user6)
+	userprofile7 = add_userprofile("00141698580", "I am a great SE student", user7)
 
-    course = add_course("COMP0123","Internet Technology", "ITECH2016", 4, user2)
+    course = add_course("COMP0123","Internet Technology", "ITECH2016", 4, user)
 
-    course2 = add_course("COMP0144","Advanced programming", "AP2016", 5, user2)
-
-    team = add_team("Awesome",course, user,"Java, CSS", "Team for ITECH project")
-
-    team2 = add_team("Bandbud",course2, user2,"Java, CSS", "Team for AP project")
-    team3 = add_team("Excurj",course, user3,"Java, CSS", "Team for ITECH project")
-    team4 = add_team("Nameless",course2, user4,"Java, CSS", "Team for AP project")
-    team5 = add_team("Crazy",course, user6,"Java, CSS", "Team for ITECH project")
-    team6 = add_team("Happy",course2, user5,"Java, CSS", "Team for AP project")
+    team = add_team("Awesome",course, user6,"Java, CSS", "Team for ITECH project")
+    
 
     add_member_request(user2,team)
     add_member_request(user3,team5)
     add_member_request(user4,team2)
     add_member_request(user5,team4)
-    add_member_request(user6,team3)
-    add_member_request(user,team6)
+    add_member_request(user7,team3)
 
-    '''
-    skill1 = add_skill("python programming")
-    skill2 = add_skill("Java programming")
-    skill3 = add_skill("C++")
-    skill4 = add_skill("perl")
-    skill5 = add_skill("Javascript")
-    skill6 = add_skill("Ruby on rails")
-    add_user_skill(userprofile1,skill1)
-    add_user_skill(userprofile1,skill2)
-    add_user_skill(userprofile2,skill1)
-    add_user_skill(userprofile2,skill3)
-    '''
+
 
 def add_user(username, password, email):
     user = User.objects.get_or_create(username=username)[0]
