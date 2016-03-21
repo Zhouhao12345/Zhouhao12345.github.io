@@ -3,8 +3,10 @@
 
 {% block body_block %}
     <h3>Requests needing your attention</h3>
+     <div id="latest_teams" class="col-sm-6">
     {% if requests %}
-        <table>
+         <div class="table-responsive">
+        <table class="table">
             <tr>
                 <td>Team</td>
                 <td>Requester</td>
@@ -31,9 +33,9 @@
             </tr>
             {% endfor %}
         </table>
-
+     </div>
     {% else %}
         <p>There are no available requests at this time</p>
     {% endif %}
-
+    </div>
 {% endblock %}

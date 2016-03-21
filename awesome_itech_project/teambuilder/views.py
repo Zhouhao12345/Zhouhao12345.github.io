@@ -27,7 +27,7 @@ def create_team(request):
     context_dict = {}
 
     context_dict['courses'] = Course.objects.order_by('name')  # get all the available courses
-    if request.method == 'POST':  # user is sending data to the server
+    if request.method == 'POST':  # user is sending data to the server#
         team_form = TeamForm(data=request.POST)
         context_dict['team_form'] = team_form
 
