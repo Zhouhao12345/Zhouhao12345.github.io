@@ -25,7 +25,7 @@ def about(request):
 @login_required
 def create_team(request):
     context_dict = {}
-    if request.method=='POST':
+    if request.method == 'POST':
         team_form = TeamForm(data=request.POST)
         context_dict['team_form'] = team_form
         if team_form.is_valid():
@@ -54,17 +54,17 @@ def create_team(request):
             context_dict['errors'] = team_form.errors
 
     else:
-        team_form = TeamForm();
+        team_form = TeamForm()
         context_dict['team_form'] = team_form
+        context_dict['courses'] = Course.objects.order_by('name')
     return render(request, 'teambuilder/create_team.html', context_dict)
 
 @login_required
 def profile(request, username):
     context_dict = {}
 
-    u = User.objects.get(username=username)
-
     try:  # if user has a profile, get and pass the profile to the template file or else create an empty one
+        u = User.objects.get(username=username)
         up = UserProfile.objects.get_or_create(user=u)[0]
         context_dict['profile'] = up
 
@@ -204,13 +204,14 @@ def add_course(request):
 
         # else form has errors. Add those errors to the context dictionary for rendering on the template file
         else:
-            context_dic['errors']=course_form.errors
+            context_dic['errors'] = course_form.errors
 
     # user is requesting data. Create and send back an empty form
     else:
         course_form=CourseForm()
         context_dic['course_form']=course_form
-    return render(request,'teambuilder/add_course.html',context_dic)
+
+    return render(request, 'teambuilder/add_course.html', context_dic)
 
 
 @login_required

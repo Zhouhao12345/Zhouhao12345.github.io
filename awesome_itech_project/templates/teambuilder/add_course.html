@@ -11,8 +11,6 @@
                 </div>
             {% endif %}
 
-
-
             <div class="form-group">
                 <label class="sr-only" for="id_code">Code:</label>
                 <input id="id_code" class="form-control" maxlength="30" name="code" type="text" placeholder="Enter course code "/>
@@ -40,6 +38,6 @@
         </form>
 
     {% else %}
-        <p>Course has been successfully added</p>
+        <p>Course has been successfully added. <a href="/teambuilder/dashboard/">Click here</a> to return to dashboard. </p>
     {% endif %}
 {% endblock %}
