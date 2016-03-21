@@ -25,6 +25,7 @@ def about(request):
 @login_required
 def create_team(request):
     context_dict = {}
+    context_dict['courses'] = Course.objects.order_by('name')
     if request.method == 'POST':
         team_form = TeamForm(data=request.POST)
         context_dict['team_form'] = team_form
@@ -56,7 +57,7 @@ def create_team(request):
     else:
         team_form = TeamForm()
         context_dict['team_form'] = team_form
-        context_dict['courses'] = Course.objects.order_by('name')
+
     return render(request, 'teambuilder/create_team.html', context_dict)
 
 @login_required

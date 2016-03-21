@@ -8,7 +8,7 @@ from teambuilder.models import Team, UserProfile, Course, Memberrequest, Skill, 
 from django.contrib.auth.models import User
 
 def populate():
-    user = add_user("user1", "abcdef", "abc@xyz.com")
+    user = add_user("leifos", "leifos", "leifos@gmail.com")
     user2 = add_user("user2", "abcdef", "def@xyz.com")
     user3 = add_user("user3", "abcdef", "ghi@xyz.com")
     user4 = add_user("user4", "abcdef", "jkl@xyz.com")
@@ -23,19 +23,25 @@ def populate():
     userprofile6 = add_userprofile("00125698580", "just another regular guy", user6)
 
     course = add_course("COMP0123","Internet Technology", "ITECH2016", 4, user2)
+
     course2 = add_course("COMP0144","Advanced programming", "AP2016", 5, user2)
+
     team = add_team("Awesome",course, user,"Java, CSS", "Team for ITECH project")
+
     team2 = add_team("Bandbud",course2, user2,"Java, CSS", "Team for AP project")
     team3 = add_team("Excurj",course, user3,"Java, CSS", "Team for ITECH project")
     team4 = add_team("Nameless",course2, user4,"Java, CSS", "Team for AP project")
     team5 = add_team("Crazy",course, user6,"Java, CSS", "Team for ITECH project")
     team6 = add_team("Happy",course2, user5,"Java, CSS", "Team for AP project")
+
     add_member_request(user2,team)
     add_member_request(user3,team5)
     add_member_request(user4,team2)
     add_member_request(user5,team4)
     add_member_request(user6,team3)
     add_member_request(user,team6)
+
+    '''
     skill1 = add_skill("python programming")
     skill2 = add_skill("Java programming")
     skill3 = add_skill("C++")
@@ -46,6 +52,7 @@ def populate():
     add_user_skill(userprofile1,skill2)
     add_user_skill(userprofile2,skill1)
     add_user_skill(userprofile2,skill3)
+    '''
 
 def add_user(username, password, email):
     user = User.objects.get_or_create(username=username)[0]
