@@ -4,7 +4,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'awesome_itech_project.settings'
 import django
 django.setup()
 
-from teambuilder.models import Team, UserProfile, Course, Memberrequest, Skill, UserProfile_Skill
+from teambuilder.models import Team, UserProfile, Course, Memberrequest
 from django.contrib.auth.models import User
 
 def populate():
@@ -14,7 +14,8 @@ def populate():
     user4 = add_user("yu", "yu", "yu@gmail.com")
     user5 = add_user("hao", "hao", "hao@gmail.com")
     user6 = add_user("gozie", "gozie", "gozie@gmail.com")
-	user7 = add_user("jeff", "jeff", "jeff@gmail.com")
+    user7 = add_user("jeff", "jeff", "jeff@gmail.com")
+
 
     userprofile1 = add_userprofile("01234567890", "I am the lecturer of Internet technology", user)
     userprofile2 = add_userprofile("01238747890", "I am an industrial visitor", user2)
