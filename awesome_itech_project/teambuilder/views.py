@@ -25,6 +25,7 @@ def about(request):
 @login_required
 def create_team(request):
     context_dict = {}
+    context_dict['courses'] = Course.objects.order_by('name')
     if request.method == 'POST':
         team_form = TeamForm(data=request.POST)
         context_dict['team_form'] = team_form
@@ -49,6 +50,7 @@ def create_team(request):
             else:
                 context_dict['error'] = "Invalid course password provided"
                 context_dict['created'] = False
+                context_dict['courses'] = Course.objects.order_by('name')
 
         else:
             context_dict['errors'] = team_form.errors

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title_block %}Add a course {% endblock %}
 {% block body_block %}
-
+    <p><strong>Create course</strong></p>
     {% if not created %}
         <form id="course_form" method="post" action="{% url 'teambuilder:add_course' %}" role="form">
             {% csrf_token %}
