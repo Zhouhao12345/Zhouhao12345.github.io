@@ -11,11 +11,6 @@
                 </div>
             {% endif %}
 
-         <!--label>Please enter your first name</label><br/>
-                    <div class="form-group">
-                        <input class="form-control" id="id_first_name" maxlength="30" name="first_name" type="text" />
-                    </div><br/-->
-
         <label>Please enter your team name:</label><br/>
           <div class="form-group">
             <input class="form-control" id="id_name" maxlength="100" name="name" type="text" placeholder="Enter team name" />
@@ -24,9 +19,9 @@
         <label>Please enter your course name:</label><br/>
             <div class="form-group">
                 <select class="form-control" id="id_course" name="course">
-                <option value="" selected="selected">---------</option>
-                <option value="1">Internet Technology</option>
-                <option value="2">Advanced programming</option>
+                 {% for course in courses %}
+                    <option value="{{course.id}}">{{course.name}}</option>
+                {% endfor %}
                 </select>
             </div><br/>
 
@@ -42,7 +37,7 @@
                 </textarea>
             </div><br/>
 
-        <label>Enter your course password:</label><br/>
+        <label>Enter the course password:</label><br/>
             <div class="form-group">
              <input class="form-control" id="id_course_password" maxlength="15" name="course_password" type="text" placeholder="Enter your course password"/>
         </div><br/>
