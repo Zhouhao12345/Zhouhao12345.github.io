@@ -23,8 +23,7 @@ If Error shows "The two password fields didn't match.":
 If Error shows "Please enter a correct username and password. Note that 
    both fields may be case-sensitive.":
 4) Check the detail of typeing or register another account
-
-If User logs in website application successfully: 
+ 
    How to view and edit profile in this website application?
 1) Click username Drop-Down Button(for example "zhou") on the top-right side 
    of homepage
@@ -35,6 +34,15 @@ If User logs in website application successfully:
    TextBoxs and upload profile phote on edit-profile page
 6) Click "Save changes" to save profile information, or
    Click "Cancel" to cancel those changes of profile
+  
+   How to reset password of user account?
+1) Click username Drop-Down Button(for example "zhou") on the top-right side 
+   of homepage
+2) Click "Change Password" in the drop-down list
+3) Enter old password, new password, and confirm new password into required 
+   TextBoxs
+If Error shows "Your old password was entered incorrectly. Please enter it again."
+4) Check the old password typing 
  
    How to find one team in this website application?
 1) Click "Find team" Button in the center of homepage, or
@@ -141,8 +149,7 @@ If Error shows "Course with this course code already exists"
    How to cancel request to one team?
 1) Click one team name user prefered
 2) View the team detail
-3) Click "Cancel request" Button 
-
+3) Click "Cancel request" Button  
  
 
 

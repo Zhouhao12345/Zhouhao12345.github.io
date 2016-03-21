@@ -1,5 +1,5 @@
 from django.contrib import admin
-from teambuilder.models import Team, UserProfile, User, Course, Memberrequest, Skill
+from teambuilder.models import Team, UserProfile, Course, Memberrequest
 
 
 class UserProfileAdmin(admin.ModelAdmin):
@@ -17,4 +17,3 @@ admin.site.register(Team, TeamAdmin)
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Course)
 admin.site.register(Memberrequest, MemberRequestAdmin)
-admin.site.register(Skill)
