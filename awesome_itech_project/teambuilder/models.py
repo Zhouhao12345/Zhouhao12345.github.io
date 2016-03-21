@@ -3,14 +3,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
-class Skill(models.Model):
-    skill_name=models.CharField(max_length=50, unique=True)
-
-    def __unicode__(self):
-        return self.skill_name
 
 def upload_location(instance, filename):
     return 'profile_images/{0}/{1}'.format(instance.user.username, filename)
+
 
 class UserProfile(models.Model):
     # This line is required. Links UserProfile to a User model instance.
@@ -26,18 +22,10 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-class UserProfile_Skill(models.Model):
-    user_profile = models.ForeignKey(UserProfile)
-    skill = models.ForeignKey(Skill)
-
-    def __unicode__(self):
-        return self.user_profile.user.username + "skills"
-
-
 class Course(models.Model):
     code=models.CharField(max_length=15,unique=True)
     name=models.CharField(max_length=100,unique=True)
-    course_password=models.CharField(max_length=15)
+    course_password=models.CharField(max_length=15, null=False)
     team_size=models.IntegerField(default=0)
     add_date=models.DateTimeField(default=datetime.now(), null=False)
     creator=models.ForeignKey(User)
@@ -49,6 +37,7 @@ class Course(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class Team(models.Model):
     name=models.CharField(max_length=100, unique=True)
@@ -71,6 +60,7 @@ class Team(models.Model):
 
     def available_slots(self):
         return self.course.team_size - self.current_size
+
 
 class Memberrequest(models.Model):
     user=models.ForeignKey(User)

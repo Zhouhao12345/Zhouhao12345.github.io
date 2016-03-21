@@ -10,57 +10,65 @@ from datetime import datetime
 
 # Create your views here.
 def index(request):
-    teams = Team.objects.filter(status=True).order_by('-creation_date')[:5]
-    courses = Course.objects.order_by('-add_date')[:5]
+    teams = Team.objects.filter(status=True).order_by('-creation_date')[:5]  # get the top 5 teams ordered by most recently created
+    courses = Course.objects.order_by('-add_date')[:5]  # get the top 5 courses ordered by most recently created
     context_dict = {}
     context_dict['teams'] = teams
     context_dict['courses'] = courses
-    return render(request, 'teambuilder/index.html', context_dict)
+    return render(request, 'teambuilder/index.html', context_dict)  # render the template file containing courses and teams
 
 
 def about(request):
     return render(request, 'teambuilder/about.html', {})
 
 
-@login_required
+@login_required  # user has to be logged in to create a team
 def create_team(request):
     context_dict = {}
-    context_dict['courses'] = Course.objects.order_by('name')
-    if request.method == 'POST':
+    context_dict['courses'] = Course.objects.order_by('name')  # get all the available courses
+    if request.method == 'POST':  # user is sending data to the server
         team_form = TeamForm(data=request.POST)
         context_dict['team_form'] = team_form
+
+        # check if the sent data is valid
         if team_form.is_valid():
+
+            # if data is valid, process team creation
             course_password = request.POST['course_password']
             course_id = request.POST['course']
             course = Course.objects.get(pk=course_id)
 
+            team = team_form.save(commit=False)  # capture user input but don't save yet
+
             if course_password == course.course_password:
-                team = team_form.save(commit=False)
+                # if user entered the correct course password, save the created team
+
                 team.creator = request.user
                 created_before = Team.objects.filter(course=course, creator=team.creator, status = True) #check if user has created an active team for the course previously
 
-                if len(created_before) > 0:
+                if len(created_before) > 0:  # user has already created a team for the course. Deny team creation request
                     context_dict['error'] = "You have already created a team for this course before"
                 else:
+                    # user creating first team for the course. accept the request and save the team
                     team.name = team.name.title()
                     team.save()
                     context_dict['created'] = True
-                    return HttpResponseRedirect('/teambuilder/team/'+team.slug+'/')
+                    return HttpResponseRedirect('/teambuilder/team/'+team.slug+'/')  # redirect user to the team page of newly created team
 
             else:
+                # incorrect password entered for course. Notify user of that
                 context_dict['error'] = "Invalid course password provided"
                 context_dict['created'] = False
+                # also pass the entered data to template file to redisplay it
+                context_dict['team'] = team
 
         else:
+            # data passed in by user failed validation. Notify user of that
             context_dict['errors'] = team_form.errors
-
-    else:
-        team_form = TeamForm()
-        context_dict['team_form'] = team_form
 
     return render(request, 'teambuilder/create_team.html', context_dict)
 
-@login_required
+@login_required # user has to be logged in to view a user's profile
 def profile(request, username):
     context_dict = {}
 
@@ -76,7 +84,7 @@ def profile(request, username):
 
     return render(request, 'teambuilder/profile.html', context_dict)
 
-@login_required
+@login_required # user has to be logged in to edit profile
 def edit_profile(request):
     context_dict = {}
     user = request.user  # get logged in user
@@ -94,13 +102,13 @@ def edit_profile(request):
             # check the user profile part for validity
             if profile_form.is_valid():
                 # if form is valid, save
-                # save the user details part
+                # save the user details part first
                 user.first_name=request.POST['first_name']
                 user.last_name=request.POST['last_name']
                 user.save()
 
                 user_profile = profile_form.save(commit=False)
-                if 'picture' in request.FILES:
+                if 'picture' in request.FILES:  # if user added a photo, add the photo to user's profile
                     user_profile.picture = request.FILES['picture']
                 user_profile.save()
                 context_dict['created'] = True
@@ -109,7 +117,7 @@ def edit_profile(request):
                 context_dict['errors'] = profile_form.errors
                 context_dict['profile'] = uprofile  # validation failed. pass already entered data back to the user
 
-        else:  # user is just requesting data from server
+        else:  # user is just requesting data from server i.e. making a GET request
             context_dict['profile'] = profile2
 
     except UserProfile.DoesNotExist:
@@ -122,14 +130,16 @@ def team_details(request, team_name_slug):
 
     context_dict = {}
     try:
-        team = Team.objects.get(slug=team_name_slug)
+        team = Team.objects.get(slug=team_name_slug)  # get team with the specified team name slug
         context_dict['team'] = team
 
-        #check if user has previously requested to join the team
-        user = request.user
+        # check if user has previously requested to join the team
+        user = request.user  # get the logged in user
+
         if user.is_authenticated():
             try:
-                mr = Memberrequest.objects.get(team=team,user=user,status="pending")
+                # if user has a pending request to join the team, pass that request to the template file
+                mr = Memberrequest.objects.get(team=team, user=user, status="pending")
                 context_dict['member_request'] = mr
 
             except Memberrequest.DoesNotExist:
@@ -138,7 +148,8 @@ def team_details(request, team_name_slug):
             #check if user has an already accepted request for that team
             try:
                 mr2 = Memberrequest.objects.get(team=team,user=user,status="accepted")
-                if mr2:
+
+                if mr2: # if an accepted request exists, pass True to the template file.
                     context_dict['accepted_request'] = True
 
             except Memberrequest.DoesNotExist:
@@ -190,7 +201,7 @@ def search_team(request):
         return render(request, 'teambuilder/search_team.html', {'team_list': team_list })
 
 
-@login_required
+@login_required  # user has to be logged in to add a course
 def add_course(request):
     context_dic = {}
     if request.method == 'POST': # user is sending data
@@ -215,31 +226,40 @@ def add_course(request):
     return render(request, 'teambuilder/add_course.html', context_dic)
 
 
-@login_required
+@login_required # user has to be logged in to send a request to join a team
 def join_team(request, team_name_slug):
     user = request.user
-    team = Team.objects.get(slug=team_name_slug)
-    Memberrequest.objects.get_or_create(user=user, team=team, status="pending")
+    try:
+        team = Team.objects.get(slug=team_name_slug)
+        Memberrequest.objects.get_or_create(user=user, team=team, status="pending")  # using get_or_create to prevent user
+                                                # from sending a join request twice to the same team if an already pending
+                                                # request exists
+
+    except Team.DoesNotExist:
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/')
 
 
-@login_required
-def edit_team(request,team_name_slug):
+@login_required  # user has to be logged in to edit a team
+def edit_team(request, team_name_slug):
     context_dict = {}
     try:
         user = request.user #get logged in user
         team = Team.objects.get(slug=team_name_slug) #get the specified team
-        if request.method=='POST':
-                team.name=request.POST['name']
-                team.required_skills=request.POST['skill']
-                team.description=request.POST['description']
 
-                #update team with new details and save
-                team.save()
-                context_dict['created'] = True
-        context_dict['user']=user
-        context_dict['team']=team
+        if request.method == 'POST':  # user is sending data to the server
+            team.name = request.POST['name']
+            team.required_skills = request.POST['skill']
+            team.description = request.POST['description']
+
+            #update team with new details and save
+            team.save()
+            context_dict['created'] = True
+
+
+        context_dict['user'] = user
+        context_dict['team'] = team
 
     except Team.DoesNotExist: #redirect user to 404 page if team does not exist
         return HttpResponseRedirect('/teambuilder/page-not-found/')

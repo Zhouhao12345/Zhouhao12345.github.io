@@ -2,6 +2,7 @@
 {% block title_block %}Edit Team{% endblock %}
 {% block body_block %}
     {% if not created %}
+        <h3></h3>
         <form id="team_form" method="post">
             {% csrf_token %}
             {{errors}}
@@ -11,6 +12,8 @@
             <input type="submit" value="Submit" />
         </form>
     {% else %}
-         <p>You have been successfully edited this team, Click <a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a> to view team </p>
+    <div class="alert alert-success">
+         <p>You have successfully edited this team, Click <a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a> to view team </p>
+    </div>
     {% endif %}
 {% endblock %}
