@@ -5,11 +5,31 @@
         <h3></h3>
         <form id="team_form" method="post">
             {% csrf_token %}
-            {{errors}}
-            <p>Team name: <input type="text" value="{{team.name}}" name="name"/></p></br>
-            <p>Skill needed: <input type="text" value="{{team.required_skills}}" name="skill"/></p></br>
-            <p>Description: <input type="text" value="{{team.description}}" name="description"/></p></br>
-            <input type="submit" value="Submit" />
+               {% if errors %}
+                <div class="alert alert-danger">
+                    <p>{{ errors }}</p>
+                </div>
+            {% endif %}
+
+
+            <label>Please enter your team name:</label><br/>
+             <div class="form-group">
+                <input class="form-control" id="course_code" type="text" name="name" value="{{team.name}}" />
+             </div><br/>
+
+            <label>Please enter your skill needed:</label><br/>
+             <div class="form-group">
+            <input class="form-control" type="text" value="{{team.required_skills}}" name="skill"/>
+                 </div><br/>
+
+            <label>Please enter your description:</label><br/>
+            <div class="form-group">
+                <input class="form-control" type="text" value="{{team.description}}" name="description"/>
+            </div><br/>
+
+
+            <button class="btn btn-success btn-block center-block" type="submit" value="submit">Submit</button>
+
         </form>
     {% else %}
     <div class="alert alert-success">
