@@ -2,6 +2,7 @@ from datetime import datetime, date
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from django.core.validators import MinValueValidator
 
 
 def upload_location(instance, filename):
@@ -26,7 +27,7 @@ class Course(models.Model):
     code=models.CharField(max_length=15,unique=True)
     name=models.CharField(max_length=100,unique=True)
     course_password=models.CharField(max_length=15, null=False)
-    team_size=models.IntegerField(default=0)
+    team_size = models.IntegerField(validators=[MinValueValidator(2)])
     add_date=models.DateTimeField(default=datetime.now(), null=False)
     creator=models.ForeignKey(User)
     slug = models.SlugField()

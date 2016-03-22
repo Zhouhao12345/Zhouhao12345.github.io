@@ -8,6 +8,7 @@ from teambuilder.models import Team, UserProfile, Course, Memberrequest
 from django.contrib.auth.models import User
 
 def populate():
+
     user = add_user("leifos", "leifos", "leifos@gmail.com")
     user2 = add_user("laura", "laura", "laura@gmail.com")
     user3 = add_user("david", "david", "david@gmail.com")
@@ -23,18 +24,18 @@ def populate():
     userprofile4 = add_userprofile("01255555590", "I am a hardworking IT student", user4)
     userprofile5 = add_userprofile("07778585840", "I am a smart SD student", user5)
     userprofile6 = add_userprofile("00125698580", "I am a SD student, good at web development ", user6)
-	userprofile7 = add_userprofile("00141698580", "I am a great SE student", user7)
+    userprofile7 = add_userprofile("00141698580", "I am a great SE student", user7)
+
 
     course = add_course("COMP0123","Internet Technology", "ITECH2016", 4, user)
 
     team = add_team("Awesome",course, user6,"Java, CSS", "Team for ITECH project")
-    
 
-    add_member_request(user2,team)
-    add_member_request(user3,team5)
-    add_member_request(user4,team2)
-    add_member_request(user5,team4)
-    add_member_request(user7,team3)
+    add_member_request(user3,team)
+    add_member_request(user4,team)
+    add_member_request(user5,team)
+    add_member_request(user6,team)
+    add_member_request(user7,team)
 
 
 
@@ -62,18 +63,9 @@ def add_team(name, course, creator, required_skills, description):
     t.description = description
     return t
 
-def add_skill(skill):
-    s = Skill.objects.get_or_create(skill_name=skill)[0]
-    return s;
-
 def add_member_request(user,team):
     a = Memberrequest.objects.get_or_create(user=user,team=team)[0]
     return a
-
-def add_user_skill(user,skill):
-    s = UserProfile_Skill.objects.get_or_create(user_profile = user, skill=skill)[0]
-    return s
-
 
 if __name__ == '__main__':
     print "Starting teambuilder population script..."

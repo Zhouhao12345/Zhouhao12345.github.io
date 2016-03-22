@@ -4,30 +4,27 @@ from django.contrib.auth.models import User
 
 class TeamAttributesTest(TestCase):
 
-    def Test_ensure_team_size_is_greater_than_zero(self):
+    def test_ensure_team_size_is_greater_than_zero(self):
 
         user = User(username='jeff')
         user.set_password('jeff')
-        user.save();
+        user.save()
 
         course = Course(name='big data', creator=user, team_size=4, code='COMP01234', course_password='BIGDATA')
         course.save()
-        team = Team(name='awesome',course=course,creator=user,required_skills='java',description='team for big data')
+        team = Team(name='awesome',course=course,creator=user,required_skills='java', description='team for big data')
         team.save()
-        team2 = Team(name='awesome2',course=course,creator=user,required_skills='java',description='team for big data')
-        team2.save()
-        self.assertEqual((team.current_size == 1),True)
 
-    def Test_ensure_team_name_are_positive(self):
+        self.assertEqual((team.current_size == 1), True)
+
+    def test_ensure_team_size_entered_for_course_is_greater_than_one(self):
 
         user = User(username='jeff')
         user.set_password('jeff')
-        user.save();
+        user.save()
 
-        course = Course(name='big data', creator=user, team_size=4, code='COMP01234', course_password='BIGDATA')
+        course = Course(name='big data', creator=user, team_size=1, code='COMP01234', course_password='BIGDATA')
         course.save()
-        team = Team(name='awesome',course=course,creator=user,required_skills='java',description='team for big data')
-        team.save()
-        team2 = Team(name='awesome2',course=course,creator=user,required_skills='java',description='team for big data')
-        team2.save()
-        self.assertEqual((team.name >= 0),True)
+
+        self.assertEqual((course.team_size > 1), False)
+

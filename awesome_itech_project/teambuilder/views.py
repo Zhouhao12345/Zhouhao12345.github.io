@@ -106,8 +106,8 @@ def edit_profile(request):
             if profile_form.is_valid():
                 # if form is valid, save
                 # save the user details part first
-                user.first_name=request.POST['first_name']
-                user.last_name=request.POST['last_name']
+                user.first_name = request.POST['first_name']
+                user.last_name = request.POST['last_name']
                 user.save()
 
                 user_profile = profile_form.save(commit=False)
@@ -115,6 +115,7 @@ def edit_profile(request):
                     user_profile.picture = request.FILES['picture']
                 user_profile.save()
                 context_dict['created'] = True
+                context_dict['profile'] = user_profile
             else:
                 # else show errors
                 context_dict['errors'] = profile_form.errors
@@ -273,10 +274,14 @@ def edit_team(request, team_name_slug):
 @login_required
 def cancel_request(request, team_name_slug):
     user = request.user
-    team = Team.objects.get(slug=team_name_slug)
-    mr = Memberrequest.objects.get(user=user, team=team, status="pending")
-    mr.status = "cancelled"
-    mr.save()
+    team = Team.objects.get(slug=team_name_slug)  # get the team whose request is to be cancelled
+    try:
+        mr = Memberrequest.objects.get(user=user, team=team, status="pending")  # get the pending request sent by user to that team
+        mr.status = "cancelled"  # cancel the request
+        mr.save()
+
+    except Memberrequest.DoesNotExist:
+        return HttpResponseRedirect('/teambuilder/page-not-found/')
 
     return HttpResponseRedirect('/teambuilder/team/'+team_name_slug+'/')
 
@@ -287,25 +292,25 @@ def view_requests(request, team_name_slug):
     team = Team.objects.get(slug=team_name_slug)
 
     if team.creator == user:
-        requests = Memberrequest.objects.filter(team=team).order_by('-request_date')
+        requests = Memberrequest.objects.filter(team=team).order_by('-request_date')  # get requests sent to the team
 
         return render(request, 'teambuilder/view_requests.html', {'requests': requests, 'team': team})
 
-    else:
+    else:  # if the user accessing the view request page is not the creator, redirect to 403 page
         return HttpResponseRedirect('/teambuilder/unauthorized/')
 
 
 @login_required
 def accept_request(request, request_id):
     try:
-        mr = Memberrequest.objects.get(pk=request_id)
+        mr = Memberrequest.objects.get(pk=request_id)  # get the request with the id
         team = mr.team
 
         user = request.user
-        if user == team.creator:
-            if mr.status == "pending":
-                mr.status = "accepted"
-                team.current_size += 1
+        if user == team.creator:  # if the accessor is the team creator, continue with operation
+            if mr.status == "pending":  # if the status of the request is pending,
+                mr.status = "accepted"  # accept the request
+                team.current_size += 1  # increment the team's current size by one
                 team.save()
                 mr.save()
 
@@ -313,44 +318,46 @@ def accept_request(request, request_id):
                 if team.current_size == team.course.team_size:
                     Memberrequest.objects.filter(team=team, status="pending").update(status="rejected")
 
-                #cancel any other requests sent by a user to join other teams in the same course
+                #cancel any other requests sent by a user to join other teams in the same course. A user should not belong to 2 teams in the same course
                 sender = mr.user
-                reqs =  Memberrequest.objects.filter(user=sender, status='pending') #get the memberrequests sent by sender that are pending
+                reqs = Memberrequest.objects.filter(user=sender, status='pending')  # get the member requests sent by sender that are pending
 
                 #select the ones with the same course and cancel them
-                teams = team.course.team_set.all()
+                teams = team.course.team_set.all()  # get teams built for the course
+
+                # go through each of the pending requests. If the team for that request is in 'teams' above, cancel that request
                 for req in reqs:
                     if req.team in teams:
                         req.status = "cancelled"
                         req.save()
 
 
-        else:
+        else:  # if accessor is not the team creator, redirect to 403 page
             return HttpResponseRedirect('/teambuilder/unauthorized/')
 
-    except Memberrequest.DoesNotExist:
+    except Memberrequest.DoesNotExist:  # if member request does not exist, redirect to 404 page
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])  # if successful, redirect to the previous page
 
 
 @login_required
 def reject_request(request, request_id):
     try:
-        mr = Memberrequest.objects.get(pk=request_id)
-        team = mr.team
+        mr = Memberrequest.objects.get(pk=request_id)  # get request with the id
+        team = mr.team  # get the team the request was sent to
 
-        if request.user == team.creator:
+        if request.user == team.creator:  # if accessor is team creator, continue operation
             mr.status = "rejected"
             mr.save()
 
-        else:
+        else:  # if accessor is not team creator, redirect to 403 page
             return HttpResponseRedirect('/teambuilder/unauthorized/')
 
-    except Memberrequest.DoesNotExist:
+    except Memberrequest.DoesNotExist:  # if request with the id is not found, redirect to 404 page
         return HttpResponseRedirect('/teambuilder/page-not-found/')
 
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])  # if successful, redirect to the previous page
 
 
 @login_required
