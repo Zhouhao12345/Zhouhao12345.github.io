@@ -18,17 +18,17 @@ def populate():
     user7 = add_user("jeff", "jeff", "jeff@gmail.com")
 
 
-    userprofile1 = add_userprofile("01234567890", "I am the lecturer of Internet technology", user)
-    userprofile2 = add_userprofile("01238747890", "I am an industrial visitor", user2)
-    userprofile3 = add_userprofile("01299854740", "I am an industrial visitor too", user3)
-    userprofile4 = add_userprofile("01255555590", "I am a hardworking IT student", user4)
-    userprofile5 = add_userprofile("07778585840", "I am a smart SD student", user5)
-    userprofile6 = add_userprofile("00125698580", "I am a SD student, good at web development ", user6)
-    userprofile7 = add_userprofile("00141698580", "I am a great SE student", user7)
+    userprofile1 = add_userprofile("01234567890", "I am the lecturer of Internet technology", user, 'coordinator')
+    userprofile2 = add_userprofile("01238747890", "I am an industrial visitor", user2, 'student')
+    userprofile3 = add_userprofile("01299854740", "I am an industrial visitor too", user3, 'student')
+    userprofile4 = add_userprofile("01255555590", "I am a hardworking IT student", user4, 'student')
+    userprofile5 = add_userprofile("07778585840", "I am a smart SD student", user5, 'student')
+    userprofile6 = add_userprofile("00125698580", "I am a SD student, good at web development ", user6, 'student')
+    userprofile7 = add_userprofile("00141698580", "I am a great SE student", user7, 'student')
 
 
     course = add_course("COMP0123","Internet Technology", "ITECH2016", 4, user)
-    course2 = add_course("COMP0456","Promgramming", "PG2016", 4, user)
+    course2 = add_course("COMP0456","Programming", "PG2016", 4, user)
 
     team = add_team("Awesome",course, user6,"Java, CSS", "Team for ITECH project")
     team = add_team("Better",course2, user2,"Java, python", "Team for Programming project")
@@ -41,7 +41,7 @@ def populate():
     add_member_request(user6,team)
     add_member_request(user7,team)
 
-
+    print "Database has been successfully populated!!!!!!!!!"
 
 def add_user(username, password, email):
     user = User.objects.get_or_create(username=username)[0]
@@ -50,10 +50,11 @@ def add_user(username, password, email):
     user.save()
     return user
 
-def add_userprofile(phone, aboutme, user):
+def add_userprofile(phone, aboutme, user, role):
     u = UserProfile.objects.get_or_create(user=user)[0]
     u.phone_number = phone
     u.about_me = aboutme
+    u.role = role
     u.save()
     return u
 

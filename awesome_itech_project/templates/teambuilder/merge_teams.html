@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 {% block title_block %}Merge teams{% endblock %}
 {% block body_block %}
-    <h3>Merge teams together</h3>
+    <h2>Merge teams together</h2>
+   <div class="row">
+       <div class="col-lg-12">
+           <ul class="breadcrumb">
+                <li><a href="{% url 'teambuilder:index' %}">Home</a></li>
+                <li class="active">Merge teams</li>
+           </ul>
+       </div>
+   </div>
+
     <p>Note that the members of the child team will be moved to the parent team</p>
     {% if teams %}
-        <div class="alert alert-success">
-            <p>{{message}}</p>
-        </div>
+        {% if message %}
+            <div class="alert alert-success">
+                <p>{{message}}</p>
+            </div>
+        {% endif %}
+
         {% if not merge %}
             <form id="merge_team_form" method="post" action="/teambuilder/course/{{course.slug}}/merge-teams/">
                 {% csrf_token %}
