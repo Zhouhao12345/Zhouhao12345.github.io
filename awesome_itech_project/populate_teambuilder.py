@@ -28,8 +28,12 @@ def populate():
 
 
     course = add_course("COMP0123","Internet Technology", "ITECH2016", 4, user)
+    course2 = add_course("COMP0456","Promgramming", "PG2016", 4, user)
 
     team = add_team("Awesome",course, user6,"Java, CSS", "Team for ITECH project")
+    team = add_team("Better",course2, user2,"Java, python", "Team for Programming project")
+    team = add_team("Great",course2, user3,"Java, python", "Team for Programming project")
+
 
     add_member_request(user3,team)
     add_member_request(user4,team)
