@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block title_block %}Build a team {% endblock %}
 {% block body_block %}
+    <h2>Create team</h2>
+       <div class="row">
+           <div class="col-lg-12">
+               <ul class="breadcrumb">
+                    <li><a href="{% url 'teambuilder:index' %}">Home</a></li>
+                   <li><a href="{% url 'teambuilder:dashboard'  %}">Dashboard</a></li>
+                    <li class="active">Create team</li>
+               </ul>
+           </div>
+       </div>
     {% if not created %}
         <form id="team_form" method="post" action="{% url 'teambuilder:create_team' %}">
             {% csrf_token %}

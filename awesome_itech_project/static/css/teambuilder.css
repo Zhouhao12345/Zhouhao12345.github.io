@@ -8,3 +8,35 @@ div.dataTables_wrapper {
 .errorlist   li {
     list-style-type: none;
 }
+.vertical-space {
+    margin-bottom: 20px;
+}
+
+.navbar-brand img {
+    position:absolute;
+    top: 0;
+    left: 100px;
+}
+body {
+    background-image: url('/static/images/dot.png');
+    -moz-background-image: url('/static/images/dot.png');
+    -o-background-image: url('/static/images/dot.png');
+    -webkit-background-image: url('/static/images/dot.png');
+    background-size: 2px 2px;
+}
+
+#body_div   {
+    min-height: 100%;
+}
+
+#footer_div.container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+    min-height: 40px;
+    padding-top: 10px;
+}
+
+    #footer_div p {
+        padding: 10px 0;
+        color: #777
+    }

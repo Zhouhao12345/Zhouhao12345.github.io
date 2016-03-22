@@ -1,7 +1,16 @@
 {% extends 'base.html' %}
 {% block title_block %}Add a course {% endblock %}
 {% block body_block %}
-
+    <h2>Edit course</h2>
+       <div class="row">
+           <div class="col-lg-12">
+               <ul class="breadcrumb">
+                    <li><a href="{% url 'teambuilder:index' %}">Home</a></li>
+                   <li><a href="{% url 'teambuilder:dashboard'  %}">Dashboard</a></li>
+                    <li class="active">Edit course</li>
+               </ul>
+           </div>
+       </div>
     {% if not created %}
         <form id="course_form" method="post" action="/teambuilder/course/{{course.slug}}/edit/">
             {{errors}}
@@ -29,9 +38,9 @@
                 <input class="form-control" id="course_password" type="text" name="course_password" value="{{course.course_password}}" />
                  </div><br/>
 
-            <label>Please enter your team size:</label><br/>
+            <label>Please enter the team size:</label><br/>
             <div class="form-group">
-                <input id="course_teamsize" class="form-control" type="number" name="team_size" value="{{course.team_size}}" />
+                <input id="course_teamsize" class="form-control" type="number" name="team_size"  min="2" value="{{course.team_size}}" />
                 </div><br/>
 
             <button class="btn btn-success btn-block center-block" type="submit" value="submit">Submit</button>

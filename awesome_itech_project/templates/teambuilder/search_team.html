@@ -1,14 +1,38 @@
 {% extends 'base.html' %}
 {% block title_block %}Find team{% endblock %}
 {% block body_block %}
-     <p><strong>Search a Team</strong></p>
+       <h2>Find team</h2>
+       <div class="row">
+           <div class="col-lg-12">
+               <ul class="breadcrumb">
+                    <li><a href="{% url 'teambuilder:index' %}">Home</a></li>
+                    <li class="active">Find team</li>
+               </ul>
+           </div>
+       </div>
+
+
      <form>
          <label></label>
          <input  class="search-query span10" type="text" name="suggestion" value="" id="suggestion"  />
      </form>
      <ul></ul>
      <div id="teams" class="row" >
-          <div class="col-lg-7"></div>
+          <div class="col-lg-7">
+              <div class="table-responsive">
+                 <table class="table">
+                        <thead>
+                            <td>Team</td><td>Course</td>
+                        </thead>
+                        {% for team in team_list %}
+                            <tr>
+                                <td><a href="{% url 'teambuilder:team_detail' team.slug %}">{{ team.name }}</a></td>
+                                <td><a href="{% url 'teambuilder:course_detail' team.course.slug %}">{{ team.course.name }}</a></td>
+                            </tr>
+                        {% endfor %}
+                 </table>
+              </div>
+          </div>
      </div>
 
 {% endblock %}

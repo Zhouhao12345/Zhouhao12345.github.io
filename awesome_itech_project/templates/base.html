@@ -12,57 +12,40 @@
 
     <title>TeamUp - {%block title_block%}Build a team{% endblock%}</title>
 
-    <script src="{% static  'js/jquery-1.12.1.js' %}"></script>
-    <script src="{% static  'js/teambuilder_jquery.js' %}"></script>
-
     <!-- Bootstrap core CSS -->
     <link href="{% static  'css/bootstrap.min.css' %}" rel="stylesheet">
     <!--add the following link, it the css page of the original page-->
-    <link href="{% static  'css/dashboard.css' %}" rel="stylesheet">
+    <!--<link href="{% static  'css/dashboard.css' %}" rel="stylesheet">-->
+    <link href="{% static  'css/modern-business.css' %}" rel="stylesheet">
 
-    <link href="{% static 'css/signin.css' %}" rel="stylesheet" />
+    <!--<link href="{% static 'css/signin.css' %}" rel="stylesheet" />-->
     <link href="{% static 'css/searchtable.css' %}" rel="stylesheet" />
 
     <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="{% static 'css/jumbotron-narrow.css' %}" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="{% static 'js/html5shiv.min.js' %}"></script>
-      <script src="{% static 'js/respond.min.js' %}"></script>
-    <![endif]-->
-
-	<script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     <!--datatable css -->
     <link rel="stylesheet" href="{% static 'css/jquery.dataTables.min.css' %}"/>
 
     <link rel="stylesheet" href="{% static 'css/teambuilder.css' %}"/>
 
-    <!--datatable javascript -->
-    <script type="text/javascript" src="{% static 'js/jquery.dataTables.min.js' %}"></script>
-
-    <!--jqueryUI -->
-    <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
     <script type="text/javascript" src="{% static 'css/jquery-ui.css' %}"></script>
 
   </head>
 
   <body>
 
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-inverse navbar-fixed-top" >
           <div class="container">
             <div class="navbar-header">
-              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="{% url 'teambuilder:index' %}">Team Up</a>
+              <a class="navbar-brand" href="{% url 'teambuilder:index' %}"><img src="{% static 'images/logo.png' %}" alt="TeamUp" width="150" height="50" \></a>
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="{% url 'teambuilder:index' %}"><span class="glyphicon glyphicon-home"></span> Home</a> </li>
                 <li><a href="{% url 'teambuilder:about' %}">About</a> </li>
@@ -87,17 +70,28 @@
           </div>
         </nav>
 
-        <div class="container">
+        <div class="container" id="body_div">
         {% block body_block %}{% endblock %}
         </div>
 
-      <div class="container-fluid">
-        <footer class="footer">
-        <p class="text-center">&copy; Team Awesome 2016</p>
-      </footer></div>
 
+          <div class="container-fluid navbar-inverse" id="footer_div">
+                <p class="text-center">&copy; Team Awesome 2016</p>
+          </div>
+     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+      <!--[if lt IE 9]>
+        <script src="{% static 'js/html5shiv.min.js' %}"></script>
+        <script src="{% static 'js/respond.min.js' %}"></script>
+      <![endif]-->
+
+      <script src="{% static 'js/jquery.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
       <script src="{% static 'js/teambuilder_jquery.js' %}"></script>
-  </body>
+      <!-- datatable javascript -->
+      <script type="text/javascript" src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 
+      <!--jqueryUI -->
+      <script type="text/javascript" src="{% static 'js/jquery-ui.js' %}"></script>
+  </body>
 
 </html>

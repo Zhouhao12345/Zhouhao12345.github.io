@@ -1,26 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title_block %}Home page{% endblock %}
 {% block body_block %}
 
 	<div class="jumbotron">
-        <h1>Build Your Team</h1>
-        <p class="lead">Build your team today!</p>
-        {% if not user.is_authenticated %}
-            <p><a class="btn btn-lg btn-primary" href="{% url 'registration_register' %}" role="button">Sign up today</a></p>
-        {% endif %}
+        <img src="{% static 'images/slider1.jpg' %}" alt="students-image" class="img-responsive">
     </div>
 
     <div class="row">
          <div class="col-md-6">
-            <p><a class="btn btn-lg btn-primary" href="{% url 'teambuilder:search_team' %}" role="button">Find a team</a></p>
+            <p class="text-center"><a class="btn btn-lg btn-primary" href="{% url 'teambuilder:search_team' %}" role="button">Find a team</a></p>
         </div>
 
         <div class="col-md-6">
-            <p><a class="btn btn-lg btn-primary" href="{% url 'teambuilder:create_team' %}" role="button">Create a team</a></p>
+            <p class="text-center"><a class="btn btn-lg btn-primary" href="{% url 'teambuilder:create_team' %}" role="button">Create a team</a></p>
         </div>
     </div>
 
-    <div class="row">
+    <div class="vertical-space"></div>
+
+    <div class="row well">
         <div id="latest_teams" class="col-sm-6">
             <h3>Recently built teams</h3>
             {% if teams %}
