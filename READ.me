@@ -1,0 +1,26 @@
+SETTING UP THE APPLICATION
+1) Open up a terminal on your computer where you want the project files to be downloaded to. 
+2) Type the following command to clone the git repository:
+	git clone https://github.com/Zhouhao12345/AwesomeITECH.git
+3) In the chosen location on your computer, there should be a folder named AwesomeITECH. This folder contains the project files as well as the ER diagram and attributes of the entities.
+4) The project files are contained in a folder named "awesome_itech_project" . You may have to run the command "cd awesome_itech_project" to get into that directory
+5) On the terminal opened, type the following command to install the required packages for the application:
+	pip install -r requirements.txt
+6) Migrate the database by running the commands:
+	python manage.py makemigrations
+	python manage.py migrate
+7) Populate the database by running the population script with the command:
+	python populate_teambuilder.py
+8) Start the application server by running the command:
+	python manage.py runserver
+9) To view the application in a browser, visit "http://127.0.0.1:8000/teambuilder/" on your browser
+
+
+USERNAMES AND PASSWORDS FOR TESTING
+1) username: leifos		password: leifos
+2) username: laura		password: laura
+3) username: david		password: david
+
+ 
+
+
