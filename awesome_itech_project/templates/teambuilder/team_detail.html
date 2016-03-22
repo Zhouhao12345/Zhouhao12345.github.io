@@ -6,7 +6,6 @@
            <div class="col-lg-12">
                <ul class="breadcrumb">
                     <li><a href="{% url 'teambuilder:index' %}">Home</a></li>
-                   <li><a href="{% url 'teambuilder:dashboard'  %}">Dashboard</a></li>
                     <li class="active">{{team.name}} </li>
                </ul>
            </div>
@@ -48,26 +47,28 @@
     </div>
 
     {% if user.is_authenticated %}
-        {% if member_request %}
-            <p>Your request to join {{team.name}} is pending</p>
-            <a type="button" class="btn btn-danger" href="/teambuilder/team/{{team.slug}}/cancel-request/">Cancel request</a>
-        {% else %}
-            {% if user == team.creator %}
-                <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/view-requests/">View requests
-                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/view-members/">
-                    View team members <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a>
-                <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/edit/">Edit team
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+        {% if profile.role == 'student' %}
+            {% if member_request %}
+                <p>Your request to join {{team.name}} is pending</p>
+                <a type="button" class="btn btn-danger" href="/teambuilder/team/{{team.slug}}/cancel-request/">Cancel request</a>
             {% else %}
-                {% if not accepted_request %}
-                    {% if team.available_slots == 0 %}
-                        <p>Team is already full</p>
-                    {% else %}
-                        <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/send-request/">Request to join</a>
-                    {% endif %}
+                {% if user == team.creator %}
+                    <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/view-requests/">View requests
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                    <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/view-members/">
+                        View team members <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a>
+                    <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/edit/">Edit team
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                 {% else %}
-                    <p>You are a member of this team</p>
+                    {% if not accepted_request %}
+                        {% if team.available_slots == 0 %}
+                            <p>Team is already full</p>
+                        {% else %}
+                            <a type="button" class="btn btn-primary" href="/teambuilder/team/{{team.slug}}/send-request/">Request to join</a>
+                        {% endif %}
+                    {% else %}
+                        <p>You are a member of this team</p>
+                    {% endif %}
                 {% endif %}
             {% endif %}
         {% endif %}

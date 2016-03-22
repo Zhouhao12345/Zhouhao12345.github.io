@@ -6,7 +6,6 @@
            <div class="col-lg-12">
                <ul class="breadcrumb">
                     <li><a href="{% url 'teambuilder:index' %}">Home</a></li>
-                   <li><a href="{% url 'teambuilder:dashboard'  %}">Dashboard</a></li>
                     <li class="active">{{course.name}} </li>
                </ul>
            </div>
@@ -42,13 +41,11 @@
         </table>
     </div>
 
-      {% if user.is_authenticated %}
-        {% if creator  %}
-            <a class="btn btn-primary" href="/teambuilder/course/{{course.slug}}/edit/">Edit course
-            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-            <a class="btn btn-primary" href="/teambuilder/course/{{course.slug}}/teams/">View teams
-            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a>
-        {% endif %}
-      {% endif %}
+    {% if creator  %}
+        <a class="btn btn-primary" href="/teambuilder/course/{{course.slug}}/edit/">Edit course
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+        <a class="btn btn-primary" href="/teambuilder/course/{{course.slug}}/teams/">View teams
+        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a>
+    {% endif %}
 
 {% endblock %}

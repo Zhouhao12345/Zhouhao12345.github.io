@@ -1,14 +1,41 @@
 {% extends 'base.html' %}
 {% block title_block %}{{team.name}} team members{% endblock %}
 {% block body_block %}
+    <h2>{{team.name}} members</h2>
+       <div class="row">
+           <div class="col-lg-12">
+               <ul class="breadcrumb">
+                    <li><a href="{% url 'teambuilder:index' %}">Home</a></li>
+                   <li><a href="{% url 'teambuilder:dashboard'  %}">Dashboard</a></li>
+                   <li><a href="{% url 'teambuilder:team_detail' team.slug %}">{{team.name}}</a></li>
+                    <li class="active">Members </li>
+               </ul>
+           </div>
+       </div>
+
     <h3>Team members for {{team.name}}</h3>
-    <ul class="list-group">
-        <li class="list-group-item"><a href="/teambuilder/profile/{{team.creator.username}}/">{{team.creator.username}}</a>( Team Creator)</li>
-    {% if requests %}
-            {% for request in requests %}
-                <li class="list-group-item"><a href="/teambuilder/profile/{{request.user.username}}/">{{request.user.username}}</a></li>
-            {% endfor %}
-    {% else %}
-    </ul>
-    {% endif %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                     <tr>
+                        <td><a href="/teambuilder/profile/{{team.creator.username}}/">{{team.creator.username}}</a>( Team Creator)</td>
+                        <td><a href="mailto:{{team.creator.email}}">{{team.creator.email}}</a> </td>
+                    </tr>
+            {% if requests %}
+                {% for request in requests %}
+                    <tr>
+                        <td><a href="/teambuilder/profile/{{request.user.username}}/">{{request.user.username}}</a></td>
+                        <td><a href="mailto:{{request.user.email}}">{{request.user.email}}</a> </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+                </tbody>
+            </table>
+        </div>
 {% endblock %}

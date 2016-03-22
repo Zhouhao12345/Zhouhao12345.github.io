@@ -45,6 +45,16 @@
                   </div>
                 </div>
 
+                {% if not profile.role  %}
+                    <div class="form-group">
+                      <label class="col-lg-3 control-label">Role:</label>
+                      <div class="col-lg-8">
+                          <label class="radio-inline"><input type="radio" value="student" name="role" checked>Student</label>
+                          <label class="radio-inline"><input type="radio" value="coordinator" name="role">Coordinator</label>
+                      </div>
+                    </div>
+                {% endif %}
+
                 <div class="form-group">
                   <label class="col-lg-3 control-label">Phone number:</label>
                   <div class="col-lg-8">

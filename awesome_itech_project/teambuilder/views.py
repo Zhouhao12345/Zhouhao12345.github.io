@@ -139,6 +139,7 @@ def team_details(request, team_name_slug):
 
         # check if user has previously requested to join the team
         user = request.user  # get the logged in user
+        context_dict['profile'] = UserProfile.objects.get(user=user)  # get the user's profile
 
         if user.is_authenticated():
             try:
@@ -365,11 +366,12 @@ def view_team_members(request, team_name_slug):
     user = request.user
     context_dict = {}
     try:
-        team = Team.objects.get(slug=team_name_slug)
-        if team.creator == user or team.course.creator == user:
-            requests = Memberrequest.objects.filter(team=team,status="accepted")
+        team = Team.objects.get(slug=team_name_slug)  # get the team with provided slug
+        if team.creator == user or team.course.creator == user:  # if user is the team creator or course creator
+            requests = Memberrequest.objects.filter(team=team, status="accepted")  # get requests that have been accepted for that team
+                                            # users with accepted requests become part of the team
+
             context_dict['requests'] = requests
-            context_dict['team_creator'] = team.creator
             context_dict['team'] = team
 
     except Team.DoesNotExist:
@@ -383,22 +385,28 @@ def dashboard(request):
     user = request.user
     context_dict = {}
     context_list = []
-    mrs = Memberrequest.objects.filter(user=user).order_by('-request_date')
+    mrs = Memberrequest.objects.filter(user=user).order_by('-request_date')  # get all requests sent by user
     context_dict['requests2'] = mrs
-    courses = Course.objects.filter(creator=user)
+    courses = Course.objects.filter(creator=user)  # get all courses added by user
     context_dict['courses'] = courses
+    context_dict['profile'] = UserProfile.objects.get(user=user)
 
     #teams created by user
     teams = Team.objects.filter(creator=user)
     context_dict['teams'] = teams
 
-    #request to teams sent by user that have been accepted
+    # request to teams sent by user that have been accepted
     reqs = Memberrequest.objects.filter(user=request.user, status="accepted")
     context_dict['requests'] = reqs
-    teams = Team.objects.filter(creator=request.user, status=True)
+
+    teams = Team.objects.filter(creator=request.user, status=True)  # get teams created by user that were were not merged with
+                                                                    # another team and thus are active
+
+    # get the requests sent to join each team created by user and add them to a list which will be returned to the template
     for team in teams:
         requests = Memberrequest.objects.filter(team=team).order_by('-request_date')
         context_list.append(requests)
+
     context_dict['requests3'] = context_list
     return render(request, 'teambuilder/dashboard.html', context_dict)
 
@@ -408,6 +416,8 @@ def course_details(request, course_name_slug):
     try:
         course = Course.objects.get(slug=course_name_slug)
         context_dict['course'] = course
+
+        # if user is logged in and is the course creator, allow user to edit the course or view teams for the course
         if request.user.is_authenticated():
             if request.user == course.creator:
                 context_dict['creator'] = True
@@ -422,22 +432,24 @@ def course_details(request, course_name_slug):
 def edit_course(request, course_name_slug):
     context_dict = {}
     try:
-        old_course = Course.objects.get(slug=course_name_slug) # get course details
-        if request.user == old_course.creator: # check if the user trying to edit is the course creator
+        old_course = Course.objects.get(slug=course_name_slug)  # get course details
+        if request.user == old_course.creator:  # check if the user trying to edit is the course creator
             context_dict['course'] = old_course
 
-            if request.method == 'POST':
-                course_form = CourseForm(data=request.POST, instance=old_course)
+            if request.method == 'POST':  # user is sending data to server
+                course_form = CourseForm(data=request.POST, instance=old_course)  # create a CourseForm instance, linking it
+                                                                                # to the course to be edited
+
                 if course_form.is_valid():
-                    course=course_form.save()
+                    course = course_form.save()
                     return HttpResponseRedirect('/teambuilder/course/'+course.slug+'/')
                 else:
-                    context_dict['errors']=course_form.errors
+                    context_dict['errors'] = course_form.errors
 
             else:
                 pass
 
-            return render(request,'teambuilder/edit_course.html',context_dict)
+            return render(request, 'teambuilder/edit_course.html', context_dict)
 
         else: # if user is not course creator, redirect to 403 page
             return HttpResponseRedirect('/teambuilder/unauthorized/')

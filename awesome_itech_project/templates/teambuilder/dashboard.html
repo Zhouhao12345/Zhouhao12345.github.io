@@ -16,55 +16,15 @@
            </div>
        </div>
 
+    {% if profile.role == 'student' %}
     <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="pill" href="#courses">Courses</a></li>
-      <li><a data-toggle="tab" href="#teams">Teams</a></li>
-      <li><a data-toggle="tab" href="#requests">Requests</a></li>
+          <li class="active"><a data-toggle="tab" href="#teams">Teams</a></li>
+          <li><a data-toggle="tab" href="#requests">Requests</a></li>
     </ul>
 
+
     <div class="tab-content">
-      <div id="courses" class="tab-pane fade in active">
-        <h3>Courses</h3>
-          <div class="panel-group">
-              <div class="panel panel-default">
-                  <div class="panel-heading">My courses</div>
-                  <div class="panel-body">
-                    {% if courses %}
-                      <div class="table-responsive">
-                          <table class="table table-striped teams_table">
-                              <thead>
-                                <tr>
-                                    <th>Course</th>
-                                    <th>Required team size</th>
-                                    <th>Action</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {% for course in courses %}
-                                    <tr>
-                                        <td><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></td>
-                                        <td>{{course.team_size}}</td>
-                                        <td>
-                                            <a  class="btn btn-primary btn-sm" href="/teambuilder/course/{{course.slug}}/edit/">Edit course
-                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> &nbsp;
-                                            <a  class="btn btn-primary btn-sm" href="/teambuilder/course/{{course.slug}}/teams/">View teams
-                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                              </tbody>
-                          </table>
-                      </div>
-                    {% else %}
-                        <p>You have not added any course yet</p>
-                    {% endif %}
-                    <p><a  class="btn btn-primary btn-sm" href="{% url 'teambuilder:add_course' %}">Create course
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></p>
-                      </div>
-                  </div>
-              </div>
-      </div>
-      <div id="teams" class="tab-pane fade">
+          <div id="teams" class="tab-pane fade in active">
           <h3>Teams</h3>
           <div class="panel-group">
               <div class="panel panel-default">
@@ -142,6 +102,8 @@
               </div>
           </div>
       </div>
+
+
       <div id="requests" class="tab-pane fade">
             <h3>Requests</h3>
               <div class="panel-group">
@@ -233,6 +195,59 @@
 
               </div>
         </div>
+        {% elif profile.role == 'coordinator' %}
+            <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="pill" href="#courses">Course</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="courses" class="tab-pane in active">
+                    <h3>Courses</h3>
+                      <div class="panel-group">
+                          <div class="panel panel-default">
+                              <div class="panel-heading">My courses</div>
+                              <div class="panel-body">
+                                {% if courses %}
+                                  <div class="table-responsive">
+                                      <table class="table table-striped teams_table">
+                                          <thead>
+                                            <tr>
+                                                <th>Course</th>
+                                                <th>Required team size</th>
+                                                <th>Action</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            {% for course in courses %}
+                                                <tr>
+                                                    <td><a href="{% url 'teambuilder:course_detail' course.slug %}">{{course.name}}</a></td>
+                                                    <td>{{course.team_size}}</td>
+                                                    <td>
+                                                        <a  class="btn btn-primary btn-sm" href="/teambuilder/course/{{course.slug}}/edit/">Edit course
+                                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a> &nbsp;
+                                                        <a  class="btn btn-primary btn-sm" href="/teambuilder/course/{{course.slug}}/teams/">View teams
+                                                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                          </tbody>
+                                      </table>
+                                  </div>
+                                {% else %}
+                                    <p>You have not added any course yet</p>
+                                {% endif %}
+                                <p><a  class="btn btn-primary btn-sm" href="{% url 'teambuilder:add_course' %}">Create course
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></p>
+                                  </div>
+                              </div>
+                          </div>
+                  </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                <p>Please update your profile and select a role (either a student or a coordinator)</p>
+            </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
