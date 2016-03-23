@@ -139,9 +139,9 @@ def team_details(request, team_name_slug):
 
         # check if user has previously requested to join the team
         user = request.user  # get the logged in user
-        context_dict['profile'] = UserProfile.objects.get(user=user)  # get the user's profile
 
         if user.is_authenticated():
+            context_dict['profile'] = UserProfile.objects.get(user=user)  # get the user's profile
             try:
                 # if user has a pending request to join the team, pass that request to the template file
                 mr = Memberrequest.objects.get(team=team, user=user, status="pending")
