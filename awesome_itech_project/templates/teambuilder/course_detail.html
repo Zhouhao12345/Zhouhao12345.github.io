@@ -42,11 +42,12 @@
             </table>
         </div>
 
+        <a class="btn btn-primary" href="/teambuilder/course/{{course.slug}}/teams/">View teams
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a>
+
         {% if creator  %}
             <a class="btn btn-primary" href="/teambuilder/course/{{course.slug}}/edit/">Edit course
             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-            <a class="btn btn-primary" href="/teambuilder/course/{{course.slug}}/teams/">View teams
-            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> </a>
         {% endif %}
     </div>
 {% endblock %}

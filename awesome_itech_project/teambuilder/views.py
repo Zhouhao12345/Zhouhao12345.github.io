@@ -367,12 +367,13 @@ def view_team_members(request, team_name_slug):
     context_dict = {}
     try:
         team = Team.objects.get(slug=team_name_slug)  # get the team with provided slug
+        context_dict['team'] = team
         if team.creator == user or team.course.creator == user:  # if user is the team creator or course creator
             requests = Memberrequest.objects.filter(team=team, status="accepted")  # get requests that have been accepted for that team
                                             # users with accepted requests become part of the team
 
             context_dict['requests'] = requests
-            context_dict['team'] = team
+
 
     except Team.DoesNotExist:
         return HttpResponseRedirect('/teambuilder/page-not-found/')
@@ -472,12 +473,9 @@ def view_course_teams(request, course_name_slug):
     try:
         course = Course.objects.get(slug=course_name_slug)
         context_dict['course'] = course
-        if course.creator == request.user:
-            teams = Team.objects.filter(course=course)
-            context_dict['teams'] =  teams
+        teams = Team.objects.filter(course=course)
+        context_dict['teams'] =  teams
 
-        else:
-            return HttpResponseRedirect('/teambuilder/unauthorized/')
 
     except Course.DoesNotExist:
         return HttpResponseRedirect('/teambuilder/page-not-found/')
