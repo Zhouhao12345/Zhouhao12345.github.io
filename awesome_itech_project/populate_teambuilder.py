@@ -38,7 +38,6 @@ def populate():
     add_member_request(user3,team)
     add_member_request(user4,team)
     add_member_request(user5,team)
-    add_member_request(user6,team)
     add_member_request(user7,team)
 
     print "Database has been successfully populated!!!!!!!!!"

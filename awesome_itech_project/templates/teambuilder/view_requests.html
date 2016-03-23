@@ -2,8 +2,18 @@
 {% block title_block %}Requests needing your attention{% endblock %}
 
 {% block body_block %}
-    <h3>Requests needing your attention</h3>
-     <div id="latest_teams" class="col-sm-6">
+
+        <h3>Received Requests</h3>
+         <div class="row">
+           <div class="col-lg-12">
+               <ul class="breadcrumb">
+                    <li><a href="{% url 'teambuilder:index' %}">Home</a></li>
+                    <li class="active">Requests</li>
+               </ul>
+           </div>
+       </div>
+
+    <div id="latest_teams" class="col-sm-6 well">
     {% if requests %}
          <div class="table-responsive">
         <table class="table">
@@ -23,8 +33,10 @@
                         <p>Team is now full</p>
                     {% else %}
                         {% if request.status == "pending" %}
-                            <a href="/teambuilder/request/{{request.id}}/accept/">Accept request</a>
-                            <a href="/teambuilder/request/{{request.id}}/reject/">Reject request</a>
+                            <a class="btn btn-success" href="/teambuilder/request/{{request.id}}/accept/">Accept request
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                            <a class="btn btn-danger" href="/teambuilder/request/{{request.id}}/reject/">Reject request
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                         {% elif request.status == "accepted" %}
                         <p>Request accepted</p>
                         {% endif %}

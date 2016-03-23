@@ -2,8 +2,10 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import teambuilder.models
 import datetime
 from django.conf import settings
+import django.core.validators
 
 
 class Migration(migrations.Migration):
@@ -20,8 +22,8 @@ class Migration(migrations.Migration):
                 ('code', models.CharField(unique=True, max_length=15)),
                 ('name', models.CharField(unique=True, max_length=100)),
                 ('course_password', models.CharField(max_length=15)),
-                ('team_size', models.IntegerField(default=0)),
-                ('add_date', models.DateTimeField(default=datetime.datetime(2016, 3, 18, 18, 23, 56, 691000))),
+                ('team_size', models.IntegerField(validators=[django.core.validators.MinValueValidator(2)])),
+                ('add_date', models.DateTimeField(default=datetime.datetime(2016, 3, 23, 0, 37, 27, 473000))),
                 ('slug', models.SlugField()),
                 ('creator', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
@@ -34,17 +36,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('status', models.CharField(default=b'pending', max_length=10)),
-                ('request_date', models.DateTimeField(default=datetime.datetime(2016, 3, 18, 18, 23, 56, 694000))),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='Skill',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('skill_name', models.CharField(unique=True, max_length=50)),
+                ('request_date', models.DateTimeField(default=datetime.datetime(2016, 3, 23, 0, 37, 27, 473000))),
             ],
             options={
             },
@@ -56,7 +48,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(unique=True, max_length=100)),
                 ('current_size', models.IntegerField(default=1)),
-                ('creation_date', models.DateTimeField(default=datetime.datetime(2016, 3, 18, 18, 23, 56, 692000))),
+                ('creation_date', models.DateTimeField(default=datetime.datetime(2016, 3, 23, 0, 37, 27, 473000))),
                 ('required_skills', models.TextField(max_length=500)),
                 ('description', models.TextField(max_length=500)),
                 ('slug', models.SlugField()),
@@ -73,22 +65,11 @@ class Migration(migrations.Migration):
             name='UserProfile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('phone_number', models.CharField(max_length=15, null=True)),
-                ('dob', models.DateField(default=datetime.date(2016, 3, 18), null=True)),
-                ('about_me', models.TextField(max_length=500, null=True)),
-                ('slug', models.SlugField()),
+                ('phone_number', models.CharField(max_length=15, blank=True)),
+                ('about_me', models.TextField(max_length=500, blank=True)),
+                ('picture', models.ImageField(default=b'default-avatar.jpg', upload_to=teambuilder.models.upload_location)),
+                ('role', models.CharField(max_length=15, null=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='UserProfile_Skill',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('skill', models.ForeignKey(to='teambuilder.Skill')),
-                ('user_profile', models.ForeignKey(to='teambuilder.UserProfile')),
             ],
             options={
             },
